@@ -15,8 +15,11 @@ require("rose-pine").setup({
   }
 })
 
+vim.background = 'dark'
 vim.g.moonflyTransparent = true
 vim.g.moonflyVirtualTextColor = true
 vim.g.solarized_termtrans = 1
+vim.g.gruvbox_contrast_dark = 'hard'
+vim.g.gruvbox_material_background = 'hard'
 
-vim.cmd('silent! colorscheme catppuccin-mocha')
+vim.cmd('silent! colorscheme gruvbox-material')

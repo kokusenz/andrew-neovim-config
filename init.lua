@@ -18,7 +18,7 @@ Plug('kokusenz/deltaview.nvim')
 -- nice to haves
 Plug('fabijanzulj/blame.nvim')
 -- color schemes
-Plug('morhetz/gruvbox')
+Plug('sainnhe/gruvbox-material')
 Plug('lifepillar/vim-solarized8')
 Plug('shaunsingh/nord.nvim')
 Plug('catppuccin/nvim')
