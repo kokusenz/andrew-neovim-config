@@ -13,7 +13,6 @@ Plug('https://github.com/Hoffs/omnisharp-extended-lsp.nvim.git')
 Plug('nvim-treesitter/nvim-treesitter', {['do'] = ':TSUpdate'})
 -- searching
 Plug('ibhagwan/fzf-lua')
---Plug('/home/agil/code/deltaview.nvim.git/main')
 Plug('kokusenz/deltaview.nvim')
 -- nice to haves
 Plug('fabijanzulj/blame.nvim')
