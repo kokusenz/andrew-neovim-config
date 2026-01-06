@@ -13,7 +13,7 @@ Plug('https://github.com/Hoffs/omnisharp-extended-lsp.nvim.git')
 Plug('nvim-treesitter/nvim-treesitter', {['do'] = ':TSUpdate'})
 -- searching
 Plug('ibhagwan/fzf-lua')
-Plug('kokusenz/deltaview.nvim')
+--Plug('kokusenz/deltaview.nvim')
 -- nice to haves
 Plug('fabijanzulj/blame.nvim')
 -- color schemes
@@ -26,6 +26,7 @@ Plug('bluz71/vim-moonfly-colors')
 Plug('rose-pine/neovim', {['as'] = 'rose-pine'})
 
 vim.call('plug#end')
+vim.pack.add({ 'https://github.com/kokusenz/deltaview.nvim.git'})
 
 require('statusline')
 require('colorscheme')

@@ -1,0 +1,8 @@
+{
+  "plugins": {
+    "deltaview.nvim": {
+      "rev": "480f52ab2d104e9eb9d59e383d0c885272ab588c",
+      "src": "https://github.com/kokusenz/deltaview.nvim.git"
+    }
+  }
+}
