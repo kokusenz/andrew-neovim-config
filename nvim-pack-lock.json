@@ -1,8 +1,16 @@
 {
   "plugins": {
+    "codediff.nvim": {
+      "rev": "9b3258557d92de7d2f03955066697ca62aabeb4e",
+      "src": "https://github.com/esmuellert/codediff.nvim"
+    },
     "deltaview.nvim": {
       "rev": "480f52ab2d104e9eb9d59e383d0c885272ab588c",
       "src": "https://github.com/kokusenz/deltaview.nvim.git"
+    },
+    "nui.nvim": {
+      "rev": "de740991c12411b663994b2860f1a4fd0937c130",
+      "src": "https://github.com/MunifTanjim/nui.nvim"
     }
   }
 }

@@ -27,6 +27,8 @@ Plug('rose-pine/neovim', {['as'] = 'rose-pine'})
 
 vim.call('plug#end')
 vim.pack.add({ 'https://github.com/kokusenz/deltaview.nvim.git'})
+vim.pack.add({ 'https://github.com/MunifTanjim/nui.nvim' })
+vim.pack.add({ 'https://github.com/esmuellert/codediff.nvim' })
 
 require('statusline')
 require('colorscheme')
