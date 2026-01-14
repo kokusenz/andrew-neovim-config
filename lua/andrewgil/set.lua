@@ -10,3 +10,4 @@ vim.opt.background    = 'dark'
 vim.opt.termguicolors = true
 vim.opt.ignorecase    = true
 vim.opt.smartcase     = true
+vim.opt.incsearch = false
