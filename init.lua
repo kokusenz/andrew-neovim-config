@@ -18,6 +18,7 @@ Plug('kokusenz/deltaview.nvim')
 Plug('MunifTanjim/nui.nvim')
 Plug('esmuellert/codediff.nvim')
 -- nice to haves
+Plug('stevearc/oil.nvim')
 Plug('fabijanzulj/blame.nvim')
 -- color schemes
 Plug('sainnhe/gruvbox-material')
@@ -37,6 +38,5 @@ require('make')
 require('blametoggle')
 require('fzf').setup_fzf_lua()
 require('vimuiselect').setup()
-require('deltaview').setup({
-    fzf_threshold = 2
-})
+
+require("oil").setup()
