@@ -13,7 +13,10 @@ Plug('https://github.com/Hoffs/omnisharp-extended-lsp.nvim.git')
 Plug('nvim-treesitter/nvim-treesitter', {['do'] = ':TSUpdate'})
 -- searching
 Plug('ibhagwan/fzf-lua')
---Plug('kokusenz/deltaview.nvim')
+Plug('junegunn/fzf')
+Plug('kokusenz/deltaview.nvim')
+Plug('MunifTanjim/nui.nvim')
+Plug('esmuellert/codediff.nvim')
 -- nice to haves
 Plug('fabijanzulj/blame.nvim')
 -- color schemes
@@ -24,11 +27,7 @@ Plug('catppuccin/nvim')
 Plug('folke/tokyonight.nvim')
 Plug('bluz71/vim-moonfly-colors')
 Plug('rose-pine/neovim', {['as'] = 'rose-pine'})
-
 vim.call('plug#end')
-vim.pack.add({ 'https://github.com/kokusenz/deltaview.nvim.git'})
-vim.pack.add({ 'https://github.com/MunifTanjim/nui.nvim' })
-vim.pack.add({ 'https://github.com/esmuellert/codediff.nvim' })
 
 require('statusline')
 require('colorscheme')
@@ -38,3 +37,6 @@ require('make')
 require('blametoggle')
 require('fzf').setup_fzf_lua()
 require('vimuiselect').setup()
+require('deltaview').setup({
+    fzf_threshold = 2
+})
