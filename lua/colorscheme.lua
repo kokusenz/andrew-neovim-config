@@ -22,4 +22,4 @@ vim.g.solarized_termtrans = 1
 vim.g.gruvbox_contrast_dark = 'hard'
 vim.g.gruvbox_material_background = 'hard'
 
-vim.cmd('silent! colorscheme gruvbox-material')
+vim.cmd('silent! colorscheme catppuccin')

@@ -33,24 +33,9 @@ cmp.setup({
 
 local caps = require('cmp_nvim_lsp').default_capabilities()
 
-vim.lsp.config['ts_ls'] = {
-  capabilities = caps,
-  filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" }
-}
-
-vim.lsp.enable({'ts_ls'})
-
-vim.lsp.config['somesass_ls'] = {
-  capabilities = caps,
-  filetypes = { "scss", "sass", "css" },
-  cmd = { "some-sass-language-server", "--stdio" }
-}
+vim.lsp.enable({'tsgo'})
 
 vim.lsp.enable({'somesass_ls'})
-
-vim.lsp.config['lua_ls'] = {
-  capabilities = caps,
-}
 
 vim.lsp.enable({'lua_ls'})
 
@@ -74,11 +59,9 @@ vim.lsp.util.locations_to_items = function (locations, offset_encoding)
 end
 -- end monkey patch
 
-vim.lsp.config['angularls'] = {
-  capabilities = caps,
-}
+--vim.lsp.enable({'angularls'})
 
-vim.lsp.enable({'angularls'})
+vim.lsp.enable('clangd')
 
 local omnisharp_bin = "/usr/bin/omnisharp"
 vim.lsp.config['omnisharp'] = {
