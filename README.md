@@ -21,7 +21,7 @@ if hitting error code 131, try uninstalling and reinstalling dotnet from the off
 ### Keybinds
 | Category                   | Mapping                                   | Action                                                                  |
 |----------------------------|-------------------------------------------|-------------------------------------------------------------------------|
-| **File Explorer**           | `<leader>re`                             | Return to the **file‑tree** view                                        |
+| **File Explorer**           | `-`                             | Return to the **file‑tree** view                                        |
 | **fzf.lua**                | `<leader><leader>`                        | **Find files**                                                          |
 |                            | `<leader>bf`                              | **Buffers** picker                                                      |
 |                            | `<leader>gs`                              | **Git status** picker                                                   |
