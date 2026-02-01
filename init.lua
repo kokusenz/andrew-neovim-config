@@ -28,6 +28,10 @@ Plug('catppuccin/nvim')
 Plug('folke/tokyonight.nvim')
 Plug('bluz71/vim-moonfly-colors')
 Plug('rose-pine/neovim', {['as'] = 'rose-pine'})
+-- ai lol
+Plug('olimorris/codecompanion.nvim')
+Plug('zbirenbaum/copilot.lua')
+Plug('nvim-lua/plenary.nvim')
 vim.call('plug#end')
 
 require('statusline')
