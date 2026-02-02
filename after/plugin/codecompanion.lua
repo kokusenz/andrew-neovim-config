@@ -36,9 +36,7 @@ vim.keymap.set('v', "<leader>ac", function()
     vim.cmd("CodeCompanionChat Add")
 end, { noremap = true, silent = true })
 
-require('copilot').setup({
-    model = "claude-sonnet-4.5"
-})
+require('copilot').setup()
 
 vim.keymap.set('n', '<leader>ow', function()
   vim.fn.jobstart({

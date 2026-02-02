@@ -126,10 +126,16 @@ M.copilot_ollama_hybrid_config = {
 M.copilot_opus_config = {
     interactions = {
         chat = {
-            adapter = "copilot"
+            adapter = {
+                name = "copilot",
+                model = "claude-opus-4.5",
+            },
         },
         inline = {
-            adapter = "copilot",
+            adapter = {
+                name = "copilot",
+                model = "claude-opus-4.5",
+            },
             keymaps = {
                 accept_change = {
                     modes = { n = "ga" },
@@ -143,11 +149,17 @@ M.copilot_opus_config = {
             },
         },
         cmd = {
-            adapter = "copilot"
+            adapter = {
+                name = "copilot",
+                model = "claude-opus-4.5",
+            },
         },
         background = {
             cmd = {
-                adapter = "copilot"
+                adapter = {
+                    name = "copilot",
+                    model = "claude-opus-4.5",
+                },
             },
         },
     },
@@ -172,7 +184,10 @@ M.copilot_sonnet_config = {
             },
         },
         inline = {
-            adapter = "copilot",
+            adapter = {
+                name = "copilot",
+                model = "claude-sonnet-4.5",
+            },
             keymaps = {
                 accept_change = {
                     modes = { n = "ga" },
