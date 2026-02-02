@@ -31,6 +31,7 @@ Plug('bluz71/vim-moonfly-colors')
 Plug('rose-pine/neovim', {['as'] = 'rose-pine'})
 -- ai lol
 Plug('olimorris/codecompanion.nvim')
+Plug('ravitemer/codecompanion-history.nvim')
 Plug('zbirenbaum/copilot.lua')
 Plug('nvim-lua/plenary.nvim')
 vim.call('plug#end')

@@ -39,9 +39,17 @@ end, { noremap = true, silent = true })
 require('copilot').setup()
 
 vim.keymap.set('n', '<leader>ow', function()
+  vim.notify("Warming up Ollama...")
   vim.fn.jobstart({
     'curl', '-s', 'http://localhost:11434/api/generate',
-    '-d', '{"model":"qwen3-coder:30b","prompt":"hi","stream":false}'
+    '-d', '{"model":"qwen3-coder:30b","prompt":"Write a haiku about code","stream":false}'
+  }, {
+    on_exit = function(_, exit_code)
+      if exit_code == 0 then
+        vim.notify("Ollama warmed up!")
+      else
+        vim.notify("Ollama warmup failed", vim.log.levels.ERROR)
+      end
+    end
   })
-  vim.notify("Warming up Ollama...")
 end, { desc = "Warm up Ollama" })
