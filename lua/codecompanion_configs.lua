@@ -126,10 +126,7 @@ M.copilot_ollama_hybrid_config = {
 M.copilot_opus_config = {
     interactions = {
         chat = {
-            adapter = {
-                name = "copilot",
-                model = "Claude Opus 4.5",
-            },
+            adapter = "copilot"
         },
         inline = {
             adapter = "copilot",
@@ -146,17 +143,11 @@ M.copilot_opus_config = {
             },
         },
         cmd = {
-            adapter = {
-                name = "copilot",
-                model = "Claude Opus 4.5",
-            },
+            adapter = "copilot"
         },
         background = {
             cmd = {
-                adapter = {
-                    name = "copilot",
-                    model = "Claude Opus 4.5",
-                },
+                adapter = "copilot"
             },
         },
     },
