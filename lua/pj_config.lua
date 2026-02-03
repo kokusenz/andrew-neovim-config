@@ -9,7 +9,7 @@ local open_pj = function()
     -- Find the nearest parent directory containing .git
     local monorepo_subdir = vim.fs.root(cwd, '.git')
     if monorepo_subdir then
-        local handle = io.popen('pj --config ~/.config/pj/blank_config.yaml --marker project.json --marker Program.cs --marker Dockerfile --path ' .. monorepo_subdir .. " --max-depth 8 2>&1")
+        local handle = io.popen('pj --config ~/.config/pj/blank_config.yaml --marker project.json --marker *.csproj --path ' .. monorepo_subdir .. " --max-depth 8 2>&1")
         if handle then
             local result = handle:read("*a")
             handle:close()
@@ -18,13 +18,10 @@ local open_pj = function()
                 local projects = {}
                 for line in result:gmatch("[^\r\n]+") do
                     -- Convert absolute path to relative path from monorepo root
-                    if line == monorepo_subdir then
-                        table.insert(projects, '/')
-                    elseif line == cwd then
-                        local relative = line:gsub('^' .. vim.pesc(monorepo_subdir) .. '/', '')
+                    local relative = line == monorepo_subdir and '/' or line:gsub('^' .. vim.pesc(monorepo_subdir) .. '/', '')
+                    if line == cwd then
                         table.insert(projects, 1, relative)
                     else
-                        local relative = line:gsub('^' .. vim.pesc(monorepo_subdir) .. '/', '')
                         table.insert(projects, relative)
                     end
                 end
