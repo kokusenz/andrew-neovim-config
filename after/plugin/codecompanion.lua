@@ -1,7 +1,7 @@
 local configs = require("codecompanion_configs")
 
 local codecompanion = require("codecompanion")
-codecompanion.setup(configs.ollama_config)
+codecompanion.setup(configs.copilot_ollama_hybrid_config)
 
 function CodeCompanionBufferExists()
   for _, buf in ipairs(vim.api.nvim_list_bufs()) do
