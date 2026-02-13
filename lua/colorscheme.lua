@@ -12,6 +12,7 @@ require("rose-pine").setup({
   dark_variant = 'main',
   styles = {
     transparency = false,
+    italic = false
   }
 })
 
