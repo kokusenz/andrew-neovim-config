@@ -106,7 +106,7 @@ M.ollama_config = build_config({
 })
 
 M.copilot_ollama_hybrid_config = build_config({
-    chat_adapter = copilot_adapter("claude-sonnet-4.5"),
+    chat_adapter = copilot_adapter("claude-sonnet-4.6"),
     inline_adapter = "ollama",
     cmd_adapter = "ollama",
     background_adapter = "ollama",
@@ -114,23 +114,23 @@ M.copilot_ollama_hybrid_config = build_config({
 })
 
 M.copilot_opus_config = build_config({
-    chat_adapter = copilot_adapter("claude-opus-4.5"),
-    inline_adapter = copilot_adapter("claude-opus-4.5"),
-    cmd_adapter = copilot_adapter("claude-opus-4.5"),
+    chat_adapter = copilot_adapter("claude-opus-4.6"),
+    inline_adapter = copilot_adapter("claude-opus-4.6"),
+    cmd_adapter = copilot_adapter("claude-opus-4.6"),
     background = {
         cmd = {
-            adapter = copilot_adapter("claude-opus-4.5"),
+            adapter = copilot_adapter("claude-opus-4.6"),
         },
     },
 })
 
 M.copilot_sonnet_config = build_config({
-    chat_adapter = copilot_adapter("claude-sonnet-4.5"),
-    inline_adapter = copilot_adapter("claude-sonnet-4.5"),
-    cmd_adapter = copilot_adapter("claude-sonnet-4.5"),
+    chat_adapter = copilot_adapter("claude-sonnet-4.6"),
+    inline_adapter = copilot_adapter("claude-sonnet-4.6"),
+    cmd_adapter = copilot_adapter("claude-sonnet-4.6"),
     background = {
         cmd = {
-            adapter = copilot_adapter("claude-sonnet-4.5"),
+            adapter = copilot_adapter("claude-sonnet-4.6"),
         },
     },
 })
