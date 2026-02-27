@@ -64,13 +64,10 @@ vim.lsp.config('lua_ls', {
       -- Make the server aware of Neovim runtime files
       workspace = {
         checkThirdParty = false,
-        library = {
-          vim.env.VIMRUNTIME,
-          -- Depending on the usage, you might want to add additional paths
-          -- here.
-          -- '${3rd}/luv/library',
-          -- '${3rd}/busted/library',
-        },
+        library = vim.list_extend(
+            { vim.env.VIMRUNTIME },
+            vim.api.nvim_get_runtime_file('lua/delta', true)
+        )
         -- Or pull in all of 'runtimepath'.
         -- NOTE: this is a lot slower and will cause issues when working on
         -- your own configuration.
