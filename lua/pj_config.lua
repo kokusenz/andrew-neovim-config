@@ -49,3 +49,22 @@ local open_pj = function()
 end
 
 vim.keymap.set('n', '<leader>jp', open_pj)
+
+local move_root_up = function()
+    local cwd = vim.fn.getcwd()
+    local parent = vim.fn.fnamemodify(cwd, ':h')
+    if parent and parent ~= cwd then
+        vim.cmd('cd ' .. parent)
+        vim.notify('Relocated to: ' .. parent, vim.log.levels.INFO)
+    else
+        vim.notify('Already at root directory', vim.log.levels.WARN)
+    end
+end
+
+vim.keymap.set('n', '<leaderj-', move_root_up)
+
+vim.api.nvim_create_user_command('YankRelPath', function()
+    local path = vim.fn.expand('%:.')
+    vim.fn.setreg('+', path)
+    vim.notify('Yanked: ' .. path .. ' to register +', vim.log.levels.INFO)
+end, { desc = 'Yank relative path of current buffer to specified register' })
