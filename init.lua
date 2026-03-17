@@ -14,7 +14,7 @@ Plug('nvim-treesitter/nvim-treesitter', {['do'] = ':TSUpdate'})
 -- searching
 Plug('ibhagwan/fzf-lua')
 Plug('junegunn/fzf')
-Plug('kokusenz/deltaview.nvim', {branch = 'feature/delta-lua-integration'})
+Plug('kokusenz/deltaview.nvim')
 Plug('kokusenz/delta.lua')
 Plug('MunifTanjim/nui.nvim')
 Plug('esmuellert/codediff.nvim')
