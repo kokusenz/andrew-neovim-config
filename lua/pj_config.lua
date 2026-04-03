@@ -61,7 +61,7 @@ local move_root_up = function()
     end
 end
 
-vim.keymap.set('n', '<leaderj-', move_root_up)
+vim.keymap.set('n', '<leader>j-', move_root_up)
 
 vim.api.nvim_create_user_command('YankRelPath', function()
     local path = vim.fn.expand('%:.')
