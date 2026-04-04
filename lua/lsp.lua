@@ -107,31 +107,6 @@ end
 
 vim.lsp.enable('clangd')
 
-local omnisharp_bin = "/usr/bin/omnisharp"
-vim.lsp.config['omnisharp'] = {
-  cmd = {
-    omnisharp_bin,
-    "--languageserver",
-    "--hostPID", tostring(vim.fn.getpid()),
-    "-z", -- use zero‑based line/column (VS Code behaviour)
-    "--encoding", "utf-8",
-    "DotNet:enablePackageRestore=false",
-  },
-  capabilities = caps, -- the `caps` table you already created
-  filetypes = { "cs" },
-  settings = {         -- (optional) tweak server behaviour
-    FormattingOptions = {
-      EnableEditorConfigSupport = true,
-    },
-    Sdk = { IncludePrereleases = true },
-    RoslynExtensionsOptions = {
-        EnableDecompilationSupport = true
-    }
-  },
-}
-
-vim.lsp.enable({'omnisharp'})
-
 vim.lsp.config['rust_analyzer'] = {
   capabilities = caps,
   settings = {
@@ -166,18 +141,9 @@ vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename,
 vim.keymap.set('n', '<leader>fm', vim.lsp.buf.format,
   { noremap = true, silent = true, desc = 'LSP format' })
 
-local omnisharpextended = require('omnisharp_extended')
+require('easy-dotnet').setup()
 
-vim.keymap.set('n', '<leader>od', omnisharpextended.lsp_definition,
-  { noremap = true, silent = true, desc = 'omnisharp definition' })
-vim.keymap.set('n', '<leader>ot', omnisharpextended.lsp_type_definition,
-  { noremap = true, silent = true, desc = 'omnisharp type definition' })
-vim.keymap.set('n', '<leader>of', omnisharpextended.lsp_references,
-  { noremap = true, silent = true, desc = 'omnisharp references' })
-vim.keymap.set('n', '<leader>oi', omnisharpextended.lsp_implementation,
-  { noremap = true, silent = true, desc = 'omnisharp implementation' })
-
---- Stop LSP client for current buffer
+-- Stop LSP client for current buffer
 --- Presents a vim.ui.select menu to choose which LSP client to stop if multiple are attached
 local function stop_buffer_lsp()
   local clients = vim.lsp.get_clients({ bufnr = 0 })
