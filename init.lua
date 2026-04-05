@@ -1,4 +1,4 @@
-require('andrewgil') -- basic vanilla nvim config, no plugins involved
+require('vanilla') -- basic vanilla nvim config, no plugins involved
 
 -- to update specific plugin, or no args for all plugins
 -- :lua vim.pack.update({ 'nvim-lspconfig' })
