@@ -42,17 +42,6 @@ vim.api.nvim_create_autocmd('PackChanged', {
     end
 })
 
-local Plug = vim.fn['plug#']
-
-vim.call('plug#begin')
-Plug('junegunn/fzf') -- to be deleted
-Plug('MunifTanjim/nui.nvim') -- to be deleted
-Plug('esmuellert/codediff.nvim') -- to be deleted
--- color schemes
-Plug('shaunsingh/nord.nvim') -- to be deleted
--- ai lol
-vim.call('plug#end')
-
 require('statusline')
 require('colorscheme')
 require('searching')
