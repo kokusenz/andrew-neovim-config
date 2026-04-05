@@ -1,40 +1,56 @@
-require('andrewgil')
+require('andrewgil') -- basic vanilla nvim config, no plugins involved
+
+-- to update specific plugin, or no args for all plugins
+-- :lua vim.pack.update({ 'nvim-lspconfig' })
+-- to delete
+-- :lua vim.pack.del({ 'nvim-lspconfig' })
+vim.pack.add({
+    -- lsp related
+    'https://github.com/neovim/nvim-lspconfig',
+    'https://github.com/nvim-treesitter/nvim-treesitter',
+    'https://github.com/GustavEikaas/easy-dotnet.nvim',
+    -- navigation related
+    'https://github.com/ibhagwan/fzf-lua',
+    'https://github.com/stevearc/oil.nvim',
+    'https://github.com/josephschmitt/pj.nvim',
+    -- git related
+    'https://github.com/fabijanzulj/blame.nvim',
+    'https://github.com/kokusenz/deltaview.nvim',
+    'https://github.com/kokusenz/delta.lua',
+    -- ai related
+    'https://github.com/olimorris/codecompanion.nvim',
+    'https://github.com/ravitemer/codecompanion-history.nvim',
+    'https://github.com/zbirenbaum/copilot.lua',
+    -- colorschemes
+    'https://github.com/sainnhe/gruvbox-material',
+    'https://github.com/lifepillar/vim-solarized8',
+    'https://github.com/catppuccin/nvim',
+    'https://github.com/folke/tokyonight.nvim',
+    'https://github.com/bluz71/vim-moonfly-colors',
+    'https://github.com/rose-pine/neovim',
+    -- dependencies
+    'https://github.com/nvim-lua/plenary.nvim', -- for codecompanion and easy-dotnet
+})
+
+vim.api.nvim_create_autocmd('PackChanged', {
+    callback = function(ev)
+        local name, kind = ev.data.spec.name, ev.data.kind
+        if name == 'nvim-treesitter' and kind == 'update' then
+            if not ev.data.active then vim.cmd.packadd('nvim-treesitter') end
+            vim.cmd('TSUpdate')
+        end
+    end
+})
+
 local Plug = vim.fn['plug#']
 
 vim.call('plug#begin')
--- Language Server related plugins
-Plug('neovim/nvim-lspconfig')
-Plug('hrsh7th/cmp-nvim-lsp')
-Plug('hrsh7th/nvim-cmp')
-Plug('hrsh7th/cmp-buffer')
-Plug('hrsh7th/vim-vsnip')
-Plug('hrsh7th/cmp-vsnip')
-Plug('nvim-treesitter/nvim-treesitter', {['do'] = ':TSUpdate'})
-Plug('GustavEikaas/easy-dotnet.nvim')
--- searching
-Plug('ibhagwan/fzf-lua')
-Plug('junegunn/fzf')
-Plug('kokusenz/deltaview.nvim')
-Plug('kokusenz/delta.lua')
-Plug('MunifTanjim/nui.nvim')
-Plug('esmuellert/codediff.nvim')
-Plug('josephschmitt/pj.nvim')
--- nice to haves
-Plug('stevearc/oil.nvim')
-Plug('fabijanzulj/blame.nvim')
+Plug('junegunn/fzf') -- to be deleted
+Plug('MunifTanjim/nui.nvim') -- to be deleted
+Plug('esmuellert/codediff.nvim') -- to be deleted
 -- color schemes
-Plug('sainnhe/gruvbox-material')
-Plug('lifepillar/vim-solarized8')
-Plug('shaunsingh/nord.nvim')
-Plug('catppuccin/nvim')
-Plug('folke/tokyonight.nvim')
-Plug('bluz71/vim-moonfly-colors')
-Plug('rose-pine/neovim', {['as'] = 'rose-pine'})
+Plug('shaunsingh/nord.nvim') -- to be deleted
 -- ai lol
-Plug('olimorris/codecompanion.nvim')
-Plug('ravitemer/codecompanion-history.nvim')
-Plug('zbirenbaum/copilot.lua')
-Plug('nvim-lua/plenary.nvim')
 vim.call('plug#end')
 
 require('statusline')
