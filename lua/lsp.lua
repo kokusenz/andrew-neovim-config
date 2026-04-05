@@ -1,37 +1,23 @@
-local cmp = require('cmp')
-
-cmp.setup({
-  snippet = {
-    expand = function(args)
-      vim.fn["vsnip#anonymous"](args.body)
-    end,
-  },
-  mapping = {
-    ['<C-Space>'] = cmp.mapping.complete(),
-    ['<CR>'] = cmp.mapping.confirm({ select = true }),
-    ['<Tab>'] = function(fallback)
-      if cmp.visible() then
-        cmp.select_next_item()
-      else
-        fallback()
-      end
-    end,
-    ['<S-Tab>'] = function(fallback)
-      if cmp.visible() then
-        cmp.select_prev_item()
-      else
-        fallback()
-      end
-    end
-  },
-  sources = {
-    { name = 'nvim_lsp' },
-    { name = 'vsnip' },
-    { name = 'buffer' },
-  }
+vim.api.nvim_create_autocmd('LspAttach', {
+  callback = function(args)
+    vim.lsp.completion.enable(true, args.data.client_id, args.buf)
+  end,
 })
 
-local caps = require('cmp_nvim_lsp').default_capabilities()
+vim.keymap.set('i', '<C-Space>', '<C-x><C-o>')
+
+vim.keymap.set('n', '<leader>gd', vim.lsp.buf.definition,
+  { noremap = true, silent = true, desc = 'LSP definition' })
+vim.keymap.set('n', '<leader>hv', vim.lsp.buf.hover,
+  { noremap = true, silent = true, desc = 'LSP hover' })
+vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action,
+  { noremap = true, silent = true, desc = 'LSP code action' })
+vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename,
+  { noremap = true, silent = true, desc = 'LSP rename' })
+vim.keymap.set('n', '<leader>fm', vim.lsp.buf.format,
+  { noremap = true, silent = true, desc = 'LSP format' })
+
+require('easy-dotnet').setup()
 
 vim.lsp.enable({'tsgo'})
 
@@ -83,12 +69,9 @@ vim.lsp.config('lua_ls', {
 
 vim.lsp.enable({'lua_ls'})
 
---vim.lsp.enable({'angularls'})
-
 vim.lsp.enable('clangd')
 
 vim.lsp.config['rust_analyzer'] = {
-  capabilities = caps,
   settings = {
       ["rust-analyzer"] = {
           imports = {
@@ -110,18 +93,7 @@ vim.lsp.config['rust_analyzer'] = {
 }
 vim.lsp.enable({'rust_analyzer'})
 
-vim.keymap.set('n', '<leader>gd', vim.lsp.buf.definition,
-  { noremap = true, silent = true, desc = 'LSP definition' })
-vim.keymap.set('n', '<leader>hv', vim.lsp.buf.hover,
-  { noremap = true, silent = true, desc = 'LSP hover' })
-vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action,
-  { noremap = true, silent = true, desc = 'LSP code action' })
-vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename,
-  { noremap = true, silent = true, desc = 'LSP rename' })
-vim.keymap.set('n', '<leader>fm', vim.lsp.buf.format,
-  { noremap = true, silent = true, desc = 'LSP format' })
-
-require('easy-dotnet').setup()
+--vim.lsp.enable({'angularls'})
 
 -- Stop LSP client for current buffer
 --- Presents a vim.ui.select menu to choose which LSP client to stop if multiple are attached
