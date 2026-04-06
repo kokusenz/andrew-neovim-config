@@ -23,6 +23,7 @@ M.setup_fzf_lua = function()
     -- can replace with custom findexpr function? look at buffers, use fd, pipe results out to custom vim.ui.select
     vim.keymap.set('n', '<leader>bf', fzf.buffers)
     vim.keymap.set('n', '<leader>gs', fzf.git_status)
+    vim.keymap.set('n', '<leader>gc', fzf.git_commits)
 
     -- fzf grep stuff.
     vim.keymap.set('n', '<leader>gr', fzf.grep)
