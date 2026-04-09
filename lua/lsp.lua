@@ -17,7 +17,34 @@ vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename,
 vim.keymap.set('n', '<leader>fm', vim.lsp.buf.format,
   { noremap = true, silent = true, desc = 'LSP format' })
 
-require('easy-dotnet').setup()
+local setup_easy_dotnet = function()
+    require('easy-dotnet').setup({
+        lsp = {
+            auto_refresh_codelens = false
+        },
+        test_runner = {
+            viewmode = 'vsplit'
+        },
+    })
+
+    local dap = require('dap')
+    vim.keymap.set("n", "q", function()
+      dap.terminate()
+      dap.clear_breakpoints()
+    end, { desc = "Terminate and clear breakpoints" })
+
+    vim.keymap.set("n", "<leader>dB", dap.toggle_breakpoint, { desc = "Toggle breakpoint" })
+    vim.keymap.set("n", "<leader>dP", dap.continue, { desc = "Start/continue debugging" }) -- P for proceed
+    vim.keymap.set("n", "<leader>dO", dap.step_over, { desc = "Step over" })
+    vim.keymap.set("n", "<leader>dI", dap.step_into, { desc = "Step into" })
+    vim.keymap.set("n", "<leader>dE", dap.step_out, { desc = "Step out" }) -- E for exit
+    vim.keymap.set("n", "<leader>dC", dap.run_to_cursor, { desc = "Run to cursor" })
+    vim.keymap.set("n", "<leader>dr", dap.repl.toggle, { desc = "Toggle DAP REPL" })
+    vim.keymap.set("n", "<leader>dj", dap.down, { desc = "Go down stack frame" })
+    vim.keymap.set("n", "<leader>dk", dap.up, { desc = "Go up stack frame" })
+end
+
+vim.api.nvim_create_user_command('Csharp', setup_easy_dotnet, { desc = 'setup easy-dotnet and nvim-dap' })
 
 vim.lsp.enable({'tsgo'})
 

@@ -9,6 +9,7 @@ vim.pack.add({
     'https://github.com/neovim/nvim-lspconfig',
     'https://github.com/nvim-treesitter/nvim-treesitter',
     'https://github.com/GustavEikaas/easy-dotnet.nvim',
+    'https://github.com/mfussenegger/nvim-dap',
     -- navigation related
     'https://github.com/ibhagwan/fzf-lua',
     'https://github.com/stevearc/oil.nvim',
