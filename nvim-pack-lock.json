@@ -9,39 +9,39 @@
       "src": "https://github.com/ravitemer/codecompanion-history.nvim"
     },
     "codecompanion.nvim": {
-      "rev": "b8a0ed12978bdbf3d43b12305e5297703836dfb4",
+      "rev": "cea5b18c3446ff8d9d44547238bf35b2e5cd2565",
       "src": "https://github.com/olimorris/codecompanion.nvim"
     },
     "copilot.lua": {
-      "rev": "07aa57148ac28986bab9f55e87ee3d929e2726b1",
+      "rev": "ad7e729e9a6348f7da482be0271d452dbc4c8e2c",
       "src": "https://github.com/zbirenbaum/copilot.lua"
     },
     "delta.lua": {
-      "rev": "9d3a6884cb60bc6e653ba9868b82bb26648d5aae",
+      "rev": "898b2dc31945846df3abf89b47251a6492feb90d",
       "src": "https://github.com/kokusenz/delta.lua"
     },
     "deltaview.nvim": {
-      "rev": "dbb617444d38baeb91922ca03836d928d395f493",
+      "rev": "808cd6fbe4c49b71f03979790725fb173aade357",
       "src": "https://github.com/kokusenz/deltaview.nvim"
     },
     "easy-dotnet.nvim": {
-      "rev": "8f557b46d0954d216ce73c2f4ca7dcd04ff27b64",
+      "rev": "008427f3df32f99abaff8803c9e42facc151d501",
       "src": "https://github.com/GustavEikaas/easy-dotnet.nvim"
     },
     "fzf-lua": {
-      "rev": "9f0432fdd7825ab163520045831a40b6df82ea28",
+      "rev": "ae2e0bc885858188ef4725a02dfd5725cfc58ba2",
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
     "gruvbox-material": {
-      "rev": "afb275d8e6dc379762d122bd24e1773fc057abf3",
+      "rev": "11d779b26a9ab2b3db8c22c6ac9fb6e8ed4fea79",
       "src": "https://github.com/sainnhe/gruvbox-material"
     },
     "neovim": {
-      "rev": "cf2a288696b03d0934da713d66c6d71557b5c997",
+      "rev": "9504524e5ed0e326534698f637f9d038ba4cd0ee",
       "src": "https://github.com/rose-pine/neovim"
     },
     "nvim": {
-      "rev": "df2a1f9f3392d688397e945544a30aec8fc9b4c7",
+      "rev": "426dbebe06b5c69fd846ceb17b42e12f890aedf1",
       "src": "https://github.com/catppuccin/nvim"
     },
     "nvim-dap": {
@@ -49,7 +49,7 @@
       "src": "https://github.com/mfussenegger/nvim-dap"
     },
     "nvim-lspconfig": {
-      "rev": "a776085e04f7b15d0b59fae2244df07d98360ab4",
+      "rev": "d10ce09e42bb0ca8600fd610c3bb58676e61208d",
       "src": "https://github.com/neovim/nvim-lspconfig"
     },
     "nvim-treesitter": {
@@ -65,7 +65,7 @@
       "src": "https://github.com/josephschmitt/pj.nvim"
     },
     "plenary.nvim": {
-      "rev": "b9fd5226c2f76c951fc8ed5923d85e4de065e509",
+      "rev": "74b06c6c75e4eeb3108ec01852001636d85a932b",
       "src": "https://github.com/nvim-lua/plenary.nvim"
     },
     "tokyonight.nvim": {
