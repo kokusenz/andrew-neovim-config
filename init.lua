@@ -53,3 +53,13 @@ require('fzf').setup_fzf_lua()
 require('vimuiselect').setup()
 require('oil').setup()
 require('pj_config')
+-- TODO implement autocompletion from youtube video
+-- TODO switch to fzf lua vimuiselect, get rid of vimuiselect module
+-- TODO add vim.cmd([[cabbrev dm DeltaMenu]])
+-- TODO add vim.cmd([[cabbrev dv DeltaView]])
+-- TODO deprecate specific keybinds one by one; use built in keybinds (:h gri)
+-- -- although the quickfix binds I want; add one for :ccl
+-- TODO get rid of easy dotnet command; for some reason, breaks things
+-- TODO get rid of argpoon, replace with something mini?
+-- TODO get change colorscheme to tokyonight
+-- TODO just trim code in general, reduce lines in config
