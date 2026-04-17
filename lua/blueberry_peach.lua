@@ -129,7 +129,13 @@ local M = {}
 ---@param flavor "mocha"|"macchiato"|"frappe"|"latte"
 ---@return table overrides to deep-merge into catppuccin config
 function M.get_overrides(flavor)
-    local color_overrides = flavor == "latte" and color_overrides_light or color_overrides_dark_modified
+    local color_overrides = color_overrides_dark_modified
+    if flavor == "latte" then
+        color_overrides = color_overrides_light
+    end
+    if flavor == "frappe" or flavor == "macchiato" then
+        color_overrides = color_overrides_dark
+    end
     return {
         color_overrides = {
             [flavor] = color_overrides,

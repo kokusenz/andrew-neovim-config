@@ -1,8 +1,11 @@
 local catppuccin_opts = ({
-    transparent_background = true,
+    transparent_background = false,
     flavour = 'mocha'
 })
 catppuccin_opts = vim.tbl_deep_extend('force', catppuccin_opts, require('blueberry_peach').get_overrides('mocha'))
+catppuccin_opts = vim.tbl_deep_extend('force', catppuccin_opts, require('blueberry_peach').get_overrides('frappe'))
+catppuccin_opts = vim.tbl_deep_extend('force', catppuccin_opts, require('blueberry_peach').get_overrides('macchiato'))
+catppuccin_opts = vim.tbl_deep_extend('force', catppuccin_opts, require('blueberry_peach').get_overrides('latte'))
 require("catppuccin").setup(catppuccin_opts)
 
 require("tokyonight").setup({
