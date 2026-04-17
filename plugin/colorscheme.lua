@@ -1,18 +1,21 @@
-require("catppuccin").setup({
-  transparent_background = true,
+local catppuccin_opts = ({
+    transparent_background = true,
+    flavour = 'mocha'
 })
+catppuccin_opts = vim.tbl_deep_extend('force', catppuccin_opts, require('blueberry_peach').get_overrides('mocha'))
+require("catppuccin").setup(catppuccin_opts)
 
 require("tokyonight").setup({
-  transparent = true
+    transparent = true
 })
 
 require("rose-pine").setup({
-  variant = 'main',
-  dark_variant = 'main',
-  styles = {
-    transparency = false,
-    italic = false
-  }
+    variant = 'main',
+    dark_variant = 'main',
+    styles = {
+        transparency = false,
+        italic = false
+    }
 })
 
 vim.background = 'dark'
@@ -21,4 +24,4 @@ vim.g.moonflyVirtualTextColor = true
 vim.g.gruvbox_contrast_dark = 'hard'
 vim.g.gruvbox_material_background = 'hard'
 
-vim.cmd('silent! colorscheme tokyonight-night')
+vim.cmd([[silent! colorscheme catppuccin]])
