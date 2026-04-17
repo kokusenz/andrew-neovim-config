@@ -52,9 +52,10 @@ require('blametoggle')
 require('fzf').setup_fzf_lua()
 require('oil').setup()
 require('pj_config')
+require('deltaview_config')
+
+-- TODO move stuff from after/ into lua/
 -- TODO implement autocompletion from youtube video
--- TODO add vim.cmd([[cabbrev dm DeltaMenu]])
--- TODO add vim.cmd([[cabbrev dv DeltaView]])
 -- TODO deprecate specific keybinds one by one; use built in keybinds (:h gri)
 -- -- although the quickfix binds I want; add one for :ccl
 -- TODO get rid of easy dotnet command; for some reason, breaks things
