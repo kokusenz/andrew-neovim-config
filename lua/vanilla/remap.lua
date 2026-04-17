@@ -17,3 +17,4 @@ vim.keymap.set('n', '<C-d>', '<C-d>zz', { silent = true, noremap = true })
 -- quickfix list nav bindings
 vim.keymap.set('n', '<leader>cn', vim.cmd.cnext)
 vim.keymap.set('n', '<leader>cp', vim.cmd.cprev)
+vim.keymap.set('n', '<leader>cq', vim.cmd.cclose)
