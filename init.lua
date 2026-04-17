@@ -50,11 +50,9 @@ require('lsp')
 require('make')
 require('blametoggle')
 require('fzf').setup_fzf_lua()
-require('vimuiselect').setup()
 require('oil').setup()
 require('pj_config')
 -- TODO implement autocompletion from youtube video
--- TODO switch to fzf lua vimuiselect, get rid of vimuiselect module
 -- TODO add vim.cmd([[cabbrev dm DeltaMenu]])
 -- TODO add vim.cmd([[cabbrev dv DeltaView]])
 -- TODO deprecate specific keybinds one by one; use built in keybinds (:h gri)
