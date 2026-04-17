@@ -54,7 +54,6 @@ require('oil').setup()
 require('pj_config')
 require('deltaview_config')
 
--- TODO move stuff from after/ into lua/
 -- TODO implement autocompletion from youtube video
 -- TODO deprecate specific keybinds one by one; use built in keybinds (:h gri)
 -- -- although the quickfix binds I want; add one for :ccl
