@@ -44,7 +44,6 @@ vim.api.nvim_create_autocmd('PackChanged', {
 })
 
 require('statusline')
-require('colorscheme')
 require('searching')
 require('lsp')
 require('make')

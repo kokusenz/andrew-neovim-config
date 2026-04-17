@@ -1,5 +1,4 @@
-local catppuccin = require("catppuccin")
-catppuccin.setup({
+require("catppuccin").setup({
   transparent_background = true,
 })
 
@@ -22,4 +21,4 @@ vim.g.moonflyVirtualTextColor = true
 vim.g.gruvbox_contrast_dark = 'hard'
 vim.g.gruvbox_material_background = 'hard'
 
-vim.cmd('silent! colorscheme catppuccin')
+vim.cmd('silent! colorscheme tokyonight-night')
