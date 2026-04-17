@@ -47,10 +47,8 @@ require('statusline')
 require('searching')
 require('lsp')
 require('make')
-require('fzf').setup_fzf_lua()
 require('oil').setup()
 require('pj_config')
-require('deltaview_config')
 
 -- TODO implement autocompletion from youtube video
 -- TODO deprecate specific keybinds one by one; use built in keybinds (:h gri)
