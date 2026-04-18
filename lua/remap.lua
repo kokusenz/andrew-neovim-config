@@ -1,5 +1,5 @@
 vim.g.mapleader = " "
-vim.keymap.set('n', '-', function() vim.cmd("Oil") end)
+vim.keymap.set('n', '-', function() vim.cmd("Ex") end)
 
 -- pane navigation, pane resizing
 vim.keymap.set('n', '<leader>wl', '<C-w>l', { silent = true, noremap = true })
