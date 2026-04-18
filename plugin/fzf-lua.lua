@@ -22,7 +22,7 @@ vim.keymap.set('v', '<leader>8', fzf.grep_visual)
 
 -- fzf lsp stuff. Generally, if I could benefit from the preview or the search, it's worth using this over vim.lsp.buf
 -- These are the default keybinds, just overriding them with the fzf versions
-vim.keymap.set('n', 'CTRL-]', fzf.lsp_definitions)
+vim.keymap.set('n', '<C-]>', fzf.lsp_definitions)
 vim.keymap.set('n', 'grr', fzf.lsp_references)
 vim.keymap.set('n', 'gri', fzf.lsp_implementations)
 -- the below are not default keybinds, but are unused, and just follow the pattern of g + r + first letter

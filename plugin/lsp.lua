@@ -4,7 +4,12 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end,
 })
 
+-- the following enables omnifunc autocomplete. keep manually triggered omnifunc for now, but know that this exists
+-- vim.o.ac = true
+-- vim.o.complete = 'o'
+-- vim.o.completeopt = 'menu,menuone,popup,noinsert'
 vim.keymap.set('i', '<C-Space>', '<C-x><C-o>')
+
 vim.lsp.enable({ 'tsgo' })
 vim.lsp.enable({ 'somesass_ls' })
 vim.lsp.enable('clangd')

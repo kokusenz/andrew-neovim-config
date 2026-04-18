@@ -52,7 +52,6 @@ require('statusline')
 require('searching')
 require('make')
 
--- TODO implement autocompletion from youtube video
 -- TODO deprecate specific keybinds one by one; use built in keybinds (:h gri)
 -- -- although the quickfix binds I want; add one for :ccl
 -- TODO get rid of easy dotnet command; for some reason, breaks things
