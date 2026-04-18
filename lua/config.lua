@@ -11,7 +11,8 @@ local M = {
         transparent = true,
     },
     --- @type 'sonnet' | 'opus' | 'ollama_hybrid'
-    codecompanion = 'sonnet'
+    codecompanion = 'sonnet',
+    lazy_dotnet = true
 }
 
 return M
