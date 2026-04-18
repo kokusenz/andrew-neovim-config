@@ -27,5 +27,5 @@ if all_files then
 end
 
 -- grep --
-vim.opt.grepprg = 'rg --vimgrep --smart-case --hidden'
+vim.opt.grepprg = 'rg --vimgrep --no-messages --smart-case --hidden'
 vim.cmd([[cabbrev rg grep]])
