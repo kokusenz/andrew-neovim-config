@@ -31,4 +31,3 @@ vim.keymap.set("n", "grw", fzf.diagnostics_workspace)
 
 -- fzf nice to haves
 vim.keymap.set('n', '<leader>cs', fzf.colorschemes)
-vim.keymap.set('n', '<leader>co', fzf.quickfix)
