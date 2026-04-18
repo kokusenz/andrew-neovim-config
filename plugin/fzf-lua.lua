@@ -19,16 +19,15 @@ vim.keymap.set('n', '<leader>gc', fzf.git_commits)
 vim.keymap.set('n', '<leader>gr', fzf.grep)
 vim.keymap.set('n', '<leader>ga', ":lua FzfLua.grep({resume=true})<cr>")
 vim.keymap.set('v', '<leader>8', fzf.grep_visual)
-vim.keymap.set('n', '<leader>gl', fzf.live_grep)
 
--- fzf lsp stuff. Generally, if I could benefit from the preview or the search, it's worth using this over vim.lsp.buf.
--- add outgoing_calls and incoming_calls ; generally subsets of find references, but can be helpful
-vim.keymap.set('n', '<leader>fr', fzf.lsp_references,
-  { noremap = true, silent = true, desc = 'LSP references' })
-vim.keymap.set('n', '<leader>gi', fzf.lsp_implementations,
-  { noremap = true, silent = true })
-vim.keymap.set("n", "<leader>db", fzf.diagnostics_document)
-vim.keymap.set("n", "<leader>dw", fzf.diagnostics_workspace)
+-- fzf lsp stuff. Generally, if I could benefit from the preview or the search, it's worth using this over vim.lsp.buf
+-- These are the default keybinds, just overriding them with the fzf versions
+vim.keymap.set('n', 'CTRL-]', fzf.lsp_definitions)
+vim.keymap.set('n', 'grr', fzf.lsp_references)
+vim.keymap.set('n', 'gri', fzf.lsp_implementations)
+-- the below are not default keybinds, but are unused, and just follow the pattern of g + r + first letter
+vim.keymap.set("n", "grb", fzf.diagnostics_document)
+vim.keymap.set("n", "grw", fzf.diagnostics_workspace)
 
 -- fzf nice to haves
 vim.keymap.set('n', '<leader>cs', fzf.colorschemes)
