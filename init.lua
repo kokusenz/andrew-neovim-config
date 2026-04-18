@@ -45,7 +45,6 @@ vim.api.nvim_create_autocmd('PackChanged', {
 
 require('statusline')
 require('searching')
-require('lsp')
 require('make')
 require('oil').setup()
 require('pj_config')
