@@ -144,8 +144,10 @@ local get_overrides = function(flavor)
     }
 end
 
+local config = require('config')
+
 local catppuccin_opts = ({
-    transparent_background = true,
+    transparent_background = config.colorscheme.transparent,
     flavour = 'mocha'
 })
 catppuccin_opts = vim.tbl_deep_extend('force', catppuccin_opts, get_overrides('mocha'))
@@ -156,22 +158,23 @@ catppuccin_opts = vim.tbl_deep_extend('force', catppuccin_opts, get_overrides('l
 require("catppuccin").setup(catppuccin_opts)
 
 require("tokyonight").setup({
-    transparent = true
+    transparent = config.colorscheme.transparent
 })
 
 require("rose-pine").setup({
     variant = 'main',
     dark_variant = 'main',
     styles = {
-        transparency = false,
+        transparency = config.colorscheme.transparent,
         italic = false
     }
 })
 
 vim.background = 'dark'
-vim.g.moonflyTransparent = true
+vim.g.moonflyTransparent = config.colorscheme.transparent
 vim.g.moonflyVirtualTextColor = true
 vim.g.gruvbox_contrast_dark = 'hard'
 vim.g.gruvbox_material_background = 'hard'
+vim.g.gruvbox_material_transparent_background = config.colorscheme.transparent
 
-vim.cmd([[silent! colorscheme catppuccin]])
+vim.cmd('silent! colorscheme ' .. config.colorscheme.name)
