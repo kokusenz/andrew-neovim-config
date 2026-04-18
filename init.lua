@@ -1,5 +1,3 @@
-require('vanilla') -- basic vanilla nvim config, no plugins involved
-
 -- to update specific plugin, or no args for all plugins
 -- :lua vim.pack.update({ 'nvim-lspconfig' })
 -- to delete
@@ -43,6 +41,10 @@ vim.api.nvim_create_autocmd('PackChanged', {
     end
 })
 
+require('remap')
+require('diagnostics')
+require('set')
+require('make')
 require('statusline')
 require('searching')
 require('make')
