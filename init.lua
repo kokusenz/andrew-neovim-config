@@ -41,8 +41,8 @@ vim.api.nvim_create_autocmd('PackChanged', {
     end
 })
 
--- consider installing cfilter as well; quickfix list filter
 vim.cmd.packadd('nvim.difftool')
+vim.cmd.packadd('cfilter')
 
 require('remap')
 require('diagnostics')

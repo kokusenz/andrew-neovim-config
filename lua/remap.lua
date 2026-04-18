@@ -1,21 +1,18 @@
 vim.g.mapleader = " "
 vim.keymap.set('n', '-', function() vim.cmd("Ex") end)
 
--- pane navigation, pane resizing
-vim.keymap.set('n', '<leader>wl', '<C-w>l', { silent = true, noremap = true })
-vim.keymap.set('n', '<leader>wh', '<C-w>h', { silent = true, noremap = true })
-vim.keymap.set('n', '<leader>wk', '<C-w>k', { silent = true, noremap = true })
-vim.keymap.set('n', '<leader>wj', '<C-w>j', { silent = true, noremap = true })
-vim.keymap.set('n', '<leader>w0', '<C-w>=', { silent = true, noremap = true })
-vim.keymap.set('n', '<leader>w-', '12<C-w><', { silent = true, noremap = true })
-vim.keymap.set('n', '<leader>w=', '12<C-w>>', { silent = true, noremap = true })
+vim.keymap.set({'n', 'v'}, '<leader>y', '"+y', { silent = true, noremap = true })
+vim.keymap.set({'n', 'v'}, '<leader>p', '"+p', { silent = true, noremap = true })
+
+-- pane resizing
+vim.keymap.set('n', '<C-w>0', '<C-w>=', { silent = true, noremap = true })
+vim.keymap.set('n', '<C-w>-', '12<C-w><', { silent = true, noremap = true })
+vim.keymap.set('n', '<C-w>=', '12<C-w>>', { silent = true, noremap = true })
 
 -- makes vertical nav a bit cleaner
 vim.keymap.set('n', '<C-u>', '<C-u>zz', { silent = true, noremap = true })
 vim.keymap.set('n', '<C-d>', '<C-d>zz', { silent = true, noremap = true })
 
 -- quickfix list nav bindings
-vim.keymap.set('n', '<leader>cn', vim.cmd.cnext)
-vim.keymap.set('n', '<leader>cp', vim.cmd.cprev)
 vim.keymap.set('n', '<leader>cq', vim.cmd.cclose)
-vim.keymap.set('n', '<leader>co', vim.cmd.copen)
+vim.keymap.set('n', '<leader>q', vim.cmd.copen)

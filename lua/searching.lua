@@ -28,4 +28,5 @@ end
 
 -- grep --
 vim.opt.grepprg = 'rg --vimgrep --no-messages --smart-case --hidden'
-vim.cmd([[cabbrev rg grep]])
+vim.cmd([[cabbrev gr silent! grep!]])
+vim.cmd([[cabbrev co \| copen]])
