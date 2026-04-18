@@ -51,6 +51,3 @@ require('make')
 require('statusline')
 require('searching')
 require('make')
-
--- TODO get rid of argpoon, replace with something mini?
--- TODO just trim code in general, reduce lines in config
