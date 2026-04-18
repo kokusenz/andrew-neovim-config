@@ -46,8 +46,6 @@ vim.api.nvim_create_autocmd('PackChanged', {
 require('statusline')
 require('searching')
 require('make')
-require('oil').setup()
-require('pj_config')
 
 -- TODO implement autocompletion from youtube video
 -- TODO deprecate specific keybinds one by one; use built in keybinds (:h gri)
