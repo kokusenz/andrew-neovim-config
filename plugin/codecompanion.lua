@@ -114,12 +114,12 @@ configs.copilot_ollama_hybrid_config = build_config({
 })
 
 configs.copilot_opus_config = build_config({
-    chat_adapter = copilot_adapter("claude-opus-4.6"),
-    inline_adapter = copilot_adapter("claude-opus-4.6"),
-    cmd_adapter = copilot_adapter("claude-opus-4.6"),
+    chat_adapter = copilot_adapter("claude-opus-4.7"),
+    inline_adapter = copilot_adapter("claude-opus-4.7"),
+    cmd_adapter = copilot_adapter("claude-opus-4.7"),
     background = {
         cmd = {
-            adapter = copilot_adapter("claude-opus-4.6"),
+            adapter = copilot_adapter("claude-opus-4.7"),
         },
     },
 })
@@ -136,7 +136,12 @@ configs.copilot_sonnet_config = build_config({
 })
 
 local codecompanion = require("codecompanion")
-codecompanion.setup(configs.copilot_sonnet_config)
+local codecompanion_config = {
+    ['sonnet'] = configs.copilot_sonnet_config,
+    ['opus'] = configs.copilot_opus_config,
+    ['ollama_hybrid'] = configs.copilot_ollama_hybrid_config
+}
+codecompanion.setup(codecompanion_config[require('config').codecompanion])
 
 function CodeCompanionBufferExists()
   for _, buf in ipairs(vim.api.nvim_list_bufs()) do

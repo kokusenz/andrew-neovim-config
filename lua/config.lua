@@ -10,9 +10,8 @@ local M = {
         -- solarized doesn't respond to transparent value
         transparent = true,
     },
-    codecompanion = {
-        model = 'sonnet-4.6'
-    }
+    --- @type 'sonnet' | 'opus' | 'ollama_hybrid'
+    codecompanion = 'sonnet'
 }
 
 return M
