@@ -5,6 +5,7 @@
 local M = {
     autocomplete = false,
     lazy_dotnet = true,
+    --- @type 'sonnet' | 'opus' | 'ollama_hybrid'
     codecompanion = 'sonnet',
     -- note that catppuccin is overriden with custom colorscheme; mocha has darker background, latte/frappe/macchiato are "blueberry"
     colorscheme = {
@@ -13,7 +14,6 @@ local M = {
         -- solarized doesn't respond to transparent value
         transparent = true,
     },
-    --- @type 'sonnet' | 'opus' | 'ollama_hybrid'
 }
 
 return M
