@@ -1,5 +1,4 @@
 vim.wo.relativenumber = true
--- keybinds to use system keyboard
 vim.opt.tabstop       = 4  -- literal <Tab> == 4 spaces when files are read
 vim.opt.shiftwidth    = 4  -- >> << == 4 spaces
 vim.opt.softtabstop   = 4  -- <Tab> while typing feels like 4 spaces

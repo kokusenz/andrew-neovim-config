@@ -1,6 +1,7 @@
 vim.g.mapleader = " "
 vim.keymap.set('n', '-', function() vim.cmd("Ex") end)
 
+-- keybinds to use system keyboard
 vim.keymap.set({'n', 'v'}, '<leader>y', '"+y', { silent = true, noremap = true })
 vim.keymap.set({'n', 'v'}, '<leader>p', '"+p', { silent = true, noremap = true })
 
@@ -16,3 +17,7 @@ vim.keymap.set('n', '<C-d>', '<C-d>zz', { silent = true, noremap = true })
 -- quickfix list nav bindings
 vim.keymap.set('n', '<leader>cq', vim.cmd.cclose)
 vim.keymap.set('n', '<leader>q', vim.cmd.copen)
+
+-- term
+vim.cmd([[cabbrev te \| term ]])
+vim.keymap.set('n', '<leader>e', ':sp | term ')
