@@ -165,7 +165,7 @@ vim.keymap.set('n', "<leader>cc", function()
     ToggleCodeCompanionChat()
 end, { noremap = true, silent = true })
 
-vim.cmd([[cabbrev cc CodeCompanion]])
+vim.cmd([[cabbrev cch CodeCompanionHistory]])
 
 -- ap for action pallete
 vim.keymap.set('n', "<leader>ap", function()
