@@ -23,9 +23,10 @@ else
 end
 
 function UseFd(cmdarg, _)
-    -- Filter files that match the cmdarg pattern
-    local fdout = vim.system({ fdfunc, '--type', 'f', '--hidden', '--exclude', '.git', '--full-path', cmdarg })
-        :wait()
+    local param = vim.fn.getcwd() .. '.*' .. tostring(cmdarg)
+    local fdout = vim.system(
+        { fdfunc, '--type', 'f', '--hidden', '--exclude', '.git', '--full-path', param}
+    ):wait()
     local matches = vim.split(fdout.stdout, "\n", { trimempty = true })
     return matches
 end
