@@ -7,3 +7,4 @@ vim.opt.background    = 'dark'
 vim.opt.termguicolors = true
 vim.opt.ignorecase    = true
 vim.opt.smartcase     = true
+vim.diagnostic.config({ virtual_text = { current_line = true }, virtual_lines = false })

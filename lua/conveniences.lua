@@ -19,6 +19,18 @@ vim.keymap.set('n', '<leader>cq', vim.cmd.cclose)
 vim.keymap.set('n', '<Del>', vim.cmd.cclose)
 vim.keymap.set('n', '<leader>q', vim.cmd.copen)
 
+-- make for cs files
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "cs",
+  callback = function()
+    --vim.bo.makeprg = "dotnet build" -- this doesn't work lol
+    vim.cmd("let dotnet_errors_only = v:true")
+    vim.cmd("let dotnet_show_project_file = v:false")
+    vim.cmd("compiler dotnet")
+  end,
+  desc = "Set dotnet compiler for C# files"
+})
+
 -- term
 vim.cmd([[cabbrev te \| term ]])
 vim.keymap.set('n', '<leader>e', ':sp | term ')

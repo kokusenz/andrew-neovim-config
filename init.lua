@@ -44,10 +44,7 @@ vim.api.nvim_create_autocmd('PackChanged', {
 vim.cmd.packadd('nvim.difftool')
 vim.cmd.packadd('cfilter')
 
-require('remap')
-require('diagnostics')
-require('set')
-require('make')
+require('conveniences')
+require('preferences')
 require('statusline')
 require('searching')
-require('make')
