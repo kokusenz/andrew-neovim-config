@@ -1,7 +1,7 @@
 local configs = {}
 
 -- Shared configurations
-local function get_ollama_adapter()
+local function get_local_ollama_adapter()
     return {
         http = {
             ollama = function()
@@ -18,6 +18,34 @@ local function get_ollama_adapter()
                     schema = {
                         model = {
                             default = "qwen3-coder:30b",
+                        },
+                    },
+                })
+            end,
+        },
+    }
+end
+
+local function get_ollama_adapter()
+    return {
+        http = {
+            ollama = function()
+                return require("codecompanion.adapters").extend("ollama", {
+                    env = {
+                        url = "https://ollama.com",
+                        -- note that i did export OLLAMA_API_KEY = <api key> in my zshrc; not sure if that is important
+                        api_key = "OLLAMA_API_KEY"
+                    },
+                    headers = {
+                        ["Content-Type"] = "application/json",
+                        ["Authorization"] = "Bearer " .. 'a4c3429c29bd4818ada6bef0318ff384.c-pikuz-U3BD-vxeVOs4Q7bq',
+                    },
+                    parameters = {
+                        sync = true,
+                    },
+                    schema = {
+                        model = {
+                            default = "kimi-k2:1t",
                         },
                     },
                 })
@@ -90,6 +118,7 @@ local function build_config(opts)
     }
 
     if opts.include_ollama_adapter then
+        --config.adapters = get_local_ollama_adapter()
         config.adapters = get_ollama_adapter()
     end
 
@@ -139,7 +168,8 @@ local codecompanion = require("codecompanion")
 local codecompanion_config = {
     ['sonnet'] = configs.copilot_sonnet_config,
     ['opus'] = configs.copilot_opus_config,
-    ['ollama_hybrid'] = configs.copilot_ollama_hybrid_config
+    ['ollama_hybrid'] = configs.copilot_ollama_hybrid_config,
+    ['ollama'] = configs.ollama_config
 }
 codecompanion.setup(codecompanion_config[require('config').codecompanion])
 
