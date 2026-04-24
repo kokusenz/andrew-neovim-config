@@ -1,12 +1,46 @@
 -- grep --
-vim.opt.grepprg = 'rg --vimgrep --no-messages --smart-case --hidden'
+local grepprg = {'rg', '--vimgrep', '--no-messages', '--smart-case', '--hidden'}
+vim.opt.grepprg = table.concat(grepprg, " ")
 vim.cmd([[cabbrev gr silent! grep!]])
 vim.cmd([[cabbrev co \| copen]])
--- intentionally overwritten by fzf-lua module, if loaded.
+-- use grep as the ex command if you are looking to use regex, otherwise here are wrappers that search fixed strings
+
+local grep_to_qflist = function(search)
+    local command = {}
+    for _, cmd in ipairs(grepprg) do
+        table.insert(command, cmd)
+    end
+    table.insert(command, '--fixed-strings')
+    table.insert(command, search)
+    local result = vim.system(command, { text = true }):wait()
+    if result.stdout ~= '' then
+        local lines = vim.split(result.stdout, "\n", { trimempty = true })
+        vim.fn.setqflist({}, 'r', { lines = lines, efm = vim.o.grepformat, title = table.concat(command, " ") })
+    else
+        vim.fn.setqflist({}, 'r', { lines = {}, efm = vim.o.grepformat, title = table.concat(command, " ") })
+    end
+    vim.cmd('copen')
+    local qf_winid = vim.fn.getqflist({ winid = 0 }).winid
+    if qf_winid ~= 0 then
+        vim.api.nvim_win_call(qf_winid, function()
+            vim.fn.clearmatches()
+            vim.api.nvim_set_hl(0, 'QfMatch', { bold = true, fg = '#9df0a2' })
+            vim.fn.matchadd('QfMatch', search)
+        end)
+    end
+end
+
+-- fixed string search, not regex
 vim.keymap.set('n', '<leader>gr', function()
-    vim.ui.input({prompt = "Grep For: "}, function(input)
-        vim.cmd("silent! grep! " .. input .. " | copen")
+    vim.ui.input({prompt = " grep 󰨀 "}, function(input)
+        if input ~= nil then grep_to_qflist(input) end
     end)
+end)
+
+-- does not work well with visual line selection.
+vim.keymap.set('v', '<leader>8', function()
+    local input = table.concat(vim.fn.getregion(vim.fn.getpos('v'), vim.fn.getpos('.')), "\n")
+    grep_to_qflist(input)
 end)
 
 -- file search --
