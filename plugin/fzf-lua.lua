@@ -12,10 +12,10 @@ fzf.setup({
 vim.keymap.set('n', '<C-.>f', fzf.files)
 -- can replace with custom findexpr function? look at buffers, use fd, pipe results out to custom vim.ui.select
 vim.keymap.set('n', '<C-.>b', fzf.buffers)
-vim.keymap.set('n', '<C-.>g', fzf.git_status)
+vim.keymap.set('n', '<C-.>s', fzf.git_status)
 
 -- fzf grep stuff.
-vim.keymap.set('n', '<C-.>r', fzf.grep)
+vim.keymap.set('n', '<C-.>g', fzf.grep)
 
 -- fzf lsp stuff.
 vim.keymap.set('n', '<C-.>[', fzf.lsp_references)
