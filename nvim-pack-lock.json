@@ -17,7 +17,7 @@
       "src": "https://github.com/zbirenbaum/copilot.lua"
     },
     "delta.lua": {
-      "rev": "d123d2ec79c7b0fc68c3dac9cb78b17b993bd836",
+      "rev": "7b6fa1b9dae21c0d28634b5a3bec3d53eaa30074",
       "src": "https://github.com/kokusenz/delta.lua"
     },
     "deltaview.nvim": {
