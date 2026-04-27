@@ -17,12 +17,13 @@
       "src": "https://github.com/zbirenbaum/copilot.lua"
     },
     "delta.lua": {
-      "rev": "7b6fa1b9dae21c0d28634b5a3bec3d53eaa30074",
+      "rev": "840fb6c9e5bf957915ddbeafffa4c0f839f1f8c2",
       "src": "https://github.com/kokusenz/delta.lua"
     },
     "deltaview.nvim": {
-      "rev": "cc42044b83b1e3e726034f5a20b1b9e6b2c271e3",
-      "src": "https://github.com/kokusenz/deltaview.nvim"
+      "rev": "d278f7d429795c0129daf56adbbe4a024883585a",
+      "src": "https://github.com/kokusenz/deltaview.nvim",
+      "version": "'feature/quickfix-picker'"
     },
     "easy-dotnet.nvim": {
       "rev": "008427f3df32f99abaff8803c9e42facc151d501",

@@ -14,7 +14,7 @@ vim.pack.add({
     'https://github.com/josephschmitt/pj.nvim',
     -- git related
     'https://github.com/fabijanzulj/blame.nvim',
-    'https://github.com/kokusenz/deltaview.nvim',
+    {src = 'https://github.com/kokusenz/deltaview.nvim', version = 'feature/quickfix-picker'},
     'https://github.com/kokusenz/delta.lua',
     -- ai related
     'https://github.com/olimorris/codecompanion.nvim',
