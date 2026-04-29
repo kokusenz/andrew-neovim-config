@@ -23,3 +23,5 @@ vim.keymap.set("n", "<C-.>d", fzf.diagnostics_document)
 
 -- fzf nice to haves
 vim.keymap.set('n', '<C-.>c', fzf.colorschemes)
+
+fzf.register_ui_select()

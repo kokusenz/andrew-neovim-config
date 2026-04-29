@@ -13,7 +13,7 @@ local function get_openrouter_adapter()
                     },
                     schema = {
                         model = {
-                            default = "",
+                            default = "qwen/qwen3-coder:free",
                         },
                     },
                 })
