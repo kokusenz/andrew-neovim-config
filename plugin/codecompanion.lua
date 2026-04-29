@@ -3,48 +3,44 @@ local neovim_config = require('config')
 
 local function get_openrouter_adapter()
     return {
-        http = {
-            openrouter = function()
-                return require("codecompanion.adapters").extend("openai_compatible", {
-                    env = {
-                        url = "https://openrouter.ai/api",
-                        api_key = neovim_config.api_keys.openrouter,
-                        chat_url = "v1/chat/completions",
+        openrouter = function()
+            return require("codecompanion.adapters").extend("openai_compatible", {
+                env = {
+                    url = "https://openrouter.ai/api",
+                    api_key = neovim_config.api_keys.openrouter,
+                    chat_url = "v1/chat/completions",
+                },
+                schema = {
+                    model = {
+                        default = "qwen/qwen3-coder:free",
                     },
-                    schema = {
-                        model = {
-                            default = "qwen/qwen3-coder:free",
-                        },
-                    },
-                })
-            end,
-        },
+                },
+            })
+        end,
     }
 end
 
 -- Shared configurations
 local function get_local_ollama_adapter()
     return {
-        http = {
-            ollama = function()
-                return require("codecompanion.adapters").extend("ollama", {
-                    env = {
-                        url = "http://localhost:11434",
+        ollama = function()
+            return require("codecompanion.adapters").extend("ollama", {
+                env = {
+                    url = "http://localhost:11434",
+                },
+                headers = {
+                    ["Content-Type"] = "application/json",
+                },
+                parameters = {
+                    sync = true,
+                },
+                schema = {
+                    model = {
+                        default = "qwen3-coder:30b",
                     },
-                    headers = {
-                        ["Content-Type"] = "application/json",
-                    },
-                    parameters = {
-                        sync = true,
-                    },
-                    schema = {
-                        model = {
-                            default = "qwen3-coder:30b",
-                        },
-                    },
-                })
-            end,
-        },
+                },
+            })
+        end,
     }
 end
 
@@ -141,10 +137,10 @@ local function build_config(opts)
 
     if opts.include_ollama_adapter then
         --config.adapters = get_local_ollama_adapter()
-        config.adapters = get_ollama_adapter()
+        config.adapters.http = get_ollama_adapter()
     end
     if opts.include_openrouter_adapter then
-        config.adapters = get_openrouter_adapter()
+        config.adapters.http = get_openrouter_adapter()
     end
 
     return config
@@ -208,13 +204,13 @@ local codecompanion_config = {
 codecompanion.setup(codecompanion_config[neovim_config.codecompanion])
 
 function CodeCompanionBufferExists()
-  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-    local name = vim.api.nvim_buf_get_name(buf)
-    if name:match("CodeCompanion") then
-      return true
+    for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+        local name = vim.api.nvim_buf_get_name(buf)
+        if name:match("CodeCompanion") then
+            return true
+        end
     end
-  end
-  return false
+    return false
 end
 
 function ToggleCodeCompanionChat()
@@ -243,17 +239,17 @@ end, { noremap = true, silent = true })
 require('copilot').setup()
 
 vim.keymap.set('n', '<leader>ow', function()
-  vim.notify("Warming up Ollama...")
-  vim.fn.jobstart({
-    'curl', '-s', 'http://localhost:11434/api/generate',
-    '-d', '{"model":"qwen3-coder:30b","prompt":"Write a haiku about code","stream":false}'
-  }, {
-    on_exit = function(_, exit_code)
-      if exit_code == 0 then
-        vim.notify("Ollama warmed up!")
-      else
-        vim.notify("Ollama warmup failed", vim.log.levels.ERROR)
-      end
-    end
-  })
+    vim.notify("Warming up Ollama...")
+    vim.fn.jobstart({
+        'curl', '-s', 'http://localhost:11434/api/generate',
+        '-d', '{"model":"qwen3-coder:30b","prompt":"Write a haiku about code","stream":false}'
+    }, {
+        on_exit = function(_, exit_code)
+            if exit_code == 0 then
+                vim.notify("Ollama warmed up!")
+            else
+                vim.notify("Ollama warmup failed", vim.log.levels.ERROR)
+            end
+        end
+    })
 end, { desc = "Warm up Ollama" })
