@@ -16,7 +16,8 @@ local M = {
     },
     api_keys = {
         ollama_cloud = ""
-    }
+    },
+    fzf_lua_leader = '<C-.>'
 }
 
 return M
