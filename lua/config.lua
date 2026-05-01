@@ -5,7 +5,7 @@
 local M = {
     autocomplete = false,
     lazy_dotnet = true,
-    --- @type 'sonnet' | 'opus' | 'ollama_hybrid' | 'ollama' | 'openrouter'
+    --- @type 'sonnet' | 'opus' | 'ollama_hybrid' | 'ollama'
     codecompanion = 'sonnet',
     -- note that catppuccin is overriden with custom colorscheme; mocha has darker background, latte/frappe/macchiato are "blueberry"
     colorscheme = {
@@ -15,8 +15,7 @@ local M = {
         transparent = true,
     },
     api_keys = {
-        ollama_cloud = "",
-        openrouter = "",
+        ollama_cloud = ""
     }
 }
 

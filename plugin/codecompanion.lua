@@ -1,25 +1,6 @@
 local configs = {}
 local neovim_config = require('config')
 
-local function get_openrouter_adapter()
-    return {
-        openrouter = function()
-            return require("codecompanion.adapters").extend("openai_compatible", {
-                env = {
-                    url = "https://openrouter.ai/api",
-                    api_key = neovim_config.api_keys.openrouter,
-                    chat_url = "v1/chat/completions",
-                },
-                schema = {
-                    model = {
-                        default = "qwen/qwen3-coder:free",
-                    },
-                },
-            })
-        end,
-    }
-end
-
 -- Shared configurations
 local function get_local_ollama_adapter()
     return {
@@ -135,14 +116,11 @@ local function build_config(opts)
         extensions = extensions_config
     }
 
+    config.adapters = {}
     if opts.include_ollama_adapter then
         --config.adapters = get_local_ollama_adapter()
         config.adapters.http = get_ollama_adapter()
     end
-    if opts.include_openrouter_adapter then
-        config.adapters.http = get_openrouter_adapter()
-    end
-
     return config
 end
 
@@ -185,21 +163,12 @@ configs.copilot_sonnet_config = build_config({
     },
 })
 
-configs.openrouter_config = build_config({
-    chat_adapter = "openrouter",
-    inline_adapter = "openrouter",
-    cmd_adapter = "openrouter",
-    background_adapter = "openrouter",
-    include_openrouter_adapter = true,
-})
-
 local codecompanion = require("codecompanion")
 local codecompanion_config = {
     ['sonnet'] = configs.copilot_sonnet_config,
     ['opus'] = configs.copilot_opus_config,
     ['ollama_hybrid'] = configs.copilot_ollama_hybrid_config,
-    ['ollama'] = configs.ollama_config,
-    ['openrouter'] = configs.openrouter_config,
+    ['ollama'] = configs.ollama_config
 }
 codecompanion.setup(codecompanion_config[neovim_config.codecompanion])
 
