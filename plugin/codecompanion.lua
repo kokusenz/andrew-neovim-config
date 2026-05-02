@@ -2,6 +2,7 @@ local configs = {}
 local neovim_config = require('config')
 
 -- Shared configurations
+local ollama_model = "qwen3.5:4b"
 local function get_local_ollama_adapter()
     return {
         ollama = function()
@@ -17,7 +18,7 @@ local function get_local_ollama_adapter()
                 },
                 schema = {
                     model = {
-                        default = "qwen3-coder:30b",
+                        default = ollama_model,
                     },
                 },
             })
@@ -25,7 +26,7 @@ local function get_local_ollama_adapter()
     }
 end
 
-local function get_ollama_adapter()
+local function get_cloud_ollama_adapter()
     return {
         http = {
             ollama = function()
@@ -118,8 +119,7 @@ local function build_config(opts)
 
     config.adapters = {}
     if opts.include_ollama_adapter then
-        --config.adapters = get_local_ollama_adapter()
-        config.adapters.http = get_ollama_adapter()
+        config.adapters.http = get_local_ollama_adapter()
     end
     return config
 end
@@ -211,7 +211,7 @@ vim.keymap.set('n', '<leader>ow', function()
     vim.notify("Warming up Ollama...")
     vim.fn.jobstart({
         'curl', '-s', 'http://localhost:11434/api/generate',
-        '-d', '{"model":"qwen3-coder:30b","prompt":"Write a haiku about code","stream":false}'
+        '-d', [[{"model":]] .. ollama_model .. [[,"prompt":"Write a haiku about code","stream":false},"options":{"num_ctx":8192}]]
     }, {
         on_exit = function(_, exit_code)
             if exit_code == 0 then
