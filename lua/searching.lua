@@ -15,9 +15,9 @@ local grep_to_qflist = function(search)
     local result = vim.system(command, { text = true }):wait()
     if result.stdout ~= '' then
         local lines = vim.split(result.stdout, "\n", { trimempty = true })
-        vim.fn.setqflist({}, 'r', { lines = lines, efm = vim.o.grepformat, title = table.concat(command, " ") })
+        vim.fn.setqflist({}, ' ', { lines = lines, efm = vim.o.grepformat, title = table.concat(command, " ") })
     else
-        vim.fn.setqflist({}, 'r', { lines = {}, efm = vim.o.grepformat, title = table.concat(command, " ") })
+        vim.fn.setqflist({}, ' ', { lines = {}, efm = vim.o.grepformat, title = table.concat(command, " ") })
     end
     vim.cmd('copen')
     local qf_winid = vim.fn.getqflist({ winid = 0 }).winid
