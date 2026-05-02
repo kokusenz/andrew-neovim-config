@@ -20,6 +20,9 @@ local function get_local_ollama_adapter()
                     model = {
                         default = ollama_model,
                     },
+                    num_ctx = {
+                        default = 8192
+                    }
                 },
             })
         end,
