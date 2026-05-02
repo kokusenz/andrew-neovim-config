@@ -22,6 +22,9 @@ local function get_local_ollama_adapter()
                     },
                     num_ctx = {
                         default = 8192
+                    },
+                    keep_alive = {
+                        default = "20m"
                     }
                 },
             })
@@ -209,19 +212,3 @@ vim.keymap.set('v', "<leader>ac", function()
 end, { noremap = true, silent = true })
 
 require('copilot').setup()
-
-vim.keymap.set('n', '<leader>ow', function()
-    vim.notify("Warming up Ollama...")
-    vim.fn.jobstart({
-        'curl', '-s', 'http://localhost:11434/api/generate',
-        '-d', [[{"model":]] .. ollama_model .. [[,"prompt":"Write a haiku about code","stream":false},"options":{"num_ctx":8192}]]
-    }, {
-        on_exit = function(_, exit_code)
-            if exit_code == 0 then
-                vim.notify("Ollama warmed up!")
-            else
-                vim.notify("Ollama warmup failed", vim.log.levels.ERROR)
-            end
-        end
-    })
-end, { desc = "Warm up Ollama" })
