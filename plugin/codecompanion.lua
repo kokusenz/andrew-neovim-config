@@ -21,7 +21,7 @@ local function get_local_ollama_adapter()
                         default = ollama_model,
                     },
                     num_ctx = {
-                        default = 8192
+                        default = 16384
                     },
                     keep_alive = {
                         default = "20m"

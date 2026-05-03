@@ -17,7 +17,9 @@ local M = {
     api_keys = {
         ollama_cloud = ""
     },
-    fzf_lua_leader = '<C-.>'
+    fzf_lua_leader = '<C-.>',
+    --- @type string[]
+    runtime_files = {'lua/delta'}, -- lua/mini.test, if minitest is installed
 }
 
 return M

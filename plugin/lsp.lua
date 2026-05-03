@@ -16,6 +16,15 @@ vim.lsp.enable({ 'tsgo' })
 vim.lsp.enable({ 'somesass_ls' })
 vim.lsp.enable('clangd')
 
+local get_lua_ls_nvim_runtime = function()
+    local config = require('config')
+    local list = { vim.env.VIMRUNTIME }
+    for _, path in ipairs(config.runtime_files) do
+        list = vim.list_extend(list, vim.api.nvim_get_runtime_file(path, true))
+    end
+    return list
+end
+
 vim.lsp.config('lua_ls', {
     on_init = function(client)
         if client.workspace_folders then
@@ -43,10 +52,7 @@ vim.lsp.config('lua_ls', {
             -- Make the server aware of Neovim runtime files
             workspace = {
                 checkThirdParty = false,
-                library = vim.list_extend(
-                    { vim.env.VIMRUNTIME },
-                    vim.api.nvim_get_runtime_file('lua/delta', true)
-                )
+                library = get_lua_ls_nvim_runtime()
                 -- Or pull in all of 'runtimepath'.
                 -- NOTE: this is a lot slower and will cause issues when working on
                 -- your own configuration.
