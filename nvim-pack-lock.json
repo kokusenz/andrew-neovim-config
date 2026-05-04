@@ -21,7 +21,7 @@
       "src": "https://github.com/kokusenz/delta.lua"
     },
     "deltaview.nvim": {
-      "rev": "d278f7d429795c0129daf56adbbe4a024883585a",
+      "rev": "66a50fd7765d096d77d50c40dd225b8ea8883de4",
       "src": "https://github.com/kokusenz/deltaview.nvim",
       "version": "'feature/quickfix-picker'"
     },
