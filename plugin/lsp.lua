@@ -98,7 +98,10 @@ if require('config').lazy_dotnet then
 
     vim.api.nvim_create_autocmd("FileType", {
         pattern = "cs",
-        callback = setup_easy_dotnet,
+        callback = function()
+            if package.loaded['easy-dotnet'] then return end
+            setup_easy_dotnet()
+        end,
         desc = "Activate easy-dotnet lsp and nvim-dap for C# files"
     })
 

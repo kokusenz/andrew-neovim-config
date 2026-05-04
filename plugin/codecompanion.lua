@@ -148,12 +148,12 @@ configs.copilot_ollama_hybrid_config = build_config({
 })
 
 configs.copilot_opus_config = build_config({
-    chat_adapter = copilot_adapter("claude-opus-4.7"),
-    inline_adapter = copilot_adapter("claude-opus-4.7"),
-    cmd_adapter = copilot_adapter("claude-opus-4.7"),
+    chat_adapter = copilot_adapter("claude-opus-4.6"),
+    inline_adapter = copilot_adapter("claude-opus-4.6"),
+    cmd_adapter = copilot_adapter("claude-opus-4.6"),
     background = {
         cmd = {
-            adapter = copilot_adapter("claude-opus-4.7"),
+            adapter = copilot_adapter("claude-opus-4.6"),
         },
     },
 })
