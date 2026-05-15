@@ -1,19 +1,14 @@
 vim.g.mapleader = " "
 vim.keymap.set('n', '-', function() vim.cmd("Ex") end)
 
-local enable_osc_yank = require('config').enable_osc_yank
-if enable_osc_yank then
-    vim.g.clipboard = {
-        name = 'OSC 52',
-        copy = {
-            ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
-            ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
-        },
-    }
-end
+if require('config').enable_osc_yank then vim.g.clipboard = 'osc52' end
 -- keybinds to use system keyboard
 vim.keymap.set({'n', 'v'}, '<leader>y', '"+y', { silent = true, noremap = true })
-vim.keymap.set({'n', 'v'}, '<leader>p', '"+p', { silent = true, noremap = true })
+if not require('config').enable_osc_yank then
+    -- only bind unnamed plus paste if osc false; zellij doesn't support
+    vim.keymap.set({'n', 'v'}, '<leader>p', '"+p', { silent = true, noremap = true })
+end
+
 
 -- pane resizing
 vim.keymap.set('n', '<C-w>0', '<C-w>=', { silent = true, noremap = true })
