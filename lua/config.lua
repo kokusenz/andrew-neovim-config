@@ -4,6 +4,7 @@
 --- @class NvimOpts
 local M = {
     autocomplete = false,
+    enable_osc_yank = false,
     lazy_dotnet = true,
     --- @type 'sonnet' | 'opus' | 'ollama_hybrid' | 'ollama'
     codecompanion = 'sonnet',
