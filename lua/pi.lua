@@ -1,0 +1,13 @@
+-- simple one file plugin to live in config; a pi helper.
+-- construct a prompt in a split pane or floating buffer
+-- use keybinds to send file names or send blocks of text into the prompt
+-- use fuzzy finder vim.ui.select to parse the list of functions found by treesitter
+-- to more easily "select" a function to send to pi
+-- three fuzzy finding windows; files, functions, diffs. In a deterministic way, these are
+-- sent to the pi prompt. once the pi prompt is submitted, it should "attach" to an existing session
+-- the diffs should pretty much just require you to select a path, a ref, and context lines
+-- the files should require you to select a path
+-- the functions should use treesitter (kind of like gO) to find things
+-- never start sessions on your own
+-- opening the pi pane should prompt a fuzzy window to search sessions to attach to
+-- problem might be that the pi process might be in a docker container. gotta figure this one out
