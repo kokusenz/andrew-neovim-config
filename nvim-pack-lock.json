@@ -21,7 +21,7 @@
       "src": "https://github.com/kokusenz/delta.lua"
     },
     "deltaview.nvim": {
-      "rev": "8940ac8340987ca4efafd386521c2c21b3ca79ae",
+      "rev": "e74ab836f65f7467a06a0b5696c984c8b9131c04",
       "src": "https://github.com/kokusenz/deltaview.nvim"
     },
     "easy-dotnet.nvim": {
