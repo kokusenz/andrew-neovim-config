@@ -44,17 +44,19 @@ vim.keymap.set('v', '<leader>8', function()
 end)
 
 -- file search --
-local fdfunc
+local fdfunc = 'fdfind'
 
-if vim.fn.executable('fd') == 1 then--- Custom find function using fd for Vim's :find command
-  fdfunc = 'fd'
-elseif vim.fn.executable('fdfind') == 1 then
-  fdfunc = 'fdfind'
-else
-    vim.notify('fd not found on system. :find will not use fd', vim.log.levels.WARN)
-    vim.opt.path:append { '**' }
-    return
-end
+vim.schedule(function()
+    if vim.fn.executable('fd') == 1 then--- Custom find function using fd for Vim's :find command
+      fdfunc = 'fd'
+    elseif vim.fn.executable('fdfind') == 1 then
+      fdfunc = 'fdfind'
+    else
+        vim.notify('fd not found on system. :find will not use fd', vim.log.levels.WARN)
+        vim.opt.path:append { '**' }
+        return
+    end
+end)
 
 function UseFd(cmdarg, _)
     local param = vim.fn.getcwd() .. '.*' .. tostring(cmdarg)
