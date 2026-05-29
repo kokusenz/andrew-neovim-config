@@ -16,10 +16,6 @@ vim.pack.add({
     'https://github.com/fabijanzulj/blame.nvim',
     'https://github.com/kokusenz/deltaview.nvim',
     'https://github.com/kokusenz/delta.lua',
-    -- ai related
-    'https://github.com/olimorris/codecompanion.nvim',
-    'https://github.com/ravitemer/codecompanion-history.nvim',
-    'https://github.com/zbirenbaum/copilot.lua',
     -- colorschemes
     'https://github.com/sainnhe/gruvbox-material',
     'https://github.com/lifepillar/vim-solarized8',

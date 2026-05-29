@@ -4,18 +4,6 @@
       "rev": "179da7aaacce7c52874af636255ede72dd6fe796",
       "src": "https://github.com/fabijanzulj/blame.nvim"
     },
-    "codecompanion-history.nvim": {
-      "rev": "bc1b4fe06eaaf0aa2399be742e843c22f7f1652a",
-      "src": "https://github.com/ravitemer/codecompanion-history.nvim"
-    },
-    "codecompanion.nvim": {
-      "rev": "cea5b18c3446ff8d9d44547238bf35b2e5cd2565",
-      "src": "https://github.com/olimorris/codecompanion.nvim"
-    },
-    "copilot.lua": {
-      "rev": "ad7e729e9a6348f7da482be0271d452dbc4c8e2c",
-      "src": "https://github.com/zbirenbaum/copilot.lua"
-    },
     "delta.lua": {
       "rev": "570d8a6c8c41d99ac051d5c36a85461693d42a9c",
       "src": "https://github.com/kokusenz/delta.lua"
