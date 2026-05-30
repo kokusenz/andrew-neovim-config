@@ -70,3 +70,10 @@ end
 -- intentionally overwritten by fzf-lua module, if loaded.
 vim.keymap.set('n', '<leader><leader>', ':find ')
 vim.o.findfunc = 'v:lua.UseFd'
+
+-- buffer --
+-- use this with typing the name and tabcomplete or typing the number
+vim.keymap.set('n', '<leader>b', function()
+    vim.cmd('ls')
+    vim.fn.feedkeys(':b ', 'n')
+end)
