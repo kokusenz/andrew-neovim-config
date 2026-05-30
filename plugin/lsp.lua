@@ -20,7 +20,7 @@ local get_lua_ls_nvim_runtime = function()
     local config = require('config')
     local list = { vim.env.VIMRUNTIME }
     for _, path in ipairs(config.runtime_files) do
-        list = vim.list_extend(list, vim.api.nvim_get_runtime_file(path, true))
+        list = vim.list_extend(list, path)
     end
     return list
 end
