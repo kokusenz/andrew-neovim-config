@@ -9,7 +9,7 @@
       "src": "https://github.com/kokusenz/delta.lua"
     },
     "deltaview.nvim": {
-      "rev": "fed02694ad2a174954b8d6d42b095269786f23d7",
+      "rev": "64663860743c0efbbd24918090b299089f633fd6",
       "src": "https://github.com/kokusenz/deltaview.nvim"
     },
     "easy-dotnet.nvim": {
