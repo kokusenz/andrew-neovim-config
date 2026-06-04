@@ -24,7 +24,7 @@ vim.keymap.set('n', config.fzf_lua.prioritize_fzf_lua_files and '<leader><leader
     })
 end)
 -- can replace with custom findexpr function? look at buffers, use fd, pipe results out to custom vim.ui.select
-vim.keymap.set('n', config.fzf_lua.prioritize_fzf_lua_files and '<leader>b' or config.fzf_lua.fzf_lua_leader .. 'b', function()
+vim.keymap.set('n', config.fzf_lua.prioritize_fzf_lua_buffers and '<leader>b' or config.fzf_lua.fzf_lua_leader .. 'b', function()
     fzf.buffers({
         previewer = false,
         fzf_opts = {['--layout'] = 'default'},
@@ -39,8 +39,8 @@ end)
 vim.keymap.set('n', config.fzf_lua.fzf_lua_leader .. 's', fzf.git_status)
 
 -- fzf grep stuff.
-vim.keymap.set('n', config.fzf_lua.prioritize_fzf_lua_files and '<leader>gr' or config.fzf_lua.fzf_lua_leader .. 'g', fzf.grep)
-vim.keymap.set('v', config.fzf_lua.prioritize_fzf_lua_files and '<leader>8' or config.fzf_lua.fzf_lua_leader .. '8', fzf.grep_visual)
+vim.keymap.set('n', config.fzf_lua.prioritize_fzf_lua_grep and '<leader>gr' or config.fzf_lua.fzf_lua_leader .. 'g', fzf.grep)
+vim.keymap.set('v', config.fzf_lua.prioritize_fzf_lua_grep and '<leader>8' or config.fzf_lua.fzf_lua_leader .. '8', fzf.grep_visual)
 
 -- fzf lsp stuff.
 vim.keymap.set('n', config.fzf_lua.fzf_lua_leader .. '[', fzf.lsp_references)
