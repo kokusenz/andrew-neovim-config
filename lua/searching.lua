@@ -30,18 +30,23 @@ local grep_to_qflist = function(search)
     end
 end
 
--- fixed string search, not regex
-vim.keymap.set('n', '<leader>gr', function()
-    vim.ui.input({prompt = " grep 󰨀 "}, function(input)
-        if input ~= nil then grep_to_qflist(input) end
+local config = require('config')
+if not config.fzf_lua.prioritize_fzf_lua_grep then
+    -- fixed string search, not regex
+    vim.keymap.set('n', '<leader>gr', function()
+        vim.ui.input({prompt = " grep 󰨀 "}, function(input)
+            if input ~= nil then grep_to_qflist(input) end
+        end)
     end)
-end)
+end
 
--- does not work well with visual line selection.
-vim.keymap.set('v', '<leader>8', function()
-    local input = table.concat(vim.fn.getregion(vim.fn.getpos('v'), vim.fn.getpos('.')), "\n")
-    grep_to_qflist(input)
-end)
+if not config.fzf_lua.prioritize_fzf_lua_grep then
+    -- does not work well with visual line selection.
+    vim.keymap.set('v', '<leader>8', function()
+        local input = table.concat(vim.fn.getregion(vim.fn.getpos('v'), vim.fn.getpos('.')), "\n")
+        grep_to_qflist(input)
+    end)
+end
 
 -- file search --
 local fdfunc = 'fdfind'
@@ -67,13 +72,17 @@ function UseFd(cmdarg, _)
     return matches
 end
 
--- intentionally overwritten by fzf-lua module, if loaded.
-vim.keymap.set('n', '<leader><leader>', ':find ')
-vim.o.findfunc = 'v:lua.UseFd'
+if not config.fzf_lua.prioritize_fzf_lua_files then
+    -- intentionally overwritten by fzf-lua module, if loaded.
+    vim.keymap.set('n', '<leader><leader>', ':find ')
+    vim.o.findfunc = 'v:lua.UseFd'
+end
 
 -- buffer --
--- use this with typing the name and tabcomplete or typing the number
-vim.keymap.set('n', '<leader>b', function()
-    vim.cmd('ls')
-    vim.fn.feedkeys(':b ', 'n')
-end)
+if not config.fzf_lua.prioritize_fzf_lua_buffers then
+    -- use this with typing the name and tabcomplete or typing the number
+    vim.keymap.set('n', '<leader>b', function()
+        vim.cmd('ls')
+        vim.fn.feedkeys(':b ', 'n')
+    end)
+end

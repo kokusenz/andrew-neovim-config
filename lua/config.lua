@@ -6,8 +6,6 @@ local M = {
     autocomplete = false,
     enable_osc_yank = false,
     lazy_dotnet = true,
-    --- @type 'sonnet' | 'opus' | 'ollama_hybrid' | 'ollama'
-    codecompanion = 'sonnet',
     -- note that catppuccin is overriden with custom colorscheme; mocha has darker background, latte/frappe/macchiato are "blueberry"
     colorscheme = {
         --- @type 'catppuccin' | 'catppuccin-mocha' | 'catppuccin-latte' | 'catppuccin-frappe' | 'catppuccin-macchiato' | 'tokyonight' | 'tokyonight-day' | 'tokyonight-moon' | 'tokyonight-night' | 'tokyonight-storm' | 'moonfly' | 'solarized8' | 'solarized8_low' | 'solarized8_flat' | 'solarized8_high' | 'gruvbox-material' | 'rose-pine' | 'rose-pine-dawn' | 'rose-pine-main' | 'rose-pine-moon'
@@ -15,10 +13,12 @@ local M = {
         -- solarized doesn't respond to transparent value
         transparent = true,
     },
-    api_keys = {
-        ollama_cloud = ""
+    fzf_lua = {
+        fzf_lua_leader = '<C-.>',
+        prioritize_fzf_lua_files = false,
+        prioritize_fzf_lua_buffers = false,
+        prioritize_fzf_lua_grep = false,
     },
-    fzf_lua_leader = '<C-.>',
     --- possible files
     --- vim.api.nvim_get_runtime_file('lua/delta', true)
     --- { '/usr/share/hypr/stubs/' }
