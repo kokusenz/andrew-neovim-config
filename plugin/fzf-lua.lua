@@ -36,7 +36,18 @@ vim.keymap.set('n', config.fzf_lua.prioritize_fzf_lua_buffers and '<leader>b' or
         }
     })
 end)
-vim.keymap.set('n', config.fzf_lua.fzf_lua_leader .. 's', fzf.git_status)
+vim.keymap.set('n', config.fzf_lua.prioritize_fzf_lua_git_status and '<leader>s' or config.fzf_lua.fzf_lua_leader .. 's', function()
+    fzf.git_status({
+        previewer = false,
+        fzf_opts = {['--layout'] = 'default'},
+        ignore_current_buffer = false,
+        winopts = {
+            height = 0.35,
+            row = 0.9,
+            border = 'single'
+        }
+    })
+end)
 
 -- fzf grep stuff.
 vim.keymap.set('n', config.fzf_lua.prioritize_fzf_lua_grep and '<leader>gr' or config.fzf_lua.fzf_lua_leader .. 'g', fzf.grep)

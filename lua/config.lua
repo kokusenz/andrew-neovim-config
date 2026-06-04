@@ -18,6 +18,7 @@ local M = {
         prioritize_fzf_lua_files = false,
         prioritize_fzf_lua_buffers = false,
         prioritize_fzf_lua_grep = false,
+        prioritize_fzf_lua_git_status = false,
     },
     --- possible files
     --- vim.api.nvim_get_runtime_file('lua/delta', true)
