@@ -155,6 +155,8 @@ vim.lsp.config['rust_analyzer'] = {
 }
 vim.lsp.enable({ 'rust_analyzer' })
 
+vim.lsp.enable('zls')
+
 -- Stop LSP client for current buffer
 --- Presents a vim.ui.select menu to choose which LSP client to stop if multiple are attached
 local function stop_buffer_lsp()
