@@ -1,17 +1,24 @@
 local config = require('config')
-local fzf = require('fzf-lua')
-fzf.setup({
-  keymap = {
-    fzf = {
-      ["ctrl-a"] = "select-all+accept",
-    }
-  }
-})
 
--- can replace with custom findexpr function use fd, pipe results out to custom vim.ui.select
--- can also replace with fzf basic vim
-vim.keymap.set('n', config.fzf_lua.prioritize_fzf_lua_files and '<leader><leader>' or config.fzf_lua.fzf_lua_leader .. 'f', function()
-    fzf.files({
+local fzf
+local function load_fzf()
+    if fzf then return fzf end
+    fzf = require('fzf-lua')
+    fzf.setup({
+        keymap = {
+            fzf = {
+                ["ctrl-a"] = "select-all+accept",
+            }
+        }
+    })
+    fzf.register_ui_select()
+    return fzf
+end
+
+local leader = config.fzf_lua.fzf_lua_leader
+
+vim.keymap.set('n', config.fzf_lua.prioritize_fzf_lua_files and '<leader><leader>' or leader .. 'f', function()
+    load_fzf().files({
         previewer = false,
         fzf_opts = {
             ['--layout'] = 'default',
@@ -23,9 +30,9 @@ vim.keymap.set('n', config.fzf_lua.prioritize_fzf_lua_files and '<leader><leader
         }
     })
 end)
--- can replace with custom findexpr function? look at buffers, use fd, pipe results out to custom vim.ui.select
-vim.keymap.set('n', config.fzf_lua.prioritize_fzf_lua_buffers and '<leader>b' or config.fzf_lua.fzf_lua_leader .. 'b', function()
-    fzf.buffers({
+
+vim.keymap.set('n', config.fzf_lua.prioritize_fzf_lua_buffers and '<leader>b' or leader .. 'b', function()
+    load_fzf().buffers({
         previewer = false,
         fzf_opts = {['--layout'] = 'default'},
         ignore_current_buffer = false,
@@ -36,8 +43,9 @@ vim.keymap.set('n', config.fzf_lua.prioritize_fzf_lua_buffers and '<leader>b' or
         }
     })
 end)
-vim.keymap.set('n', config.fzf_lua.prioritize_fzf_lua_git_status and '<leader>s' or config.fzf_lua.fzf_lua_leader .. 's', function()
-    fzf.git_status({
+
+vim.keymap.set('n', config.fzf_lua.prioritize_fzf_lua_git_status and '<leader>s' or leader .. 's', function()
+    load_fzf().git_status({
         previewer = false,
         fzf_opts = {['--layout'] = 'default'},
         ignore_current_buffer = false,
@@ -49,15 +57,10 @@ vim.keymap.set('n', config.fzf_lua.prioritize_fzf_lua_git_status and '<leader>s'
     })
 end)
 
--- fzf grep stuff.
-vim.keymap.set('n', config.fzf_lua.prioritize_fzf_lua_grep and '<leader>gr' or config.fzf_lua.fzf_lua_leader .. 'g', fzf.grep)
-vim.keymap.set('v', config.fzf_lua.prioritize_fzf_lua_grep and '<leader>8' or config.fzf_lua.fzf_lua_leader .. '8', fzf.grep_visual)
+vim.keymap.set('n', config.fzf_lua.prioritize_fzf_lua_grep and '<leader>gr' or leader .. 'g', function() load_fzf().grep() end)
+vim.keymap.set('v', config.fzf_lua.prioritize_fzf_lua_grep and '<leader>8' or leader .. '8', function() load_fzf().grep_visual() end)
 
--- fzf lsp stuff.
-vim.keymap.set('n', config.fzf_lua.fzf_lua_leader .. '[', fzf.lsp_references)
-vim.keymap.set("n", config.fzf_lua.fzf_lua_leader .. "d", fzf.diagnostics_document)
+vim.keymap.set('n', leader .. '[', function() load_fzf().lsp_references() end)
+vim.keymap.set('n', leader .. 'd', function() load_fzf().diagnostics_document() end)
 
--- fzf nice to haves
-vim.keymap.set('n', config.fzf_lua.fzf_lua_leader .. 'c', fzf.colorschemes)
-
-fzf.register_ui_select()
+vim.keymap.set('n', leader .. 'c', function() load_fzf().colorschemes() end)
