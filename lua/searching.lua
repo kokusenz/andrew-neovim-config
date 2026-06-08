@@ -75,8 +75,8 @@ end
 if not config.fzf_lua.prioritize_fzf_lua_files then
     -- intentionally overwritten by fzf-lua module, if loaded.
     vim.keymap.set('n', '<leader><leader>', ':find ')
-    vim.o.findfunc = 'v:lua.UseFd'
 end
+vim.o.findfunc = 'v:lua.UseFd'
 
 -- buffer --
 if not config.fzf_lua.prioritize_fzf_lua_buffers then
