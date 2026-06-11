@@ -4,12 +4,8 @@
       "rev": "179da7aaacce7c52874af636255ede72dd6fe796",
       "src": "https://github.com/fabijanzulj/blame.nvim"
     },
-    "delta.lua": {
-      "rev": "570d8a6c8c41d99ac051d5c36a85461693d42a9c",
-      "src": "https://github.com/kokusenz/delta.lua"
-    },
     "deltaview.nvim": {
-      "rev": "d12418fc14894db7536813d27746cdebcc972660",
+      "rev": "282ca6c6c47128af72a2a6de6fab419facde0f7b",
       "src": "https://github.com/kokusenz/deltaview.nvim"
     },
     "easy-dotnet.nvim": {

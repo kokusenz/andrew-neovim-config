@@ -15,7 +15,6 @@ vim.pack.add({
     -- git related
     'https://github.com/fabijanzulj/blame.nvim',
     'https://github.com/kokusenz/deltaview.nvim',
-    'https://github.com/kokusenz/delta.lua',
     -- colorschemes
     'https://github.com/sainnhe/gruvbox-material',
     'https://github.com/lifepillar/vim-solarized8',
