@@ -44,10 +44,6 @@
       "rev": "b73018b75affd13fa38e2fc94ef753b465f770d7",
       "src": "https://github.com/stevearc/oil.nvim"
     },
-    "pj.nvim": {
-      "rev": "9300502e96b46df8d1eb32e99dae558cb20dc9ce",
-      "src": "https://github.com/josephschmitt/pj.nvim"
-    },
     "plenary.nvim": {
       "rev": "74b06c6c75e4eeb3108ec01852001636d85a932b",
       "src": "https://github.com/nvim-lua/plenary.nvim"

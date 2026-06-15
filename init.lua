@@ -11,7 +11,6 @@ vim.pack.add({
     -- navigation related
     'https://github.com/ibhagwan/fzf-lua',
     'https://github.com/stevearc/oil.nvim',
-    'https://github.com/josephschmitt/pj.nvim',
     -- git related
     'https://github.com/fabijanzulj/blame.nvim',
     'https://github.com/kokusenz/deltaview.nvim',

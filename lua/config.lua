@@ -15,16 +15,23 @@ local M = {
     },
     fzf_lua = {
         fzf_lua_leader = '<C-.>',
-        prioritize_fzf_lua_files = false,
-        prioritize_fzf_lua_buffers = false,
+        prioritize_fzf_lua_files = true,
+        prioritize_fzf_lua_buffers = true,
         prioritize_fzf_lua_grep = false,
-        prioritize_fzf_lua_git_status = false,
+        prioritize_fzf_lua_git_status = true,
     },
     --- possible files
     --- vim.api.nvim_get_runtime_file('lua/delta', true)
     --- { '/usr/share/hypr/stubs/' }
     --- @type string[][]
-    runtime_files = { vim.api.nvim_get_runtime_file('lua/delta', true) }, -- lua/mini.test, if minitest is installed
+    runtime_files = {{ '/usr/share/hypr/stubs/' }, { '/home/agil/.luarocks/share/lua/5.5/' } },
 }
+
+-- vim.opt.runtimepath:append('/home/agil/code/deltaview.nvim.git/documentation')
+-- vim.opt.runtimepath:append('/home/agil/code/deltaview.nvim.git/documentation/after')
+-- vim.opt.runtimepath:append('/home/agil/code/delta.lua.git/archive-delta-lua')
+-- vim.opt.runtimepath:append('/home/agil/code/delta.lua.git/archive-delta-lua/after')
+-- vim.opt.runtimepath:append('/home/agil/code/nvim-reference-repos/telescope.nvim/')
+-- vim.opt.runtimepath:append('/home/agil/code/nvim-reference-repos/telescope.nvim/after')
 
 return M
