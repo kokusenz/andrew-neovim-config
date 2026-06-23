@@ -5,7 +5,7 @@
       "src": "https://github.com/fabijanzulj/blame.nvim"
     },
     "deltaview.nvim": {
-      "rev": "282ca6c6c47128af72a2a6de6fab419facde0f7b",
+      "rev": "3893d56a26e60b9907445f67d099c78fe9e90044",
       "src": "https://github.com/kokusenz/deltaview.nvim"
     },
     "easy-dotnet.nvim": {
