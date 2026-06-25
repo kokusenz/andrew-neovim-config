@@ -52,10 +52,6 @@
       "rev": "cdc07ac78467a233fd62c493de29a17e0cf2b2b6",
       "src": "https://github.com/folke/tokyonight.nvim"
     },
-    "unnest.nvim": {
-      "rev": "865b34a9db70ad4ea8715a397fad6491baa390c4",
-      "src": "https://github.com/brianhuster/unnest.nvim"
-    },
     "vim-moonfly-colors": {
       "rev": "261664f92ed51cf0c077555b2d4b2530307eac17",
       "src": "https://github.com/bluz71/vim-moonfly-colors"
