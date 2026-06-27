@@ -9,11 +9,11 @@
       "src": "https://github.com/kokusenz/deltaview.nvim"
     },
     "easy-dotnet.nvim": {
-      "rev": "2d5e7ae81869eb62e928f4fcde6d732bcf0d2083",
+      "rev": "07a41015af3bcbad7dff94191d5ad4b8a67fd202",
       "src": "https://github.com/GustavEikaas/easy-dotnet.nvim"
     },
     "fzf-lua": {
-      "rev": "988416cc782dfe28bff3f0da9b8c943b236cd86a",
+      "rev": "b6f0392fe1645973c795b5bbbd8d6db466a5a25a",
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
     "gruvbox-material": {
@@ -25,15 +25,15 @@
       "src": "https://github.com/rose-pine/neovim"
     },
     "nvim": {
-      "rev": "0303a7208dba448c459767486a38a6ec05c4216b",
+      "rev": "e068ab5f8261f23f6f71ffd8791ae40315b77b9c",
       "src": "https://github.com/catppuccin/nvim"
     },
     "nvim-dap": {
-      "rev": "531771530d4f82ad2d21e436e3cc052d68d7aebb",
+      "rev": "9e848e09a697ee95302a3ef2dd43fd6eb709e570",
       "src": "https://github.com/mfussenegger/nvim-dap"
     },
     "nvim-lspconfig": {
-      "rev": "ed19590a3a9792901553c388d1aadafce012f80d",
+      "rev": "3371bf298c1f56efc26771ee961f461176958fb5",
       "src": "https://github.com/neovim/nvim-lspconfig"
     },
     "nvim-treesitter": {
