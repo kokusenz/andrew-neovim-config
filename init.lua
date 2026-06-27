@@ -10,7 +10,6 @@ vim.pack.add({
     'https://github.com/mfussenegger/nvim-dap',
     -- navigation related
     'https://github.com/ibhagwan/fzf-lua',
-    'https://github.com/stevearc/oil.nvim',
     -- git related
     'https://github.com/fabijanzulj/blame.nvim',
     'https://github.com/kokusenz/deltaview.nvim',
