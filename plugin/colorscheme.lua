@@ -158,23 +158,23 @@ catppuccin_opts = vim.tbl_deep_extend('force', catppuccin_opts, get_overrides('l
 require("catppuccin").setup(catppuccin_opts)
 
 require("tokyonight").setup({
-    transparent = config.colorscheme.transparent
+    transparent = opts.colorscheme.transparent
 })
 
 require("rose-pine").setup({
     variant = 'main',
     dark_variant = 'main',
     styles = {
-        transparency = config.colorscheme.transparent,
+        transparency = opts.colorscheme.transparent,
         italic = false
     }
 })
 
 vim.background = 'dark'
-vim.g.moonflyTransparent = config.colorscheme.transparent
+vim.g.moonflyTransparent = opts.colorscheme.transparent
 vim.g.moonflyVirtualTextColor = true
 vim.g.gruvbox_contrast_dark = 'hard'
 vim.g.gruvbox_material_background = 'hard'
-vim.g.gruvbox_material_transparent_background = config.colorscheme.transparent
+vim.g.gruvbox_material_transparent_background = opts.colorscheme.transparent
 
-vim.cmd('silent! colorscheme ' .. config.colorscheme.name)
+vim.cmd('silent! colorscheme ' .. opts.colorscheme.name)

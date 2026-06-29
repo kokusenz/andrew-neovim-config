@@ -30,8 +30,8 @@ local grep_to_qflist = function(search)
     end
 end
 
-local config = require('config')
-if not config.fzf_lua.prioritize_fzf_lua_grep then
+local opts = require('config').options
+if not opts.fzf_lua.prioritize_fzf_lua_grep then
     -- fixed string search, not regex
     vim.keymap.set('n', '<leader>gr', function()
         vim.ui.input({prompt = " grep 󰨀 "}, function(input)
@@ -40,7 +40,7 @@ if not config.fzf_lua.prioritize_fzf_lua_grep then
     end)
 end
 
-if not config.fzf_lua.prioritize_fzf_lua_grep then
+if not opts.fzf_lua.prioritize_fzf_lua_grep then
     -- does not work well with visual line selection.
     vim.keymap.set('v', '<leader>8', function()
         local input = table.concat(vim.fn.getregion(vim.fn.getpos('v'), vim.fn.getpos('.')), "\n")
@@ -72,14 +72,14 @@ function UseFd(cmdarg, _)
     return matches
 end
 
-if not config.fzf_lua.prioritize_fzf_lua_files then
+if not opts.fzf_lua.prioritize_fzf_lua_files then
     -- intentionally overwritten by fzf-lua module, if loaded.
     vim.keymap.set('n', '<leader><leader>', ':find ')
 end
 vim.o.findfunc = 'v:lua.UseFd'
 
 -- buffer --
-if not config.fzf_lua.prioritize_fzf_lua_buffers then
+if not opts.fzf_lua.prioritize_fzf_lua_buffers then
     -- use this with typing the name and tabcomplete or typing the number
     vim.keymap.set('n', '<leader>b', function()
         vim.cmd('ls')
