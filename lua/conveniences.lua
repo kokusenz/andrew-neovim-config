@@ -1,5 +1,4 @@
 vim.g.mapleader = " "
-vim.keymap.set('n', '-', function() vim.cmd("Ex") end)
 
 if require('config').enable_osc_yank then vim.g.clipboard = 'osc52' end
 -- keybinds to use system keyboard
