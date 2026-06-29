@@ -1,8 +1,10 @@
+local M = {}
+
 --- options for common options that will change from computer to computer
 --- this way, the diff will sit in one file
 --- technically can gitignore, but I prefer for this to be visible
 --- @class NvimOpts
-local M = {
+M.defaults = {
     autocomplete = false,
     enable_unnamed_plus_paste = false,
     lazy_dotnet = true,
@@ -26,5 +28,12 @@ local M = {
     --- @type string[][]
     runtime_files = { vim.api.nvim_get_runtime_file('lua/delta', true) }, -- lua/mini.test, if minitest is installed
 }
+
+M.options = vim.deepcopy(M.defaults)
+
+--- @class NvimOpts
+M.setup = function(opts)
+    M.options = vim.tbl_deep_extend("force", M.options, opts or {})
+end
 
 return M

@@ -1,9 +1,10 @@
 vim.g.mapleader = " "
 
-if not require('config').enable_unnamed_plus_paste then vim.g.clipboard = 'osc52' end
+local opts = require('config').options
+if not opts.enable_unnamed_plus_paste then vim.g.clipboard = 'osc52' end
 -- keybinds to use system keyboard
 vim.keymap.set({'n', 'v'}, '<leader>y', '"+y', { silent = true, noremap = true })
-if require('config').enable_unnamed_plus_paste then
+if opts.enable_unnamed_plus_paste then
     vim.keymap.set({'n', 'v'}, '<leader>p', '"+p', { silent = true, noremap = true })
 end
 

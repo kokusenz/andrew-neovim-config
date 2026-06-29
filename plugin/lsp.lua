@@ -4,7 +4,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end,
 })
 
-if require('config').autocomplete then
+local opts = require('config').options
+
+if opts.autocomplete then
     vim.o.ac = true
     vim.o.complete = 'o'
     vim.o.completeopt = 'menu,menuone,popup,noinsert'
@@ -17,9 +19,8 @@ vim.lsp.enable({ 'somesass_ls' })
 vim.lsp.enable('clangd')
 
 local get_lua_ls_nvim_runtime = function()
-    local config = require('config')
     local list = { vim.env.VIMRUNTIME }
-    for _, path in ipairs(config.runtime_files) do
+    for _, path in ipairs(opts.runtime_files) do
         list = vim.list_extend(list, path)
     end
     return list
@@ -68,7 +69,7 @@ vim.lsp.config('lua_ls', {
 
 vim.lsp.enable({ 'lua_ls' })
 
-if require('config').lazy_dotnet then
+if opts.lazy_dotnet then
     local setup_easy_dotnet = function()
         require('easy-dotnet').setup({
             lsp = {

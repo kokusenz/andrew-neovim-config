@@ -144,10 +144,10 @@ local get_overrides = function(flavor)
     }
 end
 
-local config = require('config')
+local opts = require('config').options
 
 local catppuccin_opts = ({
-    transparent_background = config.colorscheme.transparent,
+    transparent_background = opts.colorscheme.transparent,
     flavour = 'mocha'
 })
 catppuccin_opts = vim.tbl_deep_extend('force', catppuccin_opts, get_overrides('mocha'))
