@@ -13,7 +13,7 @@ M.defaults = {
         --- @type 'catppuccin' | 'catppuccin-mocha' | 'catppuccin-latte' | 'catppuccin-frappe' | 'catppuccin-macchiato' | 'tokyonight' | 'tokyonight-day' | 'tokyonight-moon' | 'tokyonight-night' | 'tokyonight-storm' | 'moonfly' | 'solarized8' | 'solarized8_low' | 'solarized8_flat' | 'solarized8_high' | 'gruvbox-material' | 'rose-pine' | 'rose-pine-dawn' | 'rose-pine-main' | 'rose-pine-moon'
         plugin_colorscheme_name = 'moonfly',
         -- solarized should not respond to transparent value, to allow to solarize
-        default_colorscheme_name = 'habamax',
+        default_colorscheme_name = 'default',
         transparent = true,
     },
     fzf_lua = {
