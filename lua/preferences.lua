@@ -14,11 +14,13 @@ vim.opt.guicursor='n-v-c-sm:block,i-ci-ve:block-blinkwait0-blinkon100-blinkoff10
 
 local opts = require('config').options
 vim.cmd('silent! colorscheme ' .. opts.colorscheme.default_colorscheme_name)
+local set_bg_none = function()
+    vim.api.nvim_set_hl(0, "Normal", { bg = "NONE" })
+end
 if opts.colorscheme.transparent then
+    set_bg_none()
     vim.api.nvim_create_autocmd('ColorScheme', {
-        callback = function()
-            vim.api.nvim_set_hl(0, "Normal", { bg = "NONE" })
-        end,
+        callback = set_bg_none,
         desc = 'Reinitialize Delta highlight groups after colorscheme change'
     })
 end
