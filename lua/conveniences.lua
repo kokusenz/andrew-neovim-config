@@ -34,8 +34,9 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- term
-vim.cmd([[cabbrev te \| term ]])
-vim.keymap.set('n', '<leader>e', ':sp | term ')
+vim.cmd([[cabbrev te \| term]])
+vim.cmd([[cabbrev vb \| let $VB=expand('%:p')]])
+vim.keymap.set('n', '<leader>e', [[:sp | let $VB=expand('%:p') | term ]])
 
 vim.api.nvim_create_user_command('YankRelPath', function()
     local path = vim.fn.expand('%:.')
