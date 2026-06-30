@@ -177,4 +177,4 @@ vim.g.gruvbox_contrast_dark = 'hard'
 vim.g.gruvbox_material_background = 'hard'
 vim.g.gruvbox_material_transparent_background = opts.colorscheme.transparent
 
-vim.cmd('silent! colorscheme ' .. opts.colorscheme.name)
+vim.cmd('silent! colorscheme ' .. opts.colorscheme.plugin_colorscheme_name)

@@ -11,8 +11,9 @@ M.defaults = {
     -- note that catppuccin is overriden with custom colorscheme; mocha has darker background, latte/frappe/macchiato are "blueberry"
     colorscheme = {
         --- @type 'catppuccin' | 'catppuccin-mocha' | 'catppuccin-latte' | 'catppuccin-frappe' | 'catppuccin-macchiato' | 'tokyonight' | 'tokyonight-day' | 'tokyonight-moon' | 'tokyonight-night' | 'tokyonight-storm' | 'moonfly' | 'solarized8' | 'solarized8_low' | 'solarized8_flat' | 'solarized8_high' | 'gruvbox-material' | 'rose-pine' | 'rose-pine-dawn' | 'rose-pine-main' | 'rose-pine-moon'
-        name = 'moonfly',
-        -- solarized doesn't respond to transparent value
+        plugin_colorscheme_name = 'moonfly',
+        -- solarized should not respond to transparent value, to allow to solarize
+        default_colorscheme_name = 'habamax',
         transparent = true,
     },
     fzf_lua = {
