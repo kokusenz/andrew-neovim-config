@@ -41,6 +41,15 @@ vim.keymap.set('n', '<leader>w', function()
     vim.cmd([[:vsp | wincmd w | let $b=expand('%:p') | term git diff --color-words $b]])
 end)
 
+-- git
+vim.keymap.set('n', 'gsa', function()
+    vim.cmd([[:!git add %]])
+    local result = vim.system({'git', 'status', '--short'}):wait()
+    if result.code == 0 then
+        vim.notify(result.stdout, vim.log.levels.TRACE)
+    end
+end)
+
 vim.api.nvim_create_user_command('YankRelPath', function()
     local path = vim.fn.expand('%:.')
     vim.fn.setreg('+', path)
