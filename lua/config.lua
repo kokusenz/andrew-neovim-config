@@ -27,7 +27,7 @@ M.defaults = {
         ---@alias Position 'center' | 'bottom' | 'top'
         ---@type Position
         position = 'center',
-        prioritize_fzy_files = false,
+        prioritize_fzy_files = true,
     },
     --- possible files
     --- vim.api.nvim_get_runtime_file('lua/delta', true)
