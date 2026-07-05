@@ -42,18 +42,19 @@ vim.keymap.set('n', '<leader>w', function()
 end)
 
 vim.keymap.set('n', '<leader>j', function()
-    local result = vim.system({'jj', 'diff', '--name-only'}):wait()
-    if not result.stdout then
-        print('idk, jj diff failed')
-        return
-    end
-    local items = vim.split(result.stdout, "\n", { trimempty = true})
-    vim.print(items)
-    vim.ui.select(items, {}, function(item)
-        if not item then
+    vim.schedule(function()
+        local result = vim.system({'jj', 'diff', '--name-only'}):wait()
+        if not result.stdout then
+            print('idk, jj diff failed')
             return
         end
-        vim.cmd('e ' .. vim.fn.fnameescape(item))
+        local items = vim.split(result.stdout, "\n", { trimempty = true})
+        vim.ui.select(items, {}, function(item)
+            if not item then
+                return
+            end
+            vim.cmd('e ' .. vim.fn.fnameescape(item))
+        end)
     end)
 end)
 
