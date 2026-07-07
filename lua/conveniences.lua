@@ -38,7 +38,7 @@ vim.cmd([[cabbrev te \| term]])
 vim.cmd([[cabbrev vb \| let $b=expand('%:p')]])
 vim.keymap.set('n', '<leader>e', [[:sp | let $b=expand('%:p') | term ]])
 vim.keymap.set('n', '<leader>w', function()
-    vim.cmd([[:vsp | wincmd w | let $b=expand('%:p') | term jj diff --no-pager -- $b]])
+    vim.cmd([[:let $b=expand('%:p') | term jj diff --no-pager -- $b]])
 end)
 
 -- git
