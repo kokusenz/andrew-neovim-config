@@ -41,6 +41,22 @@ vim.keymap.set('n', '<leader>w', function()
     vim.cmd([[:let $b=expand('%:p') | term jj diff --no-pager -- $b]])
 end)
 
+vim.keymap.set('n', '<leader>j', function()
+    local result = vim.system({'jj', 'diff', '--name-only'}):wait()
+    if not result.stdout then
+        print('idk, jj diff failed')
+        return
+    end
+    local items = vim.split(result.stdout, "\n", { trimempty = true})
+    vim.print(items)
+    vim.ui.select(items, {}, function(item)
+        if not item then
+            return
+        end
+        vim.cmd('e ' .. vim.fn.fnameescape(item))
+    end)
+end)
+
 -- git
 vim.keymap.set('n', 'gsa', function()
     vim.cmd([[:!git add %]])
