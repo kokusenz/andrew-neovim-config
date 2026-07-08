@@ -86,7 +86,7 @@ local jj_diff_select = function()
                 return { buf = buf }
             end,
         }, function(item)
-            if not item then
+            if not item or item == 'jj_log' or item == 'jj_status' then
                 return
             end
             vim.cmd('e ' .. vim.fn.fnameescape(item))
