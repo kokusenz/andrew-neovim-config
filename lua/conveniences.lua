@@ -35,37 +35,46 @@ vim.api.nvim_create_autocmd("FileType", {
 
 -- term
 vim.cmd([[cabbrev te \| term]])
-vim.cmd([[cabbrev vb \| let $b=expand('%:p')]])
 vim.keymap.set('n', '<leader>e', [[:sp | let $b=expand('%:p') | term ]])
+
+vim.keymap.set('t', '<C-b>h', '<C-\\><C-n><C-w>h', { silent = true, noremap = true })
+vim.keymap.set('t', '<C-b>j', '<C-\\><C-n><C-w>j', { silent = true, noremap = true })
+vim.keymap.set('t', '<C-b>k', '<C-\\><C-n><C-w>k', { silent = true, noremap = true })
+vim.keymap.set('t', '<C-b>l', '<C-\\><C-n><C-w>l', { silent = true, noremap = true })
+
+-- vcs
 vim.keymap.set('n', '<leader>w', function()
     vim.cmd([[:let $b=expand('%:p') | term jj diff --no-pager -- $b]])
 end)
 
-vim.keymap.set('n', '<leader>j', function()
-    vim.schedule(function()
+local jj_diff_select = function()
         local result = vim.system({'jj', 'diff', '--name-only'}):wait()
         if not result.stdout then
-            print('idk, jj diff failed')
+            vim.notify('idk, jj diff failed', vim.log.levels.ERROR)
             return
         end
         local items = vim.split(result.stdout, "\n", { trimempty = true})
-        vim.ui.select(items, {}, function(item)
+        vim.ui.select(items, {
+            prompt = 'jj diff > ',
+            preview_item = function()
+                local log_result = vim.system({'jj', 'log'}):wait()
+                local lines = log_result.stdout and
+                    vim.split(log_result.stdout, "\n", {trimempty = true}) or
+                    {'idk, jj log failed'}
+                local buf = vim.api.nvim_create_buf(false, true)
+                vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+                vim.bo[buf].bufhidden = 'wipe'
+                return { buf = buf }
+            end,
+        }, function(item)
             if not item then
                 return
             end
             vim.cmd('e ' .. vim.fn.fnameescape(item))
         end)
-    end)
-end)
+end
 
--- git
-vim.keymap.set('n', 'gsa', function()
-    vim.cmd([[:!git add %]])
-    local result = vim.system({'git', 'status', '--short'}):wait()
-    if result.code == 0 then
-        vim.notify(result.stdout, vim.log.levels.TRACE)
-    end
-end)
+vim.keymap.set('n', '<leader>j', function() jj_diff_select() end)
 
 vim.api.nvim_create_user_command('YankRelPath', function()
     local path = vim.fn.expand('%:.')
