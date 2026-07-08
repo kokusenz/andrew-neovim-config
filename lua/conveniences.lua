@@ -54,15 +54,34 @@ local jj_diff_select = function()
             return
         end
         local items = vim.split(result.stdout, "\n", { trimempty = true})
+        table.insert(items, 1, 'jj_status')
+        table.insert(items, 1, 'jj_log')
         vim.ui.select(items, {
             prompt = 'jj diff > ',
-            preview_item = function()
-                local log_result = vim.system({'jj', 'log'}):wait()
-                local lines = log_result.stdout and
-                    vim.split(log_result.stdout, "\n", {trimempty = true}) or
-                    {'idk, jj log failed'}
+            format_item = function(item)
+                if item == 'jj_log' then
+                    return '󰭅 log '
+                end
+                if item == 'jj_status' then
+                    return ' status '
+                end
+                return item
+            end,
+            preview_item = function(item)
                 local buf = vim.api.nvim_create_buf(false, true)
-                vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+                vim.schedule(function()
+                    vim.api.nvim_buf_call(buf, function()
+                        if item == 'jj_log' then
+                            vim.fn.jobstart({ 'jj', 'log' }, { term = true })
+                            return
+                        end
+                        if item == 'jj_status' then
+                            vim.fn.jobstart({ 'jj', 'st' }, { term = true })
+                            return
+                        end
+                        vim.fn.jobstart({ 'jj', 'diff', '--no-pager', '--', item }, { term = true })
+                    end)
+                end)
                 vim.bo[buf].bufhidden = 'wipe'
                 return { buf = buf }
             end,
