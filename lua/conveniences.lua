@@ -1,5 +1,3 @@
-vim.g.mapleader = " "
-
 local opts = require('config').options
 if not opts.enable_unnamed_plus_paste then vim.g.clipboard = 'osc52' end
 -- keybinds to use system keyboard
@@ -41,59 +39,6 @@ vim.keymap.set('t', '<C-b>h', '<C-\\><C-n><C-w>h', { silent = true, noremap = tr
 vim.keymap.set('t', '<C-b>j', '<C-\\><C-n><C-w>j', { silent = true, noremap = true })
 vim.keymap.set('t', '<C-b>k', '<C-\\><C-n><C-w>k', { silent = true, noremap = true })
 vim.keymap.set('t', '<C-b>l', '<C-\\><C-n><C-w>l', { silent = true, noremap = true })
-
--- vcs
-vim.keymap.set('n', '<leader>w', function()
-    vim.cmd([[:let $b=expand('%:p') | term jj diff --no-pager -- $b]])
-end)
-
-local jj_diff_select = function()
-        local result = vim.system({'jj', 'diff', '--name-only'}):wait()
-        if not result.stdout then
-            vim.notify('idk, jj diff failed', vim.log.levels.ERROR)
-            return
-        end
-        local items = vim.split(result.stdout, "\n", { trimempty = true})
-        table.insert(items, 1, 'jj_status')
-        table.insert(items, 1, 'jj_log')
-        vim.ui.select(items, {
-            prompt = 'jj diff > ',
-            format_item = function(item)
-                if item == 'jj_log' then
-                    return '󰭅 log '
-                end
-                if item == 'jj_status' then
-                    return ' status '
-                end
-                return item
-            end,
-            preview_item = function(item)
-                local buf = vim.api.nvim_create_buf(false, true)
-                vim.schedule(function()
-                    vim.api.nvim_buf_call(buf, function()
-                        if item == 'jj_log' then
-                            vim.fn.jobstart({ 'jj', 'log' }, { term = true })
-                            return
-                        end
-                        if item == 'jj_status' then
-                            vim.fn.jobstart({ 'jj', 'st' }, { term = true })
-                            return
-                        end
-                        vim.fn.jobstart({ 'jj', 'diff', '--no-pager', '--', item }, { term = true })
-                    end)
-                end)
-                vim.bo[buf].bufhidden = 'wipe'
-                return { buf = buf }
-            end,
-        }, function(item)
-            if not item or item == 'jj_log' or item == 'jj_status' then
-                return
-            end
-            vim.cmd('e ' .. vim.fn.fnameescape(item))
-        end)
-end
-
-vim.keymap.set('n', '<leader>j', function() jj_diff_select() end)
 
 vim.api.nvim_create_user_command('YankRelPath', function()
     local path = vim.fn.expand('%:.')

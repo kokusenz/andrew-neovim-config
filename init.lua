@@ -10,6 +10,8 @@ vim.pack.add({
     'https://github.com/mfussenegger/nvim-dap',
     -- navigation related
     'https://github.com/ibhagwan/fzf-lua',
+    'https://codeberg.org/mfussenegger/nvim-fzy',
+    'https://github.com/mfussenegger/nvim-qwahl',
     -- git related
     'https://github.com/fabijanzulj/blame.nvim',
     'https://github.com/kokusenz/deltaview.nvim',
@@ -37,7 +39,8 @@ vim.api.nvim_create_autocmd('PackChanged', {
 vim.cmd.packadd('nvim.difftool')
 vim.cmd.packadd('cfilter')
 
-require('conveniences')
 require('preferences')
+require('conveniences')
 require('statusline')
 require('searching')
+require('jj')

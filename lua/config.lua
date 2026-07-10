@@ -23,6 +23,12 @@ M.defaults = {
         prioritize_fzf_lua_grep = false,
         prioritize_fzf_lua_git_status = false,
     },
+    fzy = {
+        ---@alias Position 'center' | 'bottom' | 'top'
+        ---@type Position
+        position = 'center',
+        prioritize_fzy_files = false,
+    },
     --- possible files
     --- vim.api.nvim_get_runtime_file('lua/delta', true)
     --- { '/usr/share/hypr/stubs/' }

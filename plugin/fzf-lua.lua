@@ -11,7 +11,6 @@ local function load_fzf()
             }
         }
     })
-    fzf.register_ui_select()
     return fzf
 end
 

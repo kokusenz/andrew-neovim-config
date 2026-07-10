@@ -1,3 +1,4 @@
+vim.g.mapleader = " "
 vim.wo.relativenumber = true
 vim.opt.tabstop       = 4  -- literal <Tab> == 4 spaces when files are read
 vim.opt.shiftwidth    = 4  -- >> << == 4 spaces

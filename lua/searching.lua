@@ -49,13 +49,13 @@ if not opts.fzf_lua.prioritize_fzf_lua_grep then
 end
 
 -- file search --
-local fdfunc = 'fdfind'
+Fdfunc = 'fdfind'
 
 vim.schedule(function()
     if vim.fn.executable('fd') == 1 then--- Custom find function using fd for Vim's :find command
-      fdfunc = 'fd'
+      Fdfunc = 'fd'
     elseif vim.fn.executable('fdfind') == 1 then
-      fdfunc = 'fdfind'
+      Fdfunc = 'fdfind'
     else
         vim.notify('fd not found on system. :find will not use fd', vim.log.levels.WARN)
         vim.opt.path:append { '**' }
@@ -66,7 +66,7 @@ end)
 function UseFd(cmdarg, _)
     local param = vim.fn.getcwd() .. '.*' .. tostring(cmdarg)
     local fdout = vim.system(
-        { fdfunc, '--type', 'f', '--hidden', '--exclude', '.git', '--full-path', param}
+        { Fdfunc, '--type', 'f', '--hidden', '--exclude', '.git', '--full-path', param}
     ):wait()
     local matches = vim.split(fdout.stdout, "\n", { trimempty = true })
     return matches
