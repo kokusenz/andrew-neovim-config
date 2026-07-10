@@ -38,9 +38,7 @@ vim.cmd.packadd('nvim.difftool')
 vim.cmd.packadd('cfilter')
 
 require('config').setup({
-    colorscheme = {
-        plugin_colorscheme_name = 'moonfly'
-    },
+    colorscheme = { plugin_colorscheme_name = 'moonfly' },
     enable_unnamed_plus_paste = true,
     keyconfig = {
         files = { custom = true },
@@ -50,12 +48,6 @@ require('config').setup({
     runtime_files = { vim.api.nvim_get_runtime_file('lua/delta', true), { '/usr/share/hypr/stubs/' }, { '/home/agil/.luarocks/share/lua/5.5/lunatest.lua' } },
 })
 
--- vim.opt.runtimepath:append('/home/agil/code/deltaview.nvim.git/review')
--- vim.opt.runtimepath:append('/home/agil/code/deltaview.nvim.git/review/after')
--- vim.opt.runtimepath:append('/home/agil/code/delta.lua.git/main')
--- vim.opt.runtimepath:append('/home/agil/code/delta.lua.git/main')
--- vim.opt.runtimepath:append('/home/agil/code/nvim-reference-repos/telescope.nvim/')
--- vim.opt.runtimepath:append('/home/agil/code/nvim-reference-repos/telescope.nvim/after')
 require('preferences')
 require('conveniences')
 require('statusline')
