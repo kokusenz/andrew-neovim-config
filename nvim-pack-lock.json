@@ -36,10 +36,6 @@
       "rev": "3371bf298c1f56efc26771ee961f461176958fb5",
       "src": "https://github.com/neovim/nvim-lspconfig"
     },
-    "nvim-qwahl": {
-      "rev": "3081cdd8fcbccfbe68381088ed0d6e1ff47da3a6",
-      "src": "https://github.com/mfussenegger/nvim-qwahl"
-    },
     "nvim-treesitter": {
       "rev": "4916d6592ede8c07973490d9322f187e07dfefac",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter"

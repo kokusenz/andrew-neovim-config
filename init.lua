@@ -10,7 +10,6 @@ vim.pack.add({
     'https://github.com/mfussenegger/nvim-dap',
     -- navigation related
     'https://codeberg.org/mfussenegger/nvim-fzy',
-    'https://github.com/mfussenegger/nvim-qwahl',
     -- git related
     'https://github.com/fabijanzulj/blame.nvim',
     'https://github.com/kokusenz/deltaview.nvim',
@@ -44,7 +43,8 @@ require('config').setup({
     },
     enable_unnamed_plus_paste = true,
     keyconfig = {
-        files = { custom = true }
+        files = { custom = true },
+        buffers = { custom = true }
     },
     fzy = { position = 'bottom' },
     runtime_files = { vim.api.nvim_get_runtime_file('lua/delta', true), { '/usr/share/hypr/stubs/' }, { '/home/agil/.luarocks/share/lua/5.5/lunatest.lua' } },

@@ -9,8 +9,8 @@ local jj_diff_select = function()
             return
         end
         local items = vim.split(result.stdout, "\n", { trimempty = true})
-        table.insert(items, 'jj_st')
         table.insert(items, 'jj_log')
+        table.insert(items, 'jj_st')
         table.insert(items, 'jj_diff')
         table.insert(items, 'jj_describe')
         vim.ui.select(items, {
