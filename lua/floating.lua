@@ -1,6 +1,7 @@
 local M = {}
 
-M.new_popup = function()
+---@param position? Position
+M.new_popup = function(position)
     local buf = vim.api.nvim_create_buf(false, true)
     vim.api.nvim_buf_set_keymap(buf, 't', '<ESC>', '<C-\\><C-c>', {})
     vim.bo[buf].bufhidden = "wipe"
@@ -9,7 +10,7 @@ M.new_popup = function()
     local width = math.floor(columns * 0.8)
     local height = math.floor(lines * 0.8)
     local half_height = math.floor(lines * 0.30)
-    local position = require('config').options.fzy.position
+    position = position or require('config').options.fzy.position
     local opts = {
         relative = 'editor',
         style = 'minimal',
@@ -25,11 +26,12 @@ M.new_popup = function()
 end
 
 ---@param cmd string command to initialize the buffer
-M.execute_terminal_floating = function(cmd)
+---@param position? Position
+M.execute_terminal_floating = function(cmd, position)
     if vim.api.nvim_get_mode().mode == "i" then
         vim.cmd('stopinsert')
     end
-    local popup_win, buf = M.new_popup()
+    local popup_win, buf = M.new_popup(position)
     vim.api.nvim_create_autocmd("WinLeave", {
         callback = function()
             local w = vim.api.nvim_get_current_win()

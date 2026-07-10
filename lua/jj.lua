@@ -12,17 +12,21 @@ local jj_diff_select = function()
         table.insert(items, 'jj_st')
         table.insert(items, 'jj_log')
         table.insert(items, 'jj_diff')
+        table.insert(items, 'jj_describe')
         vim.ui.select(items, {
             prompt = 'jj diff > ',
             format_item = function(item)
                 if item == 'jj_log' then
-                    return 'jj log '
+                    return 'jj log'
                 end
                 if item == 'jj_st' then
-                    return 'jj status '
+                    return 'jj status'
                 end
                 if item == 'jj_diff' then
-                    return 'jj diff '
+                    return 'jj diff'
+                end
+                if item == 'jj_describe' then
+                    return 'jj describe'
                 end
                 return item
             end,
@@ -40,6 +44,10 @@ local jj_diff_select = function()
                         end
                         if item == 'jj_diff' then
                             vim.fn.jobstart({ 'jj', 'diff', '--no-pager' }, { term = true })
+                            return
+                        end
+                        if item == 'jj_describe' then
+                            -- write into buffer 'press enter to describe'
                             return
                         end
                         vim.fn.jobstart({ 'jj', 'diff', '--no-pager', '--', item }, { term = true })
@@ -61,7 +69,11 @@ local jj_diff_select = function()
                 return
             end
             if item == 'jj_diff' then
-                require('floating').execute_terminal_floating('jj diff')
+                require('floating').execute_terminal_floating('jj diff', 'center')
+                return
+            end
+            if item == 'jj_describe' then
+                require('floating').execute_terminal_floating('jj describe', 'center')
                 return
             end
             vim.cmd('e ' .. vim.fn.fnameescape(item))

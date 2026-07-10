@@ -1,5 +1,5 @@
 -- grep --
-local grepprg = {'rg', '--vimgrep', '--no-messages', '--smart-case', '--hidden'}
+local grepprg = {'rg', '--vimgrep', '--no-messages', '--smart-case', '--hidden', '-g', '!.git/**'}
 vim.opt.grepprg = table.concat(grepprg, " ")
 vim.cmd([[cabbrev gr silent! grep!]])
 vim.cmd([[cabbrev co \| copen]])
@@ -31,22 +31,18 @@ local grep_to_qflist = function(search)
 end
 
 local opts = require('config').options
-if not opts.fzf_lua.prioritize_fzf_lua_grep then
-    -- fixed string search, not regex
-    vim.keymap.set('n', '<leader>gr', function()
-        vim.ui.input({prompt = " grep 󰨀 "}, function(input)
-            if input ~= nil then grep_to_qflist(input) end
-        end)
-    end)
-end
+local set_keymap = require('config').set_keymap
 
-if not opts.fzf_lua.prioritize_fzf_lua_grep then
-    -- does not work well with visual line selection.
-    vim.keymap.set('v', '<leader>8', function()
-        local input = table.concat(vim.fn.getregion(vim.fn.getpos('v'), vim.fn.getpos('.')), "\n")
-        grep_to_qflist(input)
+set_keymap(opts.keyconfig.grep, false, function()
+    vim.ui.input({prompt = " grep 󰨀 "}, function(input)
+        if input ~= nil then grep_to_qflist(input) end
     end)
-end
+end)
+
+set_keymap(opts.keyconfig.visual_grep, false, function()
+    local input = table.concat(vim.fn.getregion(vim.fn.getpos('v'), vim.fn.getpos('.')), "\n")
+    grep_to_qflist(input)
+end)
 
 -- file search --
 Fdfunc = 'fdfind'
@@ -72,17 +68,11 @@ function UseFd(cmdarg, _)
     return matches
 end
 
-if not opts.fzf_lua.prioritize_fzf_lua_files then
-    -- intentionally overwritten by fzf-lua module, if loaded.
-    vim.keymap.set('n', '<leader><leader>', ':find ')
-end
+set_keymap(opts.keyconfig.files, false, ':find ')
 vim.o.findfunc = 'v:lua.UseFd'
 
 -- buffer --
-if not opts.fzf_lua.prioritize_fzf_lua_buffers then
-    -- use this with typing the name and tabcomplete or typing the number
-    vim.keymap.set('n', '<leader>b', function()
-        vim.cmd('ls')
-        vim.fn.feedkeys(':b ', 'n')
-    end)
-end
+set_keymap(opts.keyconfig.buffers, false, function()
+    vim.cmd('ls')
+    vim.fn.feedkeys(':b ', 'n')
+end)

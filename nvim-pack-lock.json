@@ -12,10 +12,6 @@
       "rev": "07a41015af3bcbad7dff94191d5ad4b8a67fd202",
       "src": "https://github.com/GustavEikaas/easy-dotnet.nvim"
     },
-    "fzf-lua": {
-      "rev": "39da6060d53659acf3ec118200bc48721b29b8fd",
-      "src": "https://github.com/ibhagwan/fzf-lua"
-    },
     "gruvbox-material": {
       "rev": "11d779b26a9ab2b3db8c22c6ac9fb6e8ed4fea79",
       "src": "https://github.com/sainnhe/gruvbox-material"

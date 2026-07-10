@@ -16,18 +16,36 @@ M.defaults = {
         default_colorscheme_name = 'default',
         transparent = true,
     },
-    fzf_lua = {
-        fzf_lua_leader = '<C-.>',
-        prioritize_fzf_lua_files = false,
-        prioritize_fzf_lua_buffers = false,
-        prioritize_fzf_lua_grep = false,
-        prioritize_fzf_lua_git_status = false,
+    keyconfig = {
+        --- @type KeyConfig
+        files = {
+            modes = 'n',
+            lhs = "<leader><leader>",
+            custom = false
+        },
+        --- @type KeyConfig
+        buffers = {
+            modes = 'n',
+            lhs = "<leader>b",
+            custom = false
+        },
+        --- @type KeyConfig
+        grep = {
+            modes = 'n',
+            lhs = "<leader>gr",
+            custom = false
+        },
+        --- @type KeyConfig
+        visual_grep = {
+            modes = 'v',
+            lhs = "<leader>8",
+            custom = false
+        },
     },
     fzy = {
         ---@alias Position 'center' | 'bottom' | 'top'
         ---@type Position
-        position = 'center',
-        prioritize_fzy_files = true,
+        position = 'center'
     },
     --- possible files
     --- vim.api.nvim_get_runtime_file('lua/delta', true)
@@ -38,9 +56,27 @@ M.defaults = {
 
 M.options = vim.deepcopy(M.defaults)
 
+--- sets a switchable keymap; if config leans default; then this won't trigger
+--- this is just so that in code i don't have to write if config then keymap.set
+--- @param config KeyConfig  Right-hand side |{rhs}| of the mapping, can be a Lua function.
+--- @param custom boolean indicating this is custom behavior
+--- @param rhs string|function  Right-hand side |{rhs}| of the mapping, can be a Lua function.
+M.set_keymap = function(config, custom, rhs)
+    if config.custom == custom then
+        vim.keymap.set(config.modes, config.lhs, rhs, config.opts)
+    end
+end
+
 --- @class NvimOpts
 M.setup = function(opts)
     M.options = vim.tbl_deep_extend("force", M.options, opts or {})
 end
 
 return M
+
+--- If there is not a default, this, i guess setting default to false just disables it
+--- @class KeyConfig
+--- @field modes string|string[] Mode "short-name" (see |nvim_set_keymap()|), or a list thereof.
+--- @field lhs string|string[]  Left-hand side |{lhs}| of the mapping, or a list thereof.
+--- @field opts? vim.keymap.set.Opts
+--- @field custom boolean if false, then use default behavior

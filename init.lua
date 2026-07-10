@@ -9,7 +9,6 @@ vim.pack.add({
     'https://github.com/GustavEikaas/easy-dotnet.nvim',
     'https://github.com/mfussenegger/nvim-dap',
     -- navigation related
-    'https://github.com/ibhagwan/fzf-lua',
     'https://codeberg.org/mfussenegger/nvim-fzy',
     'https://github.com/mfussenegger/nvim-qwahl',
     -- git related
@@ -44,13 +43,10 @@ require('config').setup({
         plugin_colorscheme_name = 'moonfly'
     },
     enable_unnamed_plus_paste = true,
-    fzf_lua = {
-        fzf_lua_leader = '<C-.>',
-        prioritize_fzf_lua_files = true,
-        prioritize_fzf_lua_buffers = true,
-        prioritize_fzf_lua_grep = false,
-        prioritize_fzf_lua_git_status = false,
+    keyconfig = {
+        files = { custom = true }
     },
+    fzy = { position = 'bottom' },
     runtime_files = { vim.api.nvim_get_runtime_file('lua/delta', true), { '/usr/share/hypr/stubs/' }, { '/home/agil/.luarocks/share/lua/5.5/lunatest.lua' } },
 })
 
