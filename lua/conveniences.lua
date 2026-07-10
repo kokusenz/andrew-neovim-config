@@ -33,7 +33,10 @@ vim.api.nvim_create_autocmd("FileType", {
 
 -- term
 vim.cmd([[cabbrev te \| term]])
-vim.keymap.set('n', '<leader>e', [[:sp | let $b=expand('%:p') | term ]])
+vim.keymap.set('n', '<leader>e', function()
+    vim.cmd([[:sp | let $b=expand('%:p') | term]])
+    vim.cmd([[startinsert!]])
+end)
 
 vim.keymap.set('t', '<C-b>h', '<C-\\><C-n><C-w>h', { silent = true, noremap = true })
 vim.keymap.set('t', '<C-b>j', '<C-\\><C-n><C-w>j', { silent = true, noremap = true })
