@@ -11,7 +11,7 @@ local quick_command_list = {
     },
     --- @type QCItem
     diff = {
-        formatted = 'edit',
+        formatted = 'diff',
         on_select = function() require('floating').execute_terminal_floating('jj diff', 'center') end
     },
     describe = {
