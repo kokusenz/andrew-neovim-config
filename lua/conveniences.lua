@@ -17,7 +17,7 @@ vim.keymap.set('n', '<C-d>', '<C-d>zz', { silent = true, noremap = true })
 
 -- quickfix list nav bindings
 vim.keymap.set('n', '<Del>', vim.cmd.cclose)
-vim.keymap.set('n', '<leader>q', vim.cmd.copen)
+vim.keymap.set('n', '<leader>q', function() vim.cmd([[copen 6]]) end)
 
 -- make for cs files
 vim.api.nvim_create_autocmd("FileType", {

@@ -2,7 +2,6 @@
 local grepprg = {'rg', '--vimgrep', '--no-messages', '--smart-case', '--hidden', '-g', '!.git/**'}
 vim.opt.grepprg = table.concat(grepprg, " ")
 vim.cmd([[cabbrev gr silent! grep!]])
-vim.cmd([[cabbrev co \| copen]])
 -- use grep as the ex command if you are looking to use regex, otherwise here are wrappers that search fixed strings
 
 local grep_to_qflist = function(search)
@@ -19,7 +18,7 @@ local grep_to_qflist = function(search)
     else
         vim.fn.setqflist({}, ' ', { lines = {}, efm = vim.o.grepformat, title = table.concat(command, " ") })
     end
-    vim.cmd('copen')
+    vim.cmd('copen 6')
     local qf_winid = vim.fn.getqflist({ winid = 0 }).winid
     if qf_winid ~= 0 then
         vim.api.nvim_win_call(qf_winid, function()
