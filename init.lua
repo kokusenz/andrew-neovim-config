@@ -1,7 +1,5 @@
--- to update specific plugin, or no args for all plugins
--- :lua vim.pack.update({ 'nvim-lspconfig' })
--- to delete
--- :lua vim.pack.del({ 'nvim-lspconfig' })
+vim.cmd.packadd('nvim.difftool')
+vim.cmd.packadd('cfilter')
 vim.pack.add({
     -- lsp related
     'https://github.com/neovim/nvim-lspconfig',
@@ -34,19 +32,7 @@ vim.api.nvim_create_autocmd('PackChanged', {
     end
 })
 
-vim.cmd.packadd('nvim.difftool')
-vim.cmd.packadd('cfilter')
-
-require('config').setup({
-    colorscheme = { plugin_colorscheme_name = 'moonfly' },
-    enable_unnamed_plus_paste = true,
-    keyconfig = {
-        files = { custom = true },
-        buffers = { custom = true }
-    },
-    runtime_files = { vim.api.nvim_get_runtime_file('lua/delta', true), { '/usr/share/hypr/stubs/' }, { '/home/agil/.luarocks/share/lua/5.5/lunatest.lua' } },
-})
-
+require('secret')
 require('preferences')
 require('conveniences')
 require('statusline')
