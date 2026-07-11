@@ -3,12 +3,13 @@ local M = {}
 --- options for common options that will change from computer to computer
 --- this way, the diff will sit in one file
 --- technically can gitignore, but I prefer for this to be visible
---- @class NvimOpts
+--- @class CustomOpts
 M.defaults = {
     autocomplete = false,
     enable_unnamed_plus_paste = false,
     lazy_dotnet = true,
     -- note that catppuccin is overriden with custom colorscheme; mocha has darker background, latte/frappe/macchiato are "blueberry"
+    --- @class CustomOptsColorscheme
     colorscheme = {
         --- @type 'catppuccin' | 'catppuccin-mocha' | 'catppuccin-latte' | 'catppuccin-frappe' | 'catppuccin-macchiato' | 'tokyonight' | 'tokyonight-day' | 'tokyonight-moon' | 'tokyonight-night' | 'tokyonight-storm' | 'moonfly' | 'solarized8' | 'solarized8_low' | 'solarized8_flat' | 'solarized8_high' | 'gruvbox-material' | 'rose-pine' | 'rose-pine-dawn' | 'rose-pine-main' | 'rose-pine-moon' | 'default'
         plugin_colorscheme_name = 'default',
@@ -16,6 +17,7 @@ M.defaults = {
         default_colorscheme_name = 'default',
         transparent = true,
     },
+    --- @class CustomOptsKeyConfig
     keyconfig = {
         --- @type KeyConfig
         files = {
@@ -42,11 +44,9 @@ M.defaults = {
             custom = false
         },
     },
-    fzy = {
-        ---@alias Position 'center' | 'bottom' | 'top'
-        ---@type Position
-        position = 'center'
-    },
+    ---@alias Position 'center' | 'bottom' | 'top'
+    ---@type Position
+    popup_position = 'bottom',
     --- possible files
     --- vim.api.nvim_get_runtime_file('lua/delta', true)
     --- { '/usr/share/hypr/stubs/' }
@@ -67,7 +67,7 @@ M.set_keymap = function(config, custom, rhs)
     end
 end
 
---- @class NvimOpts
+--- @class CustomOpts
 M.setup = function(opts)
     M.options = vim.tbl_deep_extend("force", M.options, opts or {})
 end

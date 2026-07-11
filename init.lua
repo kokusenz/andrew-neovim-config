@@ -44,7 +44,6 @@ require('config').setup({
         files = { custom = true },
         buffers = { custom = true }
     },
-    fzy = { position = 'bottom' },
     runtime_files = { vim.api.nvim_get_runtime_file('lua/delta', true), { '/usr/share/hypr/stubs/' }, { '/home/agil/.luarocks/share/lua/5.5/lunatest.lua' } },
 })
 
