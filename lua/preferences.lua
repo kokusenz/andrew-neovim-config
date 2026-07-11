@@ -13,12 +13,15 @@ vim.diagnostic.config({ virtual_text = { current_line = true }, virtual_lines = 
 -- vim.opt.guicursor='n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20,t:block-blinkon500-blinkoff500-TermCursor'
 vim.opt.guicursor='n-v-c-sm:block,i-ci-ve:block-blinkwait0-blinkon100-blinkoff100,r-cr-o:block-blinkwait0-blinkon100-blinkoff100,t:block-blinkon500-blinkoff500-TermCursor'
 
-local opts = require('config').options
-vim.cmd('silent! colorscheme ' .. opts.colorscheme.default_colorscheme_name)
+vim.background = 'dark'
+local ocs = require('config').options.colorscheme
+vim.cmd('silent! colorscheme ' .. ocs.default_colorscheme_name)
+
 local set_bg_none = function()
     vim.api.nvim_set_hl(0, "Normal", { bg = "NONE" })
 end
-if opts.colorscheme.transparent then
+
+if ocs.transparent then
     set_bg_none()
     vim.api.nvim_create_autocmd('ColorScheme', {
         callback = set_bg_none,

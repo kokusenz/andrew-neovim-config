@@ -11,10 +11,10 @@ M.defaults = {
     -- note that catppuccin is overriden with custom colorscheme; mocha has darker background, latte/frappe/macchiato are "blueberry"
     --- @class CustomOptsColorscheme
     colorscheme = {
-        --- @type 'catppuccin' | 'catppuccin-mocha' | 'catppuccin-latte' | 'catppuccin-frappe' | 'catppuccin-macchiato' | 'tokyonight' | 'tokyonight-day' | 'tokyonight-moon' | 'tokyonight-night' | 'tokyonight-storm' | 'moonfly' | 'solarized8' | 'solarized8_low' | 'solarized8_flat' | 'solarized8_high' | 'gruvbox-material' | 'rose-pine' | 'rose-pine-dawn' | 'rose-pine-main' | 'rose-pine-moon' | 'default'
-        plugin_colorscheme_name = 'default',
+        --- @type 'catppuccin' | 'catppuccin-mocha' | 'catppuccin-latte' | 'catppuccin-frappe' | 'catppuccin-macchiato' | 'moonfly' | 'kanagawa-wave' | 'kanagawa-dragon' | 'kanagawa-lotus' | 'default'
+        plugin_colorscheme_name = 'kanagawa-wave',
         -- solarized should not respond to transparent value, to allow to solarize
-        default_colorscheme_name = 'default',
+        default_colorscheme_name = 'retrobox',
         transparent = true,
     },
     --- @class CustomOptsKeyConfig

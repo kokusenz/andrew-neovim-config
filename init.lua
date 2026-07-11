@@ -12,12 +12,9 @@ vim.pack.add({
     'https://github.com/fabijanzulj/blame.nvim',
     'https://github.com/kokusenz/deltaview.nvim',
     -- colorschemes
-    'https://github.com/sainnhe/gruvbox-material',
-    'https://github.com/lifepillar/vim-solarized8',
     'https://github.com/catppuccin/nvim',
-    'https://github.com/folke/tokyonight.nvim',
     'https://github.com/bluz71/vim-moonfly-colors',
-    'https://github.com/rose-pine/neovim',
+    'https://github.com/rebelot/kanagawa.nvim',
     -- dependencies
     'https://github.com/nvim-lua/plenary.nvim', -- for codecompanion and easy-dotnet
 })

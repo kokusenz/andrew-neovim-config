@@ -12,13 +12,9 @@
       "rev": "07a41015af3bcbad7dff94191d5ad4b8a67fd202",
       "src": "https://github.com/GustavEikaas/easy-dotnet.nvim"
     },
-    "gruvbox-material": {
-      "rev": "11d779b26a9ab2b3db8c22c6ac9fb6e8ed4fea79",
-      "src": "https://github.com/sainnhe/gruvbox-material"
-    },
-    "neovim": {
-      "rev": "ff483051a47e27d84bdef47703538df1ed9f4a47",
-      "src": "https://github.com/rose-pine/neovim"
+    "kanagawa.nvim": {
+      "rev": "bb85e4bfc8d89b0e62c8fa53ccdd13d12e2f77b3",
+      "src": "https://github.com/rebelot/kanagawa.nvim"
     },
     "nvim": {
       "rev": "e068ab5f8261f23f6f71ffd8791ae40315b77b9c",
@@ -44,17 +40,9 @@
       "rev": "74b06c6c75e4eeb3108ec01852001636d85a932b",
       "src": "https://github.com/nvim-lua/plenary.nvim"
     },
-    "tokyonight.nvim": {
-      "rev": "cdc07ac78467a233fd62c493de29a17e0cf2b2b6",
-      "src": "https://github.com/folke/tokyonight.nvim"
-    },
     "vim-moonfly-colors": {
       "rev": "261664f92ed51cf0c077555b2d4b2530307eac17",
       "src": "https://github.com/bluz71/vim-moonfly-colors"
-    },
-    "vim-solarized8": {
-      "rev": "4433b4411de92b2446a4d32f0d8bf1b25c476bf9",
-      "src": "https://github.com/lifepillar/vim-solarized8"
     }
   }
 }
