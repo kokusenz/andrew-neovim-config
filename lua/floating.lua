@@ -8,15 +8,16 @@ M.new_popup = function(position)
     local columns = vim.o.columns
     local lines = vim.o.lines
     local width = math.floor(columns * 0.8)
+    local wide_width = math.floor(columns * 0.9)
     local height = math.floor(lines * 0.8)
     local half_height = math.floor(lines * 0.30)
     position = position or require('config').options.popup_position
     local opts = {
         relative = 'editor',
         style = 'minimal',
-        col = math.floor((columns - width) * 0.5),
+        col = math.floor((columns - (position == 'center' and width or wide_width)) * 0.5),
         row = position == 'bottom' and math.floor(lines * 0.63) or math.floor((lines - height) * 0.5),
-        width = width,
+        width = position == 'center' and width or wide_width,
         height = position == 'center' and height or half_height,
         border = "single" -- "rounded"
     }
