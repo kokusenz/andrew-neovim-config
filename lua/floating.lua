@@ -21,6 +21,10 @@ M.new_popup = function(position)
         height = position == 'center' and height or half_height,
         border = "single" -- "rounded"
     }
+    if position == 'full' then
+        vim.api.nvim_win_set_buf(0, buf)
+        return 0, buf
+    end
     local win = vim.api.nvim_open_win(buf, true, opts)
     vim.api.nvim_set_option_value('winhighlight', "Normal:Normal,FloatBorder:FloatBorderTransparent", { win = win })
     return win, buf

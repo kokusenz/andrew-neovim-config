@@ -44,7 +44,7 @@ M.defaults = {
             custom = false
         },
     },
-    ---@alias Position 'center' | 'bottom' | 'top'
+    ---@alias Position 'center' | 'bottom' | 'top' | 'full'
     ---@type Position
     popup_position = 'bottom',
     --- possible files
