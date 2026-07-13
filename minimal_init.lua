@@ -1,3 +1,5 @@
+vim.cmd.packadd('nvim.difftool')
+vim.cmd.packadd('cfilter')
 local config = vim.fn.stdpath('config')
 vim.opt.rtp:remove(config)
 vim.opt.rtp:remove(config .. '/after')
