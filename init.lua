@@ -11,6 +11,7 @@ vim.pack.add({
     -- git related
     'https://github.com/fabijanzulj/blame.nvim',
     'https://github.com/kokusenz/deltaview.nvim',
+    'https://github.com/justinmk/guh.nvim',
     -- colorschemes
     'https://github.com/catppuccin/nvim',
     'https://github.com/bluz71/vim-moonfly-colors',
