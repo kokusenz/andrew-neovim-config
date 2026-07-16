@@ -7,5 +7,6 @@ package.path = config .. '/lua/?.lua;' .. config .. '/lua/?/init.lua;' .. packag
 require('preferences')
 require('conveniences')
 require('statusline')
+require('tabline')
 require('searching')
 require('jj')
