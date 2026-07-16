@@ -17,7 +17,7 @@ M.defaults = {
         default_colorscheme_name = 'retrobox',
         transparent = true,
     },
-    --- @class CustomOptsKeyConfig
+    --- @type table 
     keyconfig = {
         --- @type KeyConfig
         files = {
@@ -43,9 +43,15 @@ M.defaults = {
             lhs = "<leader>8",
             custom = false
         },
+        --- @type UserCommandConfig
+        glance_delta = {
+            name = 'GlanceDelta',
+            opts = { range = true, desc = 'Glance at visually selected git diff text with syntax highlighting' },
+            custom = false
+        },
     },
-    ---@alias Position 'center' | 'bottom' | 'top' | 'full'
-    ---@type Position
+    --- @alias Position 'center' | 'bottom' | 'top' | 'full'
+    --- @type Position
     popup_position = 'bottom',
     --- possible files
     --- vim.api.nvim_get_runtime_file('lua/delta', true)
@@ -67,6 +73,17 @@ M.set_keymap = function(config, custom, rhs)
     end
 end
 
+--- sets a switchable user command; if config leans default; then this won't trigger
+--- this is just so that in code i don't have to write if config then create_user_command
+--- @param config UserCommandConfig  Right-hand side |{rhs}| of the mapping, can be a Lua function.
+--- @param custom boolean indicating this is custom behavior
+--- @param cmd string|fun(args: vim.api.keyset.create_user_command.command_args)
+M.create_user_command = function(config, custom, cmd)
+    if config.custom == custom then
+        vim.api.nvim_create_user_command(config.name, cmd, config.opts)
+    end
+end
+
 --- @class CustomOpts
 M.setup = function(opts)
     M.options = vim.tbl_deep_extend("force", M.options, opts or {})
@@ -79,4 +96,10 @@ return M
 --- @field modes string|string[] Mode "short-name" (see |nvim_set_keymap()|), or a list thereof.
 --- @field lhs string|string[]  Left-hand side |{lhs}| of the mapping, or a list thereof.
 --- @field opts? vim.keymap.set.Opts
+--- @field custom boolean if false, then use default behavior
+
+--- If there is not a default, this, i guess setting default to false just disables it
+--- @class UserCommandConfig
+--- @field name string
+--- @field opts? vim.api.keyset.user_command
 --- @field custom boolean if false, then use default behavior

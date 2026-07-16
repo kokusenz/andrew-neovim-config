@@ -1,4 +1,5 @@
-local opts = require('config').options
+local config = require('config')
+local opts = config.options
 if not opts.enable_unnamed_plus_paste then vim.g.clipboard = 'osc52' end
 -- keybinds to use system keyboard
 vim.keymap.set({'n', 'v'}, '<leader>y', '"+y', { silent = true, noremap = true })
@@ -49,10 +50,10 @@ vim.api.nvim_create_user_command('YankRelPath', function()
     vim.notify('Yanked: ' .. path .. ' to register +', vim.log.levels.INFO)
 end, { desc = 'Yank relative path of current buffer to specified register' })
 
-vim.api.nvim_create_user_command('GlanceDelta', function(cmd_opts)
+config.create_user_command(opts.keyconfig.glance_delta, false, function(cmd_opts)
     local lines = vim.api.nvim_buf_get_lines(0, cmd_opts.line1 - 1, cmd_opts.line2, false)
     local tmpfile = vim.fn.tempname()
     vim.fn.writefile(lines, tmpfile)
     local escaped = vim.fn.shellescape(tmpfile)
     require('floating').execute_terminal_floating('cat ' .. escaped .. ' | delta; rm ' .. escaped, 'center')
-end, { range = true, desc = 'Glance at visually selected git diff text using delta' })
+end)
