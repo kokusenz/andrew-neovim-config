@@ -18,8 +18,5 @@ local jj_diff_select = function()
     end)
 end
 
-vim.keymap.set('n', '<leader>w', function()
-    require('floating').execute_terminal_floating('jj diff -- ' .. vim.fn.expand('%:p'), 'center')
-end)
 vim.keymap.set('n', 'gj', function() require('floating').execute_terminal_floating('jj log') end)
 vim.keymap.set('n', '<leader>j', function() jj_diff_select() end)
