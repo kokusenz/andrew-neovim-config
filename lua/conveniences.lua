@@ -40,6 +40,7 @@ vim.keymap.set('n', '<leader>e', function()
 end)
 
 vim.keymap.set('t', '<C-w>', '<C-\\><C-n><C-w>', { silent = true, noremap = true })
+vim.keymap.set('t', '<C-q>', '<C-\\><C-n>', { silent = true, noremap = true })
 
 vim.api.nvim_create_user_command('YankRelPath', function()
     local path = vim.fn.expand('%:.')
