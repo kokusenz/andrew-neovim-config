@@ -7,7 +7,7 @@ local M = {}
 M.defaults = {
     autocomplete = false,
     enable_unnamed_plus_paste = false,
-    lazy_dotnet = true,
+    easy_dotnet = false,
     -- note that catppuccin is overriden with custom colorscheme; mocha has darker background, latte/frappe/macchiato are "blueberry"
     --- @class CustomOptsColorscheme
     colorscheme = {
