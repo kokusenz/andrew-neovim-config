@@ -198,6 +198,12 @@ M.conveniences = function()
     vim.keymap.set('n', '<C-w>-', '12<C-w><', { silent = true, noremap = true })
     vim.keymap.set('n', '<C-w>=', '12<C-w>>', { silent = true, noremap = true })
 
+    -- tab nav, mirrors gt/gT
+    vim.keymap.set('n', '<C-w>n', vim.cmd.tabnext, { silent = true, noremap = true })
+    vim.keymap.set('n', '<C-w>p', vim.cmd.tabprevious, { silent = true, noremap = true })
+    vim.keymap.set('n', '<C-w><C-n>', vim.cmd.tabnext, { silent = true, noremap = true })
+    vim.keymap.set('n', '<C-w><C-p>', vim.cmd.tabprevious, { silent = true, noremap = true })
+
     -- makes vertical nav a bit cleaner
     vim.keymap.set('n', '<C-u>', '<C-u>zz', { silent = true, noremap = true })
     vim.keymap.set('n', '<C-d>', '<C-d>zz', { silent = true, noremap = true })
@@ -226,6 +232,10 @@ M.conveniences = function()
     end)
 
     vim.keymap.set('t', '<C-w>', '<C-\\><C-n><C-w>', { silent = true, noremap = true })
+    vim.keymap.set('t', '<C-w>n', '<C-\\><C-n>:tabnext<CR>', { silent = true, noremap = true })
+    vim.keymap.set('t', '<C-w>p', '<C-\\><C-n>:tabprevious<CR>', { silent = true, noremap = true })
+    vim.keymap.set('t', '<C-w><C-n>', '<C-\\><C-n>:tabnext<CR>', { silent = true, noremap = true })
+    vim.keymap.set('t', '<C-w><C-p>', '<C-\\><C-n>:tabprevious<CR>', { silent = true, noremap = true })
     vim.keymap.set('t', '<C-q>', '<C-\\><C-n>', { silent = true, noremap = true })
 
     vim.api.nvim_create_user_command('YankRelPath', function()
