@@ -1,4 +1,3 @@
-vim.cmd.packadd('nvim.difftool')
 vim.cmd.packadd('cfilter')
 vim.pack.add({
     -- lsp related
@@ -9,7 +8,6 @@ vim.pack.add({
     -- navigation related
     'https://codeberg.org/mfussenegger/nvim-fzy',
     -- git related
-    'https://github.com/fabijanzulj/blame.nvim',
     'https://github.com/kokusenz/deltaview.nvim',
     'https://github.com/justinmk/guh.nvim',
     -- colorschemes
@@ -41,6 +39,5 @@ require('jj')
 require('colorscheme')
 require('treesitter')
 require('lsp')
-require('fzy-module')
-require('blame-module')
+require('fuzzy')
 require('deltaview')

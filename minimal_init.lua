@@ -1,4 +1,3 @@
-vim.cmd.packadd('nvim.difftool')
 vim.cmd.packadd('cfilter')
 require('preferences')
 require('conveniences')

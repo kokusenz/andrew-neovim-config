@@ -1,9 +1,5 @@
 {
   "plugins": {
-    "blame.nvim": {
-      "rev": "179da7aaacce7c52874af636255ede72dd6fe796",
-      "src": "https://github.com/fabijanzulj/blame.nvim"
-    },
     "deltaview.nvim": {
       "rev": "3893d56a26e60b9907445f67d099c78fe9e90044",
       "src": "https://github.com/kokusenz/deltaview.nvim"
