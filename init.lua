@@ -1,43 +1,16 @@
-vim.cmd.packadd('cfilter')
-vim.pack.add({
-    -- lsp related
-    'https://github.com/neovim/nvim-lspconfig',
-    'https://github.com/nvim-treesitter/nvim-treesitter',
-    'https://github.com/GustavEikaas/easy-dotnet.nvim',
-    'https://github.com/mfussenegger/nvim-dap',
-    -- navigation related
-    'https://codeberg.org/mfussenegger/nvim-fzy',
-    -- git related
-    'https://github.com/kokusenz/deltaview.nvim',
-    'https://github.com/justinmk/guh.nvim',
-    -- colorschemes
-    'https://github.com/catppuccin/nvim',
-    'https://github.com/bluz71/vim-moonfly-colors',
-    'https://github.com/rebelot/kanagawa.nvim',
-    -- dependencies
-    'https://github.com/nvim-lua/plenary.nvim', -- for codecompanion and easy-dotnet
-})
-
-vim.api.nvim_create_autocmd('PackChanged', {
-    callback = function(ev)
-        local name, kind = ev.data.spec.name, ev.data.kind
-        if name == 'nvim-treesitter' and kind == 'update' then
-            if not ev.data.active then vim.cmd.packadd('nvim-treesitter') end
-            vim.cmd('TSUpdate')
-        end
-    end
-})
-
+local c = require('config')
+c.setup()
 require('secret')
-require('preferences')
-require('conveniences')
-require('statusline')
-require('tabline')
-require('searching')
-require('jj')
-
-require('colorscheme')
-require('treesitter')
-require('lsp')
-require('fuzzy')
-require('deltaview')
+c.preferences()
+c.conveniences()
+c.statusline()
+c.tabline()
+c.searching()
+c.jujutsu()
+c.cfilter()
+c.colorscheme()
+c.nvim_treesitter()
+c.lsp_config()
+c.fzy()
+c.deltaview()
+c.guh()

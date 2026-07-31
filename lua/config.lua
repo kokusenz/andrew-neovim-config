@@ -1,23 +1,17 @@
 local M = {}
 
---- options for common options that will change from computer to computer
---- this way, the diff will sit in one file
---- technically can gitignore, but I prefer for this to be visible
 --- @class CustomOpts
-M.defaults = {
+local defaults = {
     autocomplete = false,
     enable_unnamed_plus_paste = false,
-    lazy_dotnet = true,
-    -- note that catppuccin is overriden with custom colorscheme; mocha has darker background, latte/frappe/macchiato are "blueberry"
     --- @class CustomOptsColorscheme
     colorscheme = {
         --- @type 'catppuccin' | 'catppuccin-mocha' | 'catppuccin-latte' | 'catppuccin-frappe' | 'catppuccin-macchiato' | 'moonfly' | 'kanagawa-wave' | 'kanagawa-dragon' | 'kanagawa-lotus' | 'default'
         plugin_colorscheme_name = 'kanagawa-wave',
-        -- solarized should not respond to transparent value, to allow to solarize
         default_colorscheme_name = 'retrobox',
         transparent = true,
     },
-    --- @type table 
+    --- @type table
     keyconfig = {
         --- @type KeyConfig
         files = {
@@ -60,14 +54,14 @@ M.defaults = {
     runtime_files = { vim.api.nvim_get_runtime_file('lua/delta', true) }, -- lua/mini.test, if minitest is installed
 }
 
-M.options = vim.deepcopy(M.defaults)
+local options = vim.deepcopy(defaults)
 
 --- sets a switchable keymap; if config leans default; then this won't trigger
 --- this is just so that in code i don't have to write if config then keymap.set
 --- @param config KeyConfig  Right-hand side |{rhs}| of the mapping, can be a Lua function.
 --- @param custom boolean indicating this is custom behavior
 --- @param rhs string|function  Right-hand side |{rhs}| of the mapping, can be a Lua function.
-M.set_keymap = function(config, custom, rhs)
+local set_keymap = function(config, custom, rhs)
     if config.custom == custom then
         vim.keymap.set(config.modes, config.lhs, rhs, config.opts)
     end
@@ -78,15 +72,633 @@ end
 --- @param config UserCommandConfig  Right-hand side |{rhs}| of the mapping, can be a Lua function.
 --- @param custom boolean indicating this is custom behavior
 --- @param cmd string|fun(args: vim.api.keyset.create_user_command.command_args)
-M.create_user_command = function(config, custom, cmd)
+local create_user_command = function(config, custom, cmd)
     if config.custom == custom then
         vim.api.nvim_create_user_command(config.name, cmd, config.opts)
     end
 end
 
---- @class CustomOpts
+---@param position? Position
+local new_popup = function(position)
+    local buf = vim.api.nvim_create_buf(false, true)
+    vim.api.nvim_buf_set_keymap(buf, 't', '<ESC>', '<C-\\><C-c>', {})
+    vim.bo[buf].bufhidden = "wipe"
+    local columns = vim.o.columns
+    local lines = vim.o.lines
+    local width = math.floor(columns * 0.8)
+    local wide_width = math.floor(columns * 0.9)
+    local height = math.floor(lines * 0.8)
+    local half_height = math.floor(lines * 0.30)
+    position = position or options.popup_position
+    local opts = {
+        relative = 'editor',
+        style = 'minimal',
+        col = math.floor((columns - (position == 'center' and width or wide_width)) * 0.5),
+        row = position == 'bottom' and math.floor(lines * 0.63) or math.floor((lines - height) * 0.5),
+        width = position == 'center' and width or wide_width,
+        height = position == 'center' and height or half_height,
+        border = "single" -- "rounded"
+    }
+    if position == 'full' then
+        vim.api.nvim_win_set_buf(0, buf)
+        return 0, buf
+    end
+    local win = vim.api.nvim_open_win(buf, true, opts)
+    vim.api.nvim_set_option_value('winhighlight', "Normal:Normal,FloatBorder:FloatBorderTransparent", { win = win })
+    return win, buf
+end
+
+---@param cmd string command to initialize the buffer
+---@param position? Position
+local execute_terminal_floating = function(cmd, position)
+    if vim.api.nvim_get_mode().mode == "i" then
+        vim.cmd('stopinsert')
+    end
+    local popup_win, buf = new_popup(position)
+    vim.api.nvim_create_autocmd("WinLeave", {
+        callback = function()
+            local w = vim.api.nvim_get_current_win()
+            if w == popup_win then
+                vim.api.nvim_buf_delete(buf, { force = true })
+                return true
+            end
+        end,
+    })
+    vim.api.nvim_create_autocmd({ 'TermOpen', 'BufEnter' }, {
+        buffer = buf,
+        command = 'startinsert!',
+        once = true,
+    })
+    local args = { vim.o.shell, vim.o.shellcmdflag, cmd }
+    vim.fn.jobstart(args, { term = true })
+end
+
+local fdfunc = 'fdfind'
+
+--- @param opts? CustomOpts
 M.setup = function(opts)
-    M.options = vim.tbl_deep_extend("force", M.options, opts or {})
+    options = vim.tbl_deep_extend("force", options, opts or {})
+
+    vim.schedule(function()
+        if vim.fn.executable('fd') == 1 then --- Custom find function using fd for Vim's :find command
+            fdfunc = 'fd'
+        elseif vim.fn.executable('fdfind') == 1 then
+            fdfunc = 'fdfind'
+        else
+            vim.notify('fd not found on system. :find will not use fd', vim.log.levels.WARN)
+            vim.opt.path:append { '**' }
+            return
+        end
+    end)
+end
+
+M.preferences = function()
+    vim.g.mapleader = " "
+    vim.wo.relativenumber = true
+    vim.opt.tabstop       = 4  -- literal <Tab> == 4 spaces when files are read
+    vim.opt.shiftwidth    = 4  -- >> << == 4 spaces
+    vim.opt.softtabstop   = 4  -- <Tab> while typing feels like 4 spaces
+    vim.opt.expandtab     = true -- convert <Tab> presses to spaces (optional)
+    vim.opt.background    = 'dark'
+    vim.opt.termguicolors = true
+    vim.opt.ignorecase    = true
+    vim.opt.smartcase     = true
+    vim.diagnostic.config({ virtual_text = { current_line = true }, virtual_lines = false })
+    -- default:
+    -- vim.opt.guicursor='n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20,t:block-blinkon500-blinkoff500-TermCursor'
+    vim.opt.guicursor='n-v-c-sm:block,i-ci-ve:block-blinkwait0-blinkon100-blinkoff100,r-cr-o:block-blinkwait0-blinkon100-blinkoff100,t:block-blinkon500-blinkoff500-TermCursor'
+
+    vim.background = 'dark'
+    local ocs = options.colorscheme
+    vim.cmd('silent! colorscheme ' .. ocs.default_colorscheme_name)
+
+    local set_bg_none = function()
+        vim.api.nvim_set_hl(0, "Normal", { bg = "NONE" })
+    end
+
+    if ocs.transparent then
+        set_bg_none()
+        vim.api.nvim_create_autocmd('ColorScheme', {
+            callback = set_bg_none,
+            desc = 'Reinitialize Delta highlight groups after colorscheme change'
+        })
+    end
+end
+
+M.conveniences = function()
+    if not options.enable_unnamed_plus_paste then vim.g.clipboard = 'osc52' end
+    -- keybinds to use system keyboard
+    vim.keymap.set({'n', 'v'}, '<leader>y', '"+y', { silent = true, noremap = true })
+    if options.enable_unnamed_plus_paste then
+        vim.keymap.set({'n', 'v'}, '<leader>p', '"+p', { silent = true, noremap = true })
+    end
+
+    -- pane resizing
+    vim.keymap.set('n', '<C-w>0', '<C-w>=', { silent = true, noremap = true })
+    vim.keymap.set('n', '<C-w>-', '12<C-w><', { silent = true, noremap = true })
+    vim.keymap.set('n', '<C-w>=', '12<C-w>>', { silent = true, noremap = true })
+
+    -- makes vertical nav a bit cleaner
+    vim.keymap.set('n', '<C-u>', '<C-u>zz', { silent = true, noremap = true })
+    vim.keymap.set('n', '<C-d>', '<C-d>zz', { silent = true, noremap = true })
+
+    -- quickfix list nav bindings
+    vim.keymap.set('n', '<Del>', vim.cmd.cclose)
+    vim.keymap.set('n', '<leader>q', function() vim.cmd([[copen 6]]) end)
+
+    -- make for cs files
+    vim.api.nvim_create_autocmd("FileType", {
+      pattern = "cs",
+      callback = function()
+        --vim.bo.makeprg = "dotnet build" -- this doesn't work lol
+        vim.cmd("let dotnet_errors_only = v:true")
+        vim.cmd("let dotnet_show_project_file = v:false")
+        vim.cmd("compiler dotnet")
+      end,
+      desc = "Set dotnet compiler for C# files"
+    })
+
+    -- term
+    vim.cmd([[cabbrev te \| term]])
+    vim.keymap.set('n', '<leader>e', function()
+        vim.cmd([[:sp | let $b=expand('%:p') | term]])
+        vim.cmd([[startinsert!]])
+    end)
+
+    vim.keymap.set('t', '<C-w>', '<C-\\><C-n><C-w>', { silent = true, noremap = true })
+    vim.keymap.set('t', '<C-q>', '<C-\\><C-n>', { silent = true, noremap = true })
+
+    vim.api.nvim_create_user_command('YankRelPath', function()
+        local path = vim.fn.expand('%:.')
+        vim.fn.setreg('+', path)
+        vim.notify('Yanked: ' .. path .. ' to register +', vim.log.levels.INFO)
+    end, { desc = 'Yank relative path of current buffer to specified register' })
+
+    create_user_command(options.keyconfig.glance_delta, false, function(cmd_opts)
+        local lines = vim.api.nvim_buf_get_lines(0, cmd_opts.line1 - 1, cmd_opts.line2, false)
+        local tmpfile = vim.fn.tempname()
+        vim.fn.writefile(lines, tmpfile)
+        local escaped = vim.fn.shellescape(tmpfile)
+        execute_terminal_floating('cat ' .. escaped .. ' | delta; rm ' .. escaped, 'center')
+    end)
+end
+
+M.searching = function()
+    -- grep --
+    local grepprg = { 'rg', '--vimgrep', '--no-messages', '--smart-case', '--hidden', '-g', '!.git/**' }
+    vim.opt.grepprg = table.concat(grepprg, " ")
+    vim.cmd([[cabbrev gr silent! grep!]])
+    -- use grep as the ex command if you are looking to use regex, otherwise here are wrappers that search fixed strings
+
+    local grep_to_qflist = function(search)
+        local command = {}
+        for _, cmd in ipairs(grepprg) do
+            table.insert(command, cmd)
+        end
+        table.insert(command, '--fixed-strings')
+        table.insert(command, search)
+        local result = vim.system(command, { text = true }):wait()
+        if result.stdout ~= '' then
+            local lines = vim.split(result.stdout, "\n", { trimempty = true })
+            vim.fn.setqflist({}, ' ', { lines = lines, efm = vim.o.grepformat, title = table.concat(command, " ") })
+        else
+            vim.fn.setqflist({}, ' ', { lines = {}, efm = vim.o.grepformat, title = table.concat(command, " ") })
+        end
+        vim.cmd('copen 6')
+        local qf_winid = vim.fn.getqflist({ winid = 0 }).winid
+        if qf_winid ~= 0 then
+            vim.api.nvim_win_call(qf_winid, function()
+                vim.fn.clearmatches()
+                vim.api.nvim_set_hl(0, 'QfMatch', { bold = true, fg = '#9df0a2' })
+                vim.fn.matchadd('QfMatch', search)
+            end)
+        end
+    end
+
+    set_keymap(options.keyconfig.grep, false, function()
+        vim.ui.input({ prompt = " grep 󰨀 " }, function(input)
+            if input ~= nil then grep_to_qflist(input) end
+        end)
+    end)
+
+    set_keymap(options.keyconfig.visual_grep, false, function()
+        local input = table.concat(vim.fn.getregion(vim.fn.getpos('v'), vim.fn.getpos('.')), "\n")
+        grep_to_qflist(input)
+    end)
+
+    function UseFd(cmdarg, _)
+        local param = vim.fn.getcwd() .. '.*' .. tostring(cmdarg)
+        local fdout = vim.system(
+            { fdfunc, '--type', 'f', '--hidden', '--exclude', '.git', '--full-path', param }
+        ):wait()
+        local matches = vim.split(fdout.stdout, "\n", { trimempty = true })
+        return matches
+    end
+
+    set_keymap(options.keyconfig.files, false, ':find ')
+    vim.o.findfunc = 'v:lua.UseFd'
+
+    -- buffer --
+    set_keymap(options.keyconfig.buffers, false, function()
+        vim.cmd('ls')
+        vim.fn.feedkeys(':b ', 'n')
+    end)
+end
+
+M.jujutsu = function()
+    local jj_diff_select = function()
+        local result = vim.system({'jj', 'diff', '--name-only'}):wait()
+        if not result.stdout then
+            vim.notify('idk, jj diff failed', vim.log.levels.ERROR)
+            return
+        end
+        local items = vim.split(result.stdout, "\n", { trimempty = true})
+        vim.ui.select(items, {
+            prompt = 'jj diff > ',
+            format_item = function(item)
+                return item
+            end,
+        }, function(item)
+            if not item then
+                return
+            end
+            vim.cmd('e ' .. vim.fn.fnameescape(item))
+        end)
+    end
+
+    vim.keymap.set('n', 'gj', function() execute_terminal_floating('jj log') end)
+    vim.keymap.set('n', '<leader>j', function() jj_diff_select() end)
+end
+
+M.nvim_treesitter = function()
+    vim.pack.add({ 'https://github.com/nvim-treesitter/nvim-treesitter' })
+
+    vim.api.nvim_create_autocmd('PackChanged', {
+        callback = function(ev)
+            local name, kind = ev.data.spec.name, ev.data.kind
+            if name == 'nvim-treesitter' and kind == 'update' then
+                if not ev.data.active then vim.cmd.packadd('nvim-treesitter') end
+                vim.cmd('TSUpdate')
+            end
+        end
+    })
+
+    require('nvim-treesitter').install({
+        'lua',
+        'vim',
+        'c_sharp',
+        'javascript',
+        'typescript',
+        'python',
+        'html',
+        'css',
+        'scss',
+        'yaml',
+        'json',
+        'markdown',
+        'rust',
+        'cpp',
+        'bash',
+        'zig'
+    })
+
+    -- Enable treesitter highlighting for specific filetypes
+    vim.api.nvim_create_autocmd('FileType', {
+        pattern = {
+            'lua',
+            'vim',
+            'cs',
+            'javascript',
+            'typescript',
+            'python',
+            'html',
+            'css',
+            'scss',
+            'yaml',
+            'json',
+            'markdown',
+            'rust',
+            'cpp',
+            'sh',
+            'zig'
+        },
+        callback = function()
+            local buf = vim.api.nvim_get_current_buf()
+            vim.schedule(function()
+                if vim.api.nvim_buf_is_valid(buf) then
+                    vim.treesitter.start(buf)
+                end
+            end)
+        end,
+    })
+end
+
+M.cfilter = function()
+    vim.cmd.packadd('cfilter')
+end
+
+M.lsp_config = function()
+    vim.pack.add({ 'https://github.com/neovim/nvim-lspconfig' })
+
+    vim.api.nvim_create_autocmd('LspAttach', {
+        callback = function(args)
+            vim.lsp.completion.enable(true, args.data.client_id, args.buf)
+        end,
+    })
+
+    if options.autocomplete then
+        vim.o.ac = true
+        vim.o.complete = 'o'
+        vim.o.completeopt = 'menu,menuone,popup,noinsert'
+    else
+        vim.keymap.set('i', '<C-Space>', '<C-x><C-o>')
+    end
+
+    local get_lua_ls_nvim_runtime = function()
+        local list = { vim.env.VIMRUNTIME }
+        for _, path in ipairs(options.runtime_files) do
+            list = vim.list_extend(list, path)
+        end
+        return list
+    end
+
+    vim.lsp.config('lua_ls', {
+        on_init = function(client)
+            if client.workspace_folders then
+                local path = client.workspace_folders[1].name
+                if
+                    path ~= vim.fn.stdpath('config')
+                    and (vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc'))
+                then
+                    return
+                end
+            end
+
+            client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
+                runtime = {
+                    -- Tell the language server which version of Lua you're using (most
+                    -- likely LuaJIT in the case of Neovim)
+                    version = 'LuaJIT',
+                    -- Tell the language server how to find Lua modules same way as Neovim
+                    -- (see `:h lua-module-load`)
+                    path = {
+                        'lua/?.lua',
+                        'lua/?/init.lua',
+                    },
+                },
+                -- Make the server aware of Neovim runtime files
+                workspace = {
+                    checkThirdParty = false,
+                    library = get_lua_ls_nvim_runtime()
+                    -- Or pull in all of 'runtimepath'.
+                    -- NOTE: this is a lot slower and will cause issues when working on
+                    -- your own configuration.
+                    -- See https://github.com/neovim/nvim-lspconfig/issues/3189
+                    -- library = vim.api.nvim_get_runtime_file('', true),
+                },
+            })
+        end,
+        settings = {
+            Lua = {},
+        },
+    })
+
+    vim.lsp.config['rust_analyzer'] = {
+        settings = {
+            ["rust-analyzer"] = {
+                imports = {
+                    granularity = {
+                        group = "module",
+                    },
+                    prefix = "self",
+                },
+                cargo = {
+                    buildScripts = {
+                        enable = true,
+                    },
+                },
+                procMacro = {
+                    enable = true
+                },
+            }
+        }
+    }
+
+    local function server_filetypes(name)
+        local files = vim.api.nvim_get_runtime_file('lsp/' .. name .. '.lua', false)
+        if #files == 0 then return {} end
+        local ok, cfg = pcall(dofile, files[1])
+        if not ok or type(cfg) ~= 'table' then return {} end
+        return cfg.filetypes or {}
+    end
+
+    local function lazy_enable(names)
+        local fts = {}
+        for _, name in ipairs(names) do
+            vim.list_extend(fts, server_filetypes(name))
+        end
+        vim.api.nvim_create_autocmd('FileType', {
+            pattern = fts,
+            once = true,
+            callback = function()
+                vim.lsp.enable(names)
+            end,
+        })
+    end
+
+    lazy_enable({ 'roslyn_ls', 'tsgo', 'lua_ls', 'zls', 'clangd', 'rust_analyzer' })
+end
+
+M.easy_dotnet = function()
+    vim.pack.add({
+        'https://github.com/nvim-lua/plenary.nvim',
+        'https://github.com/GustavEikaas/easy-dotnet.nvim',
+        'https://github.com/mfussenegger/nvim-dap',
+    })
+
+    require('easy-dotnet').setup({
+        lsp = {
+            auto_refresh_codelens = false
+        },
+        test_runner = {
+            viewmode = 'vsplit'
+        },
+    })
+
+    local dap = require('dap')
+
+    vim.keymap.set("n", "q", function()
+        dap.terminate()
+        dap.clear_breakpoints()
+    end, { desc = "Terminate and clear breakpoints" })
+
+    vim.keymap.set("n", "<leader>dB", dap.toggle_breakpoint, { desc = "Toggle breakpoint" })
+    vim.keymap.set("n", "<leader>dP", dap.continue, { desc = "Start/continue debugging" }) -- P for proceed
+    vim.keymap.set("n", "<leader>dO", dap.step_over, { desc = "Step over" })
+    vim.keymap.set("n", "<leader>dI", dap.step_into, { desc = "Step into" })
+    vim.keymap.set("n", "<leader>dE", dap.step_out, { desc = "Step out" }) -- E for exit
+    vim.keymap.set("n", "<leader>dC", dap.run_to_cursor, { desc = "Run to cursor" })
+    vim.keymap.set("n", "<leader>dr", dap.repl.toggle, { desc = "Toggle DAP REPL" })
+    vim.keymap.set("n", "<leader>dj", dap.down, { desc = "Go down stack frame" })
+    vim.keymap.set("n", "<leader>dk", dap.up, { desc = "Go up stack frame" })
+end
+
+M.fzy = function()
+    vim.pack.add({ 'https://codeberg.org/mfussenegger/nvim-fzy' })
+
+    local fzy = require('fzy')
+    fzy.new_popup = new_popup
+
+    set_keymap(options.keyconfig.files, true, function()
+        local fd_cmd = table.concat({ fdfunc, '--type', 'f', '--hidden', '--exclude', '.git', '--full-path' }, ' ')
+        fzy.execute(fd_cmd, fzy.sinks.edit_file)
+    end)
+
+    set_keymap(options.keyconfig.buffers, true, function()
+        local bufs = vim.tbl_filter(
+            function(b)
+                return vim.fn.buflisted(b) == 1 and vim.bo[b].buftype ~= 'quickfix'
+            end,
+            vim.api.nvim_list_bufs()
+        )
+        local format_bufname = function(b)
+            local fullname = vim.api.nvim_buf_get_name(b)
+            local name
+            if #fullname == 0 then
+                name = '[No Name] (' .. vim.bo[b].buftype .. ')'
+            else
+                name = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(b), ':.')
+            end
+            local modified = vim.bo[b].modified
+            return modified and name .. ' [+]' or name
+        end
+        local select_opts = {
+            prompt = 'Buffer: ',
+            format_item = format_bufname
+        }
+        vim.ui.select(bufs, select_opts, function(b)
+            if b then
+                vim.api.nvim_set_current_buf(b)
+            end
+        end)
+    end)
+end
+
+M.deltaview = function()
+    vim.pack.add({ 'https://github.com/kokusenz/deltaview.nvim' })
+    vim.cmd([[cabbrev dm DeltaMenu]])
+    vim.cmd([[cabbrev dv DeltaView]])
+    vim.cmd([[cabbrev da Delta . 3]])
+
+    create_user_command(options.keyconfig.glance_delta, true, function(cmd_opts)
+        local lines = table.concat(vim.api.nvim_buf_get_lines(0, cmd_opts.line1 - 1, cmd_opts.line2, false), '\n')
+        local win, _ = new_popup('center')
+        local delta = require('delta')
+        local bufnr = delta.patch_diff(lines, true)
+        if bufnr == nil then return end
+        vim.api.nvim_win_set_buf(win, bufnr)
+        vim.schedule(function() delta.highlight_delta_artifacts(bufnr) end)
+        vim.schedule(function() delta.syntax_highlight_diff_set(bufnr) end)
+        vim.schedule(function() delta.diff_highlight_diff(bufnr) end)
+    end)
+end
+
+M.guh = function()
+    vim.pack.add({ 'https://github.com/justinmk/guh.nvim' })
+end
+
+M.colorscheme = function()
+    vim.pack.add({
+        'https://github.com/catppuccin/nvim',
+        'https://github.com/bluz71/vim-moonfly-colors',
+        'https://github.com/rebelot/kanagawa.nvim',
+    })
+
+    local ocs = options.colorscheme
+
+    require("catppuccin").setup({
+        transparent_background = ocs.transparent,
+        flavour = 'mocha'
+    })
+
+    require("kanagawa").setup({
+        transparent = ocs.transparent,
+        colors = { theme = { all = { ui = { bg_gutter = "none" } } } }
+    })
+
+    vim.g.moonflyTransparent = ocs.transparent
+    vim.g.moonflyVirtualTextColor = true
+    vim.cmd('silent! colorscheme ' .. ocs.plugin_colorscheme_name)
+end
+
+M.statusline = function()
+    local cmp = {} -- statusline components
+
+    --- Global function to retrieve and call statusline component functions
+    --- Used in statusline format strings via %{%v:lua._statusline_component("name")%}
+    --- @param name string The component name to retrieve from the cmp table
+    --- @return string The result of calling the component function
+    function _G._statusline_component(name)
+        return cmp[name]()
+    end
+
+    local hi_pattern = '%%#%s#%s%%*'
+
+    --- Display diagnostic status for the current buffer
+    --- Shows error count, warning count, or OK indicator with appropriate highlighting
+    --- @return string Formatted diagnostic status string with highlight groups
+    function cmp.diagnostic_status()
+        local mode = vim.api.nvim_get_mode().mode
+
+        if mode == 'c' then
+            return hi_pattern:format('', '   ')
+        end
+        if mode == 't' then
+            return hi_pattern:format('', '   ')
+        end
+
+        local levels = vim.diagnostic.severity
+        local errors = #vim.diagnostic.get(0, {severity = levels.ERROR})
+        if errors > 0 then
+            return hi_pattern:format('DiagnosticError', errors .. '  ')
+        end
+
+        local warnings = #vim.diagnostic.get(0, {severity = levels.WARN})
+        if warnings > 0 then
+            return hi_pattern:format('DiagnosticWarn', warnings .. '  ')
+        end
+
+        return hi_pattern:format('DiagnosticOk', '   ')
+    end
+
+    --- Display current line and column position
+    --- @return string Formatted position string with Search highlight group
+    function cmp.line_position()
+        return hi_pattern:format('', '%3l:%-3c')
+    end
+
+    -- do %t for "tail end of file" (eg. file name), but %f if file path matters (eg. duplicate file names because bad repositories lol)
+    local statusline = {
+        '%t',
+        '%r',
+        '%m',
+        '%=',
+        '%{%v:lua._statusline_component("line_position")%}',
+        '%{%v:lua._statusline_component("diagnostic_status")%} '
+    }
+
+    vim.o.statusline = table.concat(statusline, '')
+end
+
+M.tabline = function()
+    local function emphasize_current_tab()
+        local hl = vim.api.nvim_get_hl(0, { name = 'TabLineSel', link = false })
+        hl.standout = true
+        vim.api.nvim_set_hl(0, 'TabLineSel', hl)
+    end
+
+    emphasize_current_tab()
+    vim.api.nvim_create_autocmd('ColorScheme', { callback = emphasize_current_tab })
 end
 
 return M
