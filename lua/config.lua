@@ -48,10 +48,11 @@ local defaults = {
     --- @type Position
     popup_position = 'bottom',
     --- possible files
-    --- vim.api.nvim_get_runtime_file('lua/delta', true)
+    --- vim.api.nvim_get_runtime_file('lua/mini.test', true)
+    --- though note vim.api.nvim_get_runtime_file significantly impacts load time
     --- { '/usr/share/hypr/stubs/' }
     --- @type string[][]
-    runtime_files = { vim.api.nvim_get_runtime_file('lua/delta', true) }, -- lua/mini.test, if minitest is installed
+    runtime_files = { },
 }
 
 local options = vim.deepcopy(defaults)
