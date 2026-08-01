@@ -133,6 +133,49 @@ local execute_terminal_floating = function(cmd, position)
     vim.fn.jobstart(args, { term = true })
 end
 
+--- @param dir string
+--- @return { name: string, type: string }[]
+local list_dir_entries = function(dir)
+    local entries = {}
+    local fd = vim.uv.fs_scandir(dir)
+    if fd then
+        while true do
+            local name, typ = vim.uv.fs_scandir_next(fd)
+            if not name then break end
+            table.insert(entries, { name = name, type = typ })
+        end
+    end
+    table.sort(entries, function(a, b) return a.name < b.name end)
+    return entries
+end
+
+local browse_dir
+
+--- @param dir string
+browse_dir = function(dir)
+    local items = { { name = '..', type = 'directory' } }
+    vim.list_extend(items, list_dir_entries(dir))
+    vim.ui.select(items, {
+        prompt = dir,
+        format_item = function(item)
+            return item.type == 'directory' and (item.name .. '/') or item.name
+        end,
+    }, function(choice)
+        if not choice then return end
+        if choice.name == '..' then
+            browse_dir(vim.fs.dirname(dir))
+            return
+        end
+        local path = vim.fs.joinpath(dir, choice.name)
+        if choice.type == 'directory' then
+            browse_dir(path)
+        else
+            vim.cmd.edit(vim.fn.fnameescape(path))
+        end
+    end)
+end
+
+
 local fdfunc = 'fdfind'
 
 --- @param opts? CustomOpts
@@ -168,6 +211,8 @@ M.preferences = function()
     -- vim.opt.guicursor='n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20,t:block-blinkon500-blinkoff500-TermCursor'
     vim.opt.guicursor='n-v-c-sm:block,i-ci-ve:block-blinkwait0-blinkon100-blinkoff100,r-cr-o:block-blinkwait0-blinkon100-blinkoff100,t:block-blinkon500-blinkoff500-TermCursor'
     vim.background = 'dark'
+
+    vim.g.loaded_nvim_dir_plugin = 1
 end
 
 M.conveniences = function()
@@ -223,18 +268,25 @@ M.conveniences = function()
     vim.keymap.set('t', '<C-w><C-p>', '<C-\\><C-n>:tabprevious<CR>', { silent = true, noremap = true })
     vim.keymap.set('t', '<C-q>', '<C-\\><C-n>', { silent = true, noremap = true })
 
-    vim.api.nvim_create_user_command('YankRelPath', function()
+    vim.keymap.set('n', '_', function()
         local path = vim.fn.expand('%:.')
         vim.fn.setreg('+', path)
         vim.notify('Yanked: ' .. path .. ' to register +', vim.log.levels.INFO)
     end, { desc = 'Yank relative path of current buffer to specified register' })
+
+    vim.keymap.set('n', '-', function()
+        -- open a picker with files inside the current directory, or sibling files if currently on a file
+        -- selecting '..' goes up a directory, selecting a directory recurses into it, selecting a file opens it
+        local dir = vim.fs.abspath(vim.fs.dirname(vim.fn.expand('%:.')))
+        browse_dir(dir)
+    end, {silent = true, noremap = true})
 
     create_user_command(options.keyconfig.glance_delta, false, function(cmd_opts)
         local lines = vim.api.nvim_buf_get_lines(0, cmd_opts.line1 - 1, cmd_opts.line2, false)
         local tmpfile = vim.fn.tempname()
         vim.fn.writefile(lines, tmpfile)
         local escaped = vim.fn.shellescape(tmpfile)
-        execute_terminal_floating('cat ' .. escaped .. ' | delta; rm ' .. escaped, 'center')
+        execute_terminal_floating('cat ' .. escaped .. ' | delta --no-pager; rm ' .. escaped, 'center')
     end)
 end
 
