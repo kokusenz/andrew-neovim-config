@@ -479,29 +479,18 @@ M.lsp_config = function()
         }
     }
 
-    local function server_filetypes(name)
-        local files = vim.api.nvim_get_runtime_file('lsp/' .. name .. '.lua', false)
-        if #files == 0 then return {} end
-        local ok, cfg = pcall(dofile, files[1])
-        if not ok or type(cfg) ~= 'table' then return {} end
-        return cfg.filetypes or {}
-    end
-
-    local function lazy_enable(names)
-        local fts = {}
-        for _, name in ipairs(names) do
-            vim.list_extend(fts, server_filetypes(name))
-        end
+    local lsps = { 'roslyn_ls', 'tsgo', 'lua_ls', 'zls', 'clangd', 'rust_analyzer' }
+    for _, name in ipairs(lsps) do
+        local fts = vim.lsp.config[name].filetypes
         vim.api.nvim_create_autocmd('FileType', {
             pattern = fts,
             once = true,
             callback = function()
-                vim.lsp.enable(names)
+                vim.lsp.enable(name)
             end,
         })
     end
 
-    lazy_enable({ 'roslyn_ls', 'tsgo', 'lua_ls', 'zls', 'clangd', 'rust_analyzer' })
 end
 
 M.easy_dotnet = function()
@@ -701,6 +690,7 @@ M.tabline = function()
     local function emphasize_current_tab()
         local hl = vim.api.nvim_get_hl(0, { name = 'TabLineSel', link = false })
         hl.standout = true
+        --- @diagnostic disable: param-type-mismatch
         vim.api.nvim_set_hl(0, 'TabLineSel', hl)
     end
 
