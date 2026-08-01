@@ -480,8 +480,19 @@ M.lsp_config = function()
     }
 
     local lsps = { 'roslyn_ls', 'tsgo', 'lua_ls', 'zls', 'clangd', 'rust_analyzer' }
+    -- filetypes derived from vim.lsp.config[lsp_name].filetypes
+    -- hard coding neccessary because checking filetypes programmatically expensive and slow
+    local lsp_filetypes = {
+        roslyn_ls = { 'cs' },
+        tsgo = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
+        lua_ls = { 'lua' },
+        zls = { 'zig', 'zir' },
+        c = { 'c', 'c.doxygen', 'cpp', 'cpp.doxygen', 'objc', 'objcpp', 'cuda' },
+        rust_analyzer = { 'rust' },
+    }
+
     for _, name in ipairs(lsps) do
-        local fts = vim.lsp.config[name].filetypes
+        local fts = lsp_filetypes[name]
         vim.api.nvim_create_autocmd('FileType', {
             pattern = fts,
             once = true,
