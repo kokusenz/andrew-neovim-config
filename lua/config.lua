@@ -8,7 +8,6 @@ local defaults = {
     colorscheme = {
         --- @type 'catppuccin' | 'catppuccin-mocha' | 'catppuccin-latte' | 'catppuccin-frappe' | 'catppuccin-macchiato' | 'moonfly' | 'kanagawa-wave' | 'kanagawa-dragon' | 'kanagawa-lotus' | 'default'
         plugin_colorscheme_name = 'kanagawa-wave',
-        default_colorscheme_name = 'retrobox',
         transparent = true,
     },
     --- @type table
@@ -168,22 +167,7 @@ M.preferences = function()
     -- default:
     -- vim.opt.guicursor='n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20,t:block-blinkon500-blinkoff500-TermCursor'
     vim.opt.guicursor='n-v-c-sm:block,i-ci-ve:block-blinkwait0-blinkon100-blinkoff100,r-cr-o:block-blinkwait0-blinkon100-blinkoff100,t:block-blinkon500-blinkoff500-TermCursor'
-
     vim.background = 'dark'
-    local ocs = options.colorscheme
-    vim.cmd('silent! colorscheme ' .. ocs.default_colorscheme_name)
-
-    local set_bg_none = function()
-        vim.api.nvim_set_hl(0, "Normal", { bg = "NONE" })
-    end
-
-    if ocs.transparent then
-        set_bg_none()
-        vim.api.nvim_create_autocmd('ColorScheme', {
-            callback = set_bg_none,
-            desc = 'Reinitialize Delta highlight groups after colorscheme change'
-        })
-    end
 end
 
 M.conveniences = function()
@@ -627,14 +611,26 @@ M.colorscheme = function()
 
     local ocs = options.colorscheme
 
-    require("catppuccin").setup({
-        transparent_background = ocs.transparent,
-        flavour = 'mocha'
+    vim.api.nvim_create_autocmd('ColorSchemePre', {
+        pattern = 'catppuccin*',
+        once = true,
+        callback = function()
+            require("catppuccin").setup({
+                transparent_background = ocs.transparent,
+                flavour = 'mocha'
+            })
+        end,
     })
 
-    require("kanagawa").setup({
-        transparent = ocs.transparent,
-        colors = { theme = { all = { ui = { bg_gutter = "none" } } } }
+    vim.api.nvim_create_autocmd('ColorSchemePre', {
+        pattern = 'kanagawa*',
+        once = true,
+        callback = function()
+            require("kanagawa").setup({
+                transparent = ocs.transparent,
+                colors = { theme = { all = { ui = { bg_gutter = "none" } } } }
+            })
+        end,
     })
 
     vim.g.moonflyTransparent = ocs.transparent

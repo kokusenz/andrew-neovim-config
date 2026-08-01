@@ -7,4 +7,4 @@ c.tabline()
 c.searching()
 c.jujutsu()
 c.cfilter()
--- todo add colorscheme, but after we figure out how to best lazy load schemes that aren't default in config
+c.colorscheme()
