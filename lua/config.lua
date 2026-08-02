@@ -108,9 +108,14 @@ local new_popup = function(position)
     return win, buf
 end
 
----@param cmd string command to initialize the buffer
+-- idea; just use the terminal as my file browser
+-- have a special init file that allows this to act as unnest, aliased where it calls nvim -u
+-- some kind of autocmd stuff? but basically, if I use the nvim -u from the neovim terminal window, it actually sets the alternate buffer as the file (or terminal i guess) and exits the terminal
+
+---@param cmd? string command to initialize the buffer; if omitted, starts an interactive shell
 ---@param position? Position
-local execute_terminal_floating = function(cmd, position)
+---@param cwd? string working directory for the terminal job
+local execute_terminal_floating = function(cmd, position, cwd)
     if vim.api.nvim_get_mode().mode == "i" then
         vim.cmd('stopinsert')
     end
@@ -129,8 +134,8 @@ local execute_terminal_floating = function(cmd, position)
         command = 'startinsert!',
         once = true,
     })
-    local args = { vim.o.shell, vim.o.shellcmdflag, cmd }
-    vim.fn.jobstart(args, { term = true })
+    local args = cmd and { vim.o.shell, vim.o.shellcmdflag, cmd } or { vim.o.shell }
+    vim.fn.jobstart(args, { term = true, cwd = cwd })
 end
 
 --- @param dir string
@@ -212,7 +217,22 @@ M.preferences = function()
     vim.opt.guicursor='n-v-c-sm:block,i-ci-ve:block-blinkwait0-blinkon100-blinkoff100,r-cr-o:block-blinkwait0-blinkon100-blinkoff100,t:block-blinkon500-blinkoff500-TermCursor'
     vim.background = 'dark'
 
-    vim.g.loaded_nvim_dir_plugin = 1
+    vim.api.nvim_create_autocmd('VimEnter', {
+        callback = function()
+            vim.api.nvim_del_augroup_by_name('nvim.dir')
+        end
+    })
+
+    -- set terminal as my directory browser
+    vim.api.nvim_create_autocmd('FileType', {
+        pattern = 'directory',
+        callback = function(args)
+            local dir = vim.api.nvim_buf_get_name(args.buf)
+            vim.schedule(function()
+                execute_terminal_floating(nil, 'full', dir)
+            end)
+        end,
+    })
 end
 
 M.conveniences = function()
