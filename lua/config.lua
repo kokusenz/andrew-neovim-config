@@ -81,7 +81,9 @@ end
 ---@param position? Position
 local new_popup = function(position)
     local buf = vim.api.nvim_create_buf(false, true)
-    vim.api.nvim_buf_set_keymap(buf, 't', '<ESC>', '<C-\\><C-c>', {})
+    if position ~= 'full' then
+        vim.api.nvim_buf_set_keymap(buf, 't', '<ESC>', '<C-\\><C-c>', {})
+    end
     vim.bo[buf].bufhidden = "wipe"
     local columns = vim.o.columns
     local lines = vim.o.lines
