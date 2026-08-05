@@ -308,7 +308,7 @@ M.conveniences = function()
         local tmpfile = vim.fn.tempname()
         vim.fn.writefile(lines, tmpfile)
         local escaped = vim.fn.shellescape(tmpfile)
-        execute_terminal_floating('cat ' .. escaped .. ' | delta --no-pager; rm ' .. escaped, 'center')
+        execute_terminal_floating('cat ' .. escaped .. ' | delta; rm ' .. escaped, 'center')
     end)
 end
 
