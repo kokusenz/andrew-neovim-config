@@ -553,11 +553,10 @@ M.lsp_config = function()
         }
     }
 
-    local lsps = { 'roslyn_ls', 'tsgo', 'lua_ls', 'zls', 'clangd', 'rust_analyzer' }
+    local lsps = { 'tsgo', 'lua_ls', 'zls', 'clangd', 'rust_analyzer' }
     -- filetypes derived from vim.lsp.config[lsp_name].filetypes
     -- hard coding neccessary because checking filetypes programmatically expensive and slow
     local lsp_filetypes = {
-        roslyn_ls = { 'cs' },
         tsgo = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
         lua_ls = { 'lua' },
         zls = { 'zig', 'zir' },
@@ -576,6 +575,14 @@ M.lsp_config = function()
         })
     end
 
+    vim.api.nvim_create_autocmd('FileType', {
+        pattern = {'cs'},
+        once = true,
+        callback = function()
+            vim.pack.add({ 'https://github.com/seblyng/roslyn.nvim' })
+            require('roslyn').setup({ broad_search = true })
+        end,
+    })
 end
 
 M.easy_dotnet = function()

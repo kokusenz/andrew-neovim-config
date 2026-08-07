@@ -40,6 +40,10 @@
       "rev": "74b06c6c75e4eeb3108ec01852001636d85a932b",
       "src": "https://github.com/nvim-lua/plenary.nvim"
     },
+    "roslyn.nvim": {
+      "rev": "7d8c166a0c70473ffa558d4d2430769d581fa8dd",
+      "src": "https://github.com/seblyng/roslyn.nvim"
+    },
     "vim-moonfly-colors": {
       "rev": "261664f92ed51cf0c077555b2d4b2530307eac17",
       "src": "https://github.com/bluz71/vim-moonfly-colors"
