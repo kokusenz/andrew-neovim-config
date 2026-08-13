@@ -304,7 +304,7 @@ M.conveniences = function()
     end, {silent = true, noremap = true})
 
     vim.keymap.set('n', 'gj', function() 
-        vim.ui.input({prompt='> '}, function(input) _ = input and execute_terminal_floating(input) or nil end)
+        vim.ui.input({prompt='> '}, function(input) _ = input and execute_terminal_floating(input, 'center') or nil end)
     end)
 
     create_user_command(options.keyconfig.glance_delta, false, function(cmd_opts)
