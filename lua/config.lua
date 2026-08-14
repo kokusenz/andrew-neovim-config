@@ -363,6 +363,8 @@ M.searching = function()
         grep_to_qflist(input)
     end)
 
+    -- TODO instead of passing in the arg directly into fd, try fd'ing all files, and using
+    -- lua fzy filter function on the arg to filter it
     function UseFd(cmdarg, _)
         local param = vim.fn.getcwd() .. '.*' .. tostring(cmdarg)
         local fdout = vim.system(
@@ -748,8 +750,7 @@ M.completion = function()
     end
 
     mini_completion.setup({
-        -- effectively infinite: only the manual trigger below should ever start completion
-        delay = { completion = 10^8 },
+        delay = { completion = 10^7, info = 10^7, signature = 10^7 },
         lsp_completion = {
             process_items = process_items,
         },
