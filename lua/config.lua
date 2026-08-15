@@ -2,7 +2,10 @@ local M = {}
 
 --- @class CustomOpts
 local defaults = {
+    --- @type boolean
     enable_unnamed_plus_paste = false,
+    --- @type boolean
+    enable_colon_find_fzy = false,
     --- @class CustomOptsColorscheme
     colorscheme = {
         --- @type 'catppuccin' | 'catppuccin-mocha' | 'catppuccin-latte' | 'catppuccin-frappe' | 'catppuccin-macchiato' | 'moonfly' | 'kanagawa-wave' | 'kanagawa-dragon' | 'kanagawa-lotus' | 'default'
@@ -488,6 +491,9 @@ M.searching = function()
     end)
 
     function UseFd(cmdarg, _)
+        local arg = tostring(cmdarg)
+        local param = vim.fn.getcwd() .. ".*"
+        param = not options.enable_colon_find_fzy and param .. arg or param
         local fdout = vim.system({
             fdfunc,
             '--type',
@@ -496,12 +502,12 @@ M.searching = function()
             '--exclude',
             '.git',
             '--full-path',
-            vim.fn.getcwd() .. ".*" }
+            param}
         ):wait()
         local all_files = vim.split(fdout.stdout, "\n", { trimempty = true })
-        local param = tostring(cmdarg)
-        local matches = vim.tbl_filter(function(f) return Fzy.has_match(param, f) end, all_files)
-        return matches
+        return not options.enable_colon_find_fzy and
+            all_files or
+            vim.tbl_filter(function(f) return Fzy.has_match(arg, f) end, all_files)
     end
 
     set_keymap(options.keyconfig.files, false, ':find ')
