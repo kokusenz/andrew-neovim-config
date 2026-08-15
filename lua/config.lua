@@ -306,8 +306,11 @@ M.conveniences = function()
 
     vim.keymap.set('n', 'gj', function()
         vim.ui.input({prompt='> '}, function(input)
+            if not input then
+                return
+            end
             local expanded = string.gsub(input, "%%", function(i) return vim.fn.expand(i..':p') end)
-            _ = input and execute_terminal_floating(expanded, 'center') or nil
+            execute_terminal_floating(expanded, 'center')
         end)
     end)
 
