@@ -429,7 +429,7 @@ M.conveniences = function()
     end, {silent = true, noremap = true})
 
     vim.keymap.set('n', 'gj', function()
-        vim.ui.input({prompt='> '}, function(input)
+        vim.ui.input({prompt='  '}, function(input)
             if not input then
                 return
             end
