@@ -89,18 +89,27 @@ local new_popup = function(position)
     vim.bo[buf].bufhidden = "wipe"
     local columns = vim.o.columns
     local lines = vim.o.lines
-    local width = math.floor(columns * 0.8)
-    local wide_width = math.floor(columns * 0.9)
-    local height = math.floor(lines * 0.8)
-    local half_height = math.floor(lines * 0.30)
+    local width = math.floor(columns * 0.9)
+    local center_height = math.floor(lines * 0.9)
+    local half_height = math.floor(lines * 0.3)
+    local mid_row = math.floor(lines * 0.5)
     position = position or options.popup_position
+    local height = position == 'center' and center_height or half_height
+    local row
+    if position == 'bottom' then
+        row = math.floor(lines * 0.63) -- unchanged: bottom border hovers just above the statusline
+    elseif position == 'top' then
+        row = mid_row - half_height -- bottom border sits at the 50% mark
+    else
+        row = math.floor((lines - center_height) * 0.5)
+    end
     local opts = {
         relative = 'editor',
         style = 'minimal',
-        col = math.floor((columns - (position == 'center' and width or wide_width)) * 0.5),
-        row = position == 'bottom' and math.floor(lines * 0.63) or math.floor((lines - height) * 0.5),
-        width = position == 'center' and width or wide_width,
-        height = position == 'center' and height or half_height,
+        col = math.floor((columns - width) * 0.5),
+        row = row,
+        width = width,
+        height = height,
         border = "single" -- "rounded"
     }
     if position == 'full' then
