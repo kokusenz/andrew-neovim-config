@@ -499,6 +499,27 @@ M.searching = function()
         grep_to_qflist(input)
     end)
 
+    --- fzy-based `filtersort` for `mini.completion`'s `lsp_completion.process_items`.
+    --- Filters candidates to those fzy-matching `base`, then sorts by fzy score
+    --- (descending). When `base` is empty, candidates are left in LSP-provided order.
+    --- @param items string[]
+    --- @param base string
+    local fzy_filtersort = function(items, base)
+        if base == '' then return vim.deepcopy(items) end
+
+        local scored = {}
+        for _, item in ipairs(items) do
+            if Fzy.has_match(base, item) then
+                table.insert(scored, { item = item, score = Fzy.score(base, item) })
+            end
+        end
+        table.sort(scored, function(a, b) return a.score > b.score end)
+
+        local result = {}
+        for _, s in ipairs(scored) do table.insert(result, s.item) end
+        return result
+    end
+
     function UseFd(cmdarg, _)
         local arg = tostring(cmdarg)
         local param = vim.fn.getcwd() .. ".*"
@@ -516,7 +537,7 @@ M.searching = function()
         local all_files = vim.split(fdout.stdout, "\n", { trimempty = true })
         return not options.enable_colon_find_fzy and
             all_files or
-            vim.tbl_filter(function(f) return Fzy.has_match(arg, f) end, all_files)
+            fzy_filtersort(all_files, arg)
     end
 
     set_keymap(options.keyconfig.files, false, ':find ')
@@ -730,34 +751,34 @@ M.lsp_config = function()
     end
 end
 
---- fzy-based `filtersort` for `mini.completion`'s `lsp_completion.process_items`.
---- Filters candidates to those fzy-matching `base`, then sorts by fzy score
---- (descending). When `base` is empty, candidates are left in LSP-provided order.
---- @param items table[]
---- @param base string
-local fzy_filtersort = function(items, base)
-    if base == '' then return vim.deepcopy(items) end
-
-    local scored = {}
-    for _, item in ipairs(items) do
-        local text = item.filterText or item.label
-        if Fzy.has_match(base, text) then
-            table.insert(scored, { item = item, score = Fzy.score(base, text) })
-        end
-    end
-    table.sort(scored, function(a, b) return a.score > b.score end)
-
-    local result = {}
-    for _, s in ipairs(scored) do table.insert(result, s.item) end
-    return result
-end
-
 M.completion = function()
     vim.pack.add({ 'https://github.com/nvim-mini/mini.completion' })
 
     vim.keymap.del('i', cmp_keys)
     local mini_completion = require('mini.completion')
     vim.o.completeopt = 'menu,menuone,noselect,fuzzy'
+
+    --- fzy-based `filtersort` for `mini.completion`'s `lsp_completion.process_items`.
+    --- Filters candidates to those fzy-matching `base`, then sorts by fzy score
+    --- (descending). When `base` is empty, candidates are left in LSP-provided order.
+    --- @param items table[]
+    --- @param base string
+    local fzy_filtersort = function(items, base)
+        if base == '' then return vim.deepcopy(items) end
+
+        local scored = {}
+        for _, item in ipairs(items) do
+            local text = item.filterText or item.label
+            if Fzy.has_match(base, text) then
+                table.insert(scored, { item = item, score = Fzy.score(base, text) })
+            end
+        end
+        table.sort(scored, function(a, b) return a.score > b.score end)
+
+        local result = {}
+        for _, s in ipairs(scored) do table.insert(result, s.item) end
+        return result
+    end
 
     --- @param items table[]
     --- @param base string
