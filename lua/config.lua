@@ -396,7 +396,7 @@ M.conveniences = function()
 
     -- quickfix list nav bindings
     vim.keymap.set('n', '<Del>', vim.cmd.cclose)
-    vim.keymap.set('n', '<leader>q', function() vim.cmd([[copen 6]]) end)
+    vim.keymap.set('n', '<leader>q', function() vim.cmd([[copen 4]]) end)
 
     -- make for cs files
     vim.api.nvim_create_autocmd("FileType", {
@@ -477,7 +477,7 @@ M.searching = function()
         else
             vim.fn.setqflist({}, ' ', { lines = {}, efm = vim.o.grepformat, title = table.concat(command, " ") })
         end
-        vim.cmd('copen 6')
+        vim.cmd('copen 4')
         local qf_winid = vim.fn.getqflist({ winid = 0 }).winid
         if qf_winid ~= 0 then
             vim.api.nvim_win_call(qf_winid, function()
