@@ -1,5 +1,6 @@
 local c = require('config')
 c.setup()
+require('minimal_secret')
 c.preferences()
 c.conveniences()
 c.statusline()
