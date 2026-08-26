@@ -170,12 +170,7 @@ end
 local browse_dir
 
 --- @param dir string
---- @param fzy_full boolean 
-browse_dir = function(dir, fzy_full)
-    local temp = options.popup_position
-    if fzy_full then
-        options.popup_position = 'full'
-    end
+browse_dir = function(dir)
     local items = { { name = '..', type = 'directory' } }
     vim.list_extend(items, list_dir_entries(dir))
     vim.ui.select(items, {
@@ -186,17 +181,15 @@ browse_dir = function(dir, fzy_full)
     }, function(choice)
         if not choice then return end
         if choice.name == '..' then
-            browse_dir(vim.fs.dirname(dir), fzy_full)
-            options.popup_position = temp
+            browse_dir(vim.fs.dirname(dir))
             return
         end
         local path = vim.fs.joinpath(dir, choice.name)
         if choice.type == 'directory' then
-            browse_dir(path, fzy_full)
+            browse_dir(path)
         else
             vim.cmd.edit(vim.fn.fnameescape(path))
         end
-        options.popup_position = temp
     end)
 end
 
@@ -430,7 +423,7 @@ M.conveniences = function()
         -- open a picker with files inside the current directory, or sibling files if currently on a file
         -- selecting '..' goes up a directory, selecting a directory recurses into it, selecting a file opens it
         local dir = vim.fs.abspath(vim.fs.dirname(vim.fn.expand('%:.')))
-        browse_dir(dir, false)
+        browse_dir(dir)
     end, {silent = true, noremap = true})
 
     vim.keymap.set('n', 'gj', function()
@@ -844,17 +837,6 @@ M.fzy = function()
         local fd_cmd = table.concat({ fdfunc, '--type', 'f', '--hidden', '--exclude', '.git', '--full-path' }, ' ')
         fzy.execute(fd_cmd, fzy.sinks.edit_file)
     end)
-
-    -- set terminal as my directory browser
-    vim.api.nvim_create_autocmd('FileType', {
-        pattern = 'directory',
-        callback = function(args)
-            local dir = vim.api.nvim_buf_get_name(args.buf)
-            vim.schedule(function()
-                browse_dir(dir, true)
-            end)
-        end,
-    })
 
     set_keymap(options.keyconfig.buffers, true, function()
         local bufs = vim.tbl_filter(
