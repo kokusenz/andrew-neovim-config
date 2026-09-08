@@ -703,11 +703,11 @@ M.lsp_config = function()
         }
     }
 
-    local lsps = { 'tsgo', 'lua_ls', 'zls', 'clangd', 'rust_analyzer' }
+    local lsps = { 'tsc', 'lua_ls', 'zls', 'clangd', 'rust_analyzer' }
     -- filetypes derived from vim.lsp.config[lsp_name].filetypes
     -- hard coding neccessary because checking filetypes programmatically expensive and slow
     local lsp_filetypes = {
-        tsgo = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
+        tsc = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
         lua_ls = { 'lua' },
         zls = { 'zig', 'zir' },
         c = { 'c', 'c.doxygen', 'cpp', 'cpp.doxygen', 'objc', 'objcpp', 'cuda' },
