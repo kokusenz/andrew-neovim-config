@@ -33,7 +33,7 @@
       "src": "https://codeberg.org/mfussenegger/nvim-fzy"
     },
     "nvim-lspconfig": {
-      "rev": "3371bf298c1f56efc26771ee961f461176958fb5",
+      "rev": "da1aff0332774a0f60d52bf972e815dfc226f276",
       "src": "https://github.com/neovim/nvim-lspconfig"
     },
     "nvim-treesitter": {
