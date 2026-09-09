@@ -773,12 +773,6 @@ M.completion = function()
     --- @param base string
     local process_items = function(items, base)
         local result = mini_completion.default_process_items(items, base, { filtersort = fzy_filtersort })
-        if #result == 1 then
-            vim.schedule(function()
-                local keys = vim.api.nvim_replace_termcodes('<C-n><C-y>', true, false, true)
-                vim.api.nvim_feedkeys(keys, 'n', false)
-            end)
-        end
         return result
     end
 
