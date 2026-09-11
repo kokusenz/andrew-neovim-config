@@ -11,6 +11,8 @@ local defaults = {
         --- @type 'catppuccin' | 'catppuccin-mocha' | 'catppuccin-latte' | 'catppuccin-frappe' | 'catppuccin-macchiato' | 'moonfly' | 'kanagawa-wave' | 'kanagawa-dragon' | 'kanagawa-lotus' | 'default'
         plugin_colorscheme_name = 'kanagawa-wave',
         transparent = true,
+        --- @type 'dark' | 'light'
+        background = 'dark'
     },
     --- @type table
     keyconfig = {
@@ -174,7 +176,7 @@ browse_dir = function(dir)
     local items = { { name = '..', type = 'directory' } }
     vim.list_extend(items, list_dir_entries(dir))
     vim.ui.select(items, {
-        prompt = dir,
+        prompt = dir .. '/',
         format_item = function(item)
             return item.type == 'directory' and (item.name .. '/') or item.name
         end,
@@ -343,7 +345,6 @@ M.preferences = function()
     vim.opt.shiftwidth    = 4  -- >> << == 4 spaces
     vim.opt.softtabstop   = 4  -- <Tab> while typing feels like 4 spaces
     vim.opt.expandtab     = true -- convert <Tab> presses to spaces (optional)
-    vim.opt.background    = 'dark'
     vim.opt.termguicolors = true
     vim.opt.ignorecase    = true
     vim.opt.smartcase     = true
@@ -351,7 +352,6 @@ M.preferences = function()
     -- default:
     -- vim.opt.guicursor='n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20,t:block-blinkon500-blinkoff500-TermCursor'
     vim.opt.guicursor='n-v-c-sm:block,i-ci-ve:block-blinkwait0-blinkon100-blinkoff100,r-cr-o:block-blinkwait0-blinkon100-blinkoff100,t:block-blinkon500-blinkoff500-TermCursor'
-    vim.background = 'dark'
 
     vim.api.nvim_create_autocmd('VimEnter', {
         callback = function()
@@ -893,13 +893,14 @@ M.colorscheme = function()
     })
 
     local ocs = options.colorscheme
+    local transparent = ocs.background == 'dark' and ocs.transparent, -- only allow transparent if dark; light must always be solid
 
     vim.api.nvim_create_autocmd('ColorSchemePre', {
         pattern = 'catppuccin*',
         once = true,
         callback = function()
             require("catppuccin").setup({
-                transparent_background = ocs.transparent,
+                transparent_background = transparent,
                 flavour = 'mocha'
             })
         end,
@@ -910,15 +911,22 @@ M.colorscheme = function()
         once = true,
         callback = function()
             require("kanagawa").setup({
-                transparent = ocs.transparent,
+                transparent = transparent,
                 colors = { theme = { all = { ui = { bg_gutter = "none" } } } }
             })
         end,
     })
 
-    vim.g.moonflyTransparent = ocs.transparent
+    vim.g.moonflyTransparent = transparent
     vim.g.moonflyVirtualTextColor = true
     vim.cmd('silent! colorscheme ' .. ocs.plugin_colorscheme_name)
+    vim.opt.background = ocs.background
+    vim.api.nvim_create_user_command('Calt', function()
+        local flip = ocs.background == 'dark' and 'light' or 'dark'
+        require('config').setup({ colorscheme = { background = flip } })
+        M.colorscheme()
+        vim.opt.background = flip
+    end, {})
 end
 
 M.statusline = function()
