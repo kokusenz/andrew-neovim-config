@@ -582,6 +582,7 @@ M.nvim_treesitter = function()
         'c_sharp',
         'javascript',
         'typescript',
+        'angular',
         'python',
         'html',
         'css',
@@ -589,9 +590,14 @@ M.nvim_treesitter = function()
         'yaml',
         'json',
         'markdown',
+        'jjdescription',
+        'editorconfig',
+        'nix',
+        'make',
         'rust',
         'cpp',
         'bash',
+        'zsh',
         'zig'
     })
 
@@ -610,6 +616,10 @@ M.nvim_treesitter = function()
             'yaml',
             'json',
             'markdown',
+            'jjdescription',
+            'editorconfig',
+            'nix',
+            'make',
             'rust',
             'cpp',
             'sh',
