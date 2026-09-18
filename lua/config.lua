@@ -713,7 +713,7 @@ M.lsp_config = function()
         }
     }
 
-    local lsps = { 'tsc', 'lua_ls', 'zls', 'clangd', 'rust_analyzer' }
+    local lsps = { 'tsc', 'lua_ls', 'zls', 'clangd', 'rust_analyzer', 'nixd' }
     -- filetypes derived from vim.lsp.config[lsp_name].filetypes
     -- hard coding neccessary because checking filetypes programmatically expensive and slow
     local lsp_filetypes = {
@@ -722,6 +722,7 @@ M.lsp_config = function()
         zls = { 'zig', 'zir' },
         c = { 'c', 'c.doxygen', 'cpp', 'cpp.doxygen', 'objc', 'objcpp', 'cuda' },
         rust_analyzer = { 'rust' },
+        nixd = { 'nix' },
     }
 
     for _, name in ipairs(lsps) do
